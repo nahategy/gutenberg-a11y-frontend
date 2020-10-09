@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import './style.css';
-import proba from "./module/test";
+import get_language_file from "./services/language.service";
+import HelperService from "./services/helper.service";
 
-function component() {
-    console.log("asd")
-}
-
-document.body.appendChild(component());
+HelperService.docReady(function () {
+    var language = get_language_file();
+})
