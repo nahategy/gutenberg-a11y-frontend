@@ -14,7 +14,6 @@ class Language {
     }
 
     constructor(language_code) {
-        console.log(language_code);
         this.language_code = language_code;
     }
 

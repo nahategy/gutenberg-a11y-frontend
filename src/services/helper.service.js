@@ -1,4 +1,7 @@
+import get_language_file from "./language.service";
+
 class HelperService {
+    static language;
 
     static docReady(fn) {
         // see if DOM is already available
@@ -9,6 +12,12 @@ class HelperService {
             document.addEventListener("DOMContentLoaded", fn);
         }
     }
+
+    static initializeAccessibilityChecker() {
+        HelperService.language = get_language_file()
+
+    }
+
 }
 
 
