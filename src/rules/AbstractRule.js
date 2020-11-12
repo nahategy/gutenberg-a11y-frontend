@@ -26,3 +26,4 @@ class ARule {
 }
 
 
+export default ARule;
