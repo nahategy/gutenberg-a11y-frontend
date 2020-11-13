@@ -29,14 +29,19 @@ class HelperService {
             setTimeout(HelperService.initializeLib, 500);
             return
         }
-        const config = {attributes: true, childList: true, subtree: true};
+        const config = {childList: true};
         const observer = new MutationObserver(function (mutationlist, observeer) {
-            console.log(mutationlist);
-            console.log(observeer);
+            if (mutationlist.length > 0) {
+                for (let mutation in mutationlist) {
+                    mutation = mutationlist[mutation];
+                    if (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0) {
+                        console.log(mutation);
+                    }
+                }
+            }
         });
         observer.observe(node, config)
     }
-
 }
 
 
