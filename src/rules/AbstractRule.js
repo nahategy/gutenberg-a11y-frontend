@@ -23,6 +23,10 @@ class ARule {
         return HelperService.language.get_translation(this.error_description)
     };
 
+    get wcag_link(){
+        throw new Error("wcag_link Method not Implemented yet!")
+    }
+
 }
 
 
