@@ -1,5 +1,6 @@
 import get_language_file from "./language.service";
 import ContrastRule from "../rules/ContrastRule";
+import RulesService from "./rules.service";
 
 class HelperService {
     static language;
@@ -34,8 +35,12 @@ class HelperService {
             if (mutationlist.length > 0) {
                 for (let mutation in mutationlist) {
                     mutation = mutationlist[mutation];
-                    if (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0) {
-                        console.log(mutation);
+                    if (mutation.addedNodes.length > 0) {
+                        RulesService.applyRules(mutation.addedNodes[0]);
+                    }
+
+                    if (mutation.removedNodes.length > 0) {
+                        RulesService.removeRules(mutation.removedNodes[0]);
                     }
                 }
             }
