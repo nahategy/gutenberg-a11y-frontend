@@ -12,7 +12,6 @@ class RulesService {
 
 
     static getRules() {
-
         return RulesService.ELEMENTS_TO_WATCH;
     }
 

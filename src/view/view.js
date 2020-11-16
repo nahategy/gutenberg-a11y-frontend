@@ -49,7 +49,4 @@ class ViewRule {
 
 }
 
-var view1 = new ViewRule();
-view1.function_hello();
-
-
+export default ViewRule;

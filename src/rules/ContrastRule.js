@@ -2,7 +2,7 @@ import ARule from "./AbstractRule";
 
 
 class ContrastRule extends ARule {
-    error_description = "asd"
+    error_description = "contr rule"
     run() {
             console.log('contrast rule')
     }
