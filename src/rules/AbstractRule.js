@@ -22,6 +22,7 @@ class ARule {
     _run() {
         const result = this.run();
         console.log(result);
+        console.log(window.accessibility_errors)
     }
 
     run() {
