@@ -1,18 +1,26 @@
+import RuleFactory from "../rule/RuleFactory";
+import RuleApplicator from "../rule/RuleApplicator";
+
 class RulesService {
-    static ELEMENTS_TO_WATCH = new Map();
+    static RULES_TO_RUN = new Map();
 
     static applyRules(element) {
-        RulesService.ELEMENTS_TO_WATCH.set(element, element)
-        console.log(element.dataset.type);
+        RulesService.RULES_TO_RUN.set(element, RulesService.createRules(element))
     }
 
     static removeRules(element) {
-        RulesService.ELEMENTS_TO_WATCH.delete(element);
+        RulesService.RULES_TO_RUN.delete(element);
     }
 
 
     static getRules() {
-        return RulesService.ELEMENTS_TO_WATCH;
+        return RulesService.RULES_TO_RUN;
+    }
+
+    static createRules(element) {
+        const type = element.dataset.type;
+        const rules_to_apply = RuleFactory.getRulesByBlockType(type);
+        return new RuleApplicator(element, rules_to_apply).apply_rules()
     }
 
 }

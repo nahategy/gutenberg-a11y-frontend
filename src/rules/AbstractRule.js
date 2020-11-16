@@ -1,4 +1,5 @@
 import HelperService from "../services/helper.service";
+import RulesService from "../services/rules.service";
 
 class ARule {
     html_element;
@@ -9,6 +10,13 @@ class ARule {
         if (new.target === ARule)
             throw new TypeError("Cannot construct Abstract Rule directly")
         this.html_element = html_element;
+    }
+
+    listen() {
+        const config = {childList: true};
+        const observer = new MutationObserver(this.run);
+        observer.observe(this.html_element, config);
+        this.html_element.oninput = this.run;
     }
 
     run() {
@@ -23,7 +31,7 @@ class ARule {
         return HelperService.language.get_translation(this.error_description)
     };
 
-    get wcag_link(){
+    get wcag_link() {
         throw new Error("wcag_link Method not Implemented yet!")
     }
 

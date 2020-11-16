@@ -1,5 +1,4 @@
 import get_language_file from "./language.service";
-import ContrastRule from "../rules/ContrastRule";
 import RulesService from "./rules.service";
 
 class HelperService {
@@ -17,11 +16,7 @@ class HelperService {
 
     static initializeAccessibilityChecker() {
         HelperService.language = get_language_file()
-        let rule = new ContrastRule();
-        rule.run();
-        console.log(rule.error_description);
         HelperService.initializeLib()
-
     }
 
     static initializeLib() {
