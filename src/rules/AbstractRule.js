@@ -14,9 +14,14 @@ class ARule {
 
     listen() {
         const config = {childList: true};
-        const observer = new MutationObserver(this.run);
+        const observer = new MutationObserver(this._run.bind(this));
         observer.observe(this.html_element, config);
-        this.html_element.oninput = this.run;
+        this.html_element.oninput = this._run.bind(this);
+    }
+
+    _run() {
+        const result = this.run();
+        console.log(result);
     }
 
     run() {

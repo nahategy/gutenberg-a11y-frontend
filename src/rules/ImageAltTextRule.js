@@ -5,7 +5,17 @@ class ImageAltTextRule extends ARule {
     error_description = "contr rule"
 
     run() {
-        console.log('contrast rule')
+        if (!this.html_element)
+            return;
+        const images = this.html_element.querySelectorAll('img');
+        if (!images)
+            return;
+        for (var i = 0; i < images.length; i++) {
+            const image = images[i];
+            if (!image.alt || image.alt.toString().trim() === "") {
+                return this;
+            }
+        }
     }
 }
 

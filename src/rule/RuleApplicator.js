@@ -11,9 +11,8 @@ class RuleApplicator {
         for (let i = 0; i < this.rules_to_apply.length; i++) {
             const rule = this.rules_to_apply[i];
             let rule_object = new rule(this.element);
-            rule_object.listen();
+            rule_object.listen()
         }
-        return this;
     }
 
 }
