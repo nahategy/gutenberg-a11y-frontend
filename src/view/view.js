@@ -1,7 +1,4 @@
 class ViewRule {
-    run() {
-        console.log('contrast rule')
-    }
 
     function_hello() {
         if (document.body.contains(document.getElementById('sidebar'))) {
