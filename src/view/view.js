@@ -2,7 +2,7 @@ class ViewRule {
 
     function_hello() {
         if (document.body.contains(document.getElementById('sidebar'))) {
-            x = document.getElementById("sidebar");
+            var x = document.getElementById("sidebar");
             if (x.style.display === "none") {
                 x.style.display = "block";
             }
@@ -47,5 +47,7 @@ class ViewRule {
     }
 }
 
+// var view1 = new ViewRule();
+// view1.function_hello();
 
 export default ViewRule;
