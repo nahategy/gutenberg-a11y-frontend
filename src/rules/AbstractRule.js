@@ -42,7 +42,7 @@ class ARule {
         let failed_rules = window.accessibility_errors.get(this.html_element);
         if (!failed_rules)
             failed_rules = new Map();
-        failed_rules.set(this.className, this);
+        failed_rules.set(this.constructor.name, this);
         window.accessibility_errors.set(this.html_element, failed_rules);
 
         if (this.html_element && this.html_element.toString() != '') {
