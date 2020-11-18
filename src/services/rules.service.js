@@ -9,9 +9,16 @@ class RulesService {
     }
 
     static removeRules(element) {
+        const element_rule_map = RulesService.RULES_TO_RUN.get(element);
         RulesService.RULES_TO_RUN.delete(element);
+        window.accessibility_errors.delete(element);
+        if (!element_rule_map) {
+            return;
+        }
+        element_rule_map.forEach(function (value, key, map) {
+            value.cancel();
+        })
     }
-
 
     static getRules() {
         return RulesService.RULES_TO_RUN;

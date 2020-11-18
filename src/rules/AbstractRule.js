@@ -6,24 +6,38 @@ class ARule {
     html_element;
     error;
     error_description;
+    observer;
+    rule_button;
 
     constructor(html_element) {
         if (new.target === ARule)
             throw new TypeError("Cannot construct Abstract Rule directly")
         this.html_element = html_element;
+        this.rule_button = new RuleButton(this.html_element);
     }
 
     listen() {
         const config = {childList: true};
-        const observer = new MutationObserver(this._run.bind(this));
-        observer.observe(this.html_element, config);
+        this.observer = new MutationObserver(this._run.bind(this));
+        this.observer.observe(this.html_element, config);
         this.html_element.oninput = this._run.bind(this);
+    }
+
+    cancel() {
+        console.log('Cancel rule')
+        this.observer.disconnect();
+        this.rule_button.remove();
     }
 
     _run() {
         const result = this.run();
-        if (!result)
+        if (!result) {
+            window.accessibility_errors.delete(this.html_element);
+            if (this.rule_button.is_created) {
+                this.rule_button.set_rules(new Map())
+            }
             return;
+        }
 
         let failed_rules = window.accessibility_errors.get(this.html_element);
         if (!failed_rules)
@@ -31,11 +45,12 @@ class ARule {
         failed_rules.set(this.className, this);
         window.accessibility_errors.set(this.html_element, failed_rules);
 
-        console.log(this);
         if (this.html_element && this.html_element.toString() != '') {
-            new RuleButton(this.html_element, failed_rules);
+            this.rule_button.create_button();
         }
-
+        if (this.rule_button.is_created) {
+            this.rule_button.set_rules(failed_rules);
+        }
     }
 
     run() {
