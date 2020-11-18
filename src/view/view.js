@@ -25,13 +25,13 @@ class ViewRule {
 
             var element = document.createElement("div");
             element.innerHTML += 
-                "<button type='button' tabindex='0' onclick='ViewRule.hide_view()' class='button-1' id='button-1'\n" +
+                "<button_container type='button_container' tabindex='0' onclick='ViewRule.hide_view()' class='button_container-1' id='button_container-1'\n" +
                 "        style='margin: 0px; cursor: pointer;'><span class='bavIU_caGd'><span class='bavIU_eoCh'><svg\n" +
                 "        name='IconX' viewBox='0 0 1920 1920' rotate='0' width='1em' height='1em' aria-hidden='true' role='presentation'\n" +
                 "        focusable='false' data-cid='InlineSVG SVGIcon'><g role='presentation'><path\n" +
                 "        d='M771.548 960.11L319 1412.658l188.562 188.562 452.548-452.548 452.548 452.548 188.562-188.562-452.548-452.548 452.548-452.548L1412.658 319 960.11 771.548 507.562 319 319 507.562z'\n" +
                 "        fill-rule='nonzero' stroke='none' stroke-width='1'></path></g></svg></span></span>\n" +
-                "</button>";
+                "</button_container>";
             document.getElementById('sidebar').appendChild(element);
         }
     }

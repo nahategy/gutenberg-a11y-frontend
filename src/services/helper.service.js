@@ -22,7 +22,7 @@ class HelperService {
     }
 
     static beforeUnload() {
-        const buttons = document.querySelectorAll('.rule-button');
+        const buttons = document.querySelectorAll('.rule-button_container');
         for (let i = 0; i < buttons.length; i++) {
             let button = buttons[i];
             button.remove();
