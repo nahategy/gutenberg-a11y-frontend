@@ -1,6 +1,7 @@
 class ViewRule {
 
-    function_hello() {
+    function_hello(failed_rules) {
+        console.log(failed_rules);
         if (document.body.contains(document.getElementById('sidebar'))) {
             var x = document.getElementById("sidebar");
             if (x.style.display === "none") {
@@ -24,7 +25,7 @@ class ViewRule {
 
 
             var element = document.createElement("div");
-            element.innerHTML += 
+            element.innerHTML +=
                 "<button type='button' tabindex='0' class='button-1' id='button-1'\n" +
                 "        style='margin: 0px; cursor: pointer;'><span class='bavIU_caGd'><span class='bavIU_eoCh'><svg\n" +
                 "        name='IconX' viewBox='0 0 1920 1920' rotate='0' width='1em' height='1em' aria-hidden='true' role='presentation'\n" +
@@ -32,7 +33,7 @@ class ViewRule {
                 "        d='M771.548 960.11L319 1412.658l188.562 188.562 452.548-452.548 452.548 452.548 188.562-188.562-452.548-452.548 452.548-452.548L1412.658 319 960.11 771.548 507.562 319 319 507.562z'\n" +
                 "        fill-rule='nonzero' stroke='none' stroke-width='1'></path></g></svg></span></span>\n" +
                 "</button>";
-            element.addEventListener('click',this.hide_view.bind(this));
+            element.addEventListener('click', this.hide_view.bind(this));
             document.getElementById('sidebar').appendChild(element);
         }
     }

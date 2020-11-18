@@ -69,12 +69,8 @@ class RuleButton {
     error_number() {
         const failed_rules_map = window.accessibility_errors.get(this.html_element);
 
-        try {
-            if (failed_rules_map || failed_rules_map === undefined)
-                return failed_rules_map.size;
-        } catch (error) {
-            return 0;
-        }
+        if (failed_rules_map !== undefined && failed_rules_map)
+            return failed_rules_map.size;
         return 0;
     }
 
