@@ -1,5 +1,6 @@
 import HelperService from "../services/helper.service";
 import RulesService from "../services/rules.service";
+import RuleButton from "../view/RuleButton";
 
 class ARule {
     html_element;
@@ -21,8 +22,20 @@ class ARule {
 
     _run() {
         const result = this.run();
-        console.log(result);
-        console.log(window.accessibility_errors)
+        if (!result)
+            return;
+
+        let failed_rules = window.accessibility_errors.get(this.html_element);
+        if (!failed_rules)
+            failed_rules = new Map();
+        failed_rules.set(this.className, this);
+        window.accessibility_errors.set(this.html_element, failed_rules);
+
+        console.log(this);
+        if (this.html_element && this.html_element.toString() != '') {
+            new RuleButton(this.html_element, failed_rules);
+        }
+
     }
 
     run() {

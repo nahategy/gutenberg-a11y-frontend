@@ -1,5 +1,6 @@
 import get_language_file from "./language.service";
 import RulesService from "./rules.service";
+import RuleButton from "../view/RuleButton";
 
 class HelperService {
     static language;
@@ -17,6 +18,15 @@ class HelperService {
     static initializeAccessibilityChecker() {
         HelperService.language = get_language_file()
         HelperService.initializeLib()
+        window.addEventListener('unload', HelperService.beforeUnload)
+    }
+
+    static beforeUnload() {
+        const buttons = document.querySelectorAll('.rule-button');
+        for (let i = 0; i < buttons.length; i++) {
+            let button = buttons[i];
+            button.remove();
+        }
     }
 
     static initializeLib() {

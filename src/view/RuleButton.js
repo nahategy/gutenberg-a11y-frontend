@@ -6,30 +6,36 @@ const RULE_BUTTON_CLASS_SELECTOR = `.${RULE_BUTTON_CLASS}`;
 class RuleButton {
     html_element;
     rules;
+    button;
 
     constructor(element, rules) {
         this.html_element = element;
         this.rules = rules;
         this.html_element.onclick = this.click.bind(this);
-        this.remove_button();
         this.create_button();
     }
 
-    remove_button() {
-        const existing_button = this.html_element.querySelector(RULE_BUTTON_CLASS_SELECTOR);
-        if (existing_button)
-            existing_button.remove();
-        return this;
-    }
-
     create_button() {
-        const button = document.createElement('button');
-        button.classList.add(RULE_BUTTON_CLASS);
-        this.html_element.appendChild(button);
-        return this;
+        if (this.button) {
+            this.update_button();
+            return;
+        }
+        const coordinates = this.html_element.getBoundingClientRect()
+        this.button = document.createElement('button');
+        this.button.classList.add(RULE_BUTTON_CLASS);
+
+        this.button.style.top = coordinates.top;
+        this.button.style.right = coordinates.right;
+        this.button.onclick = this.click.bind(this);
+        document.body.appendChild(this.button);
     }
 
-    click() {
+    update_button() {
+        existing_button.html('asdasdadaasd');
+    }
+
+    click(ev) {
+        ev.preventDefault();
         let v = new ViewRule;
         v.function_hello(this.rules);
     }
