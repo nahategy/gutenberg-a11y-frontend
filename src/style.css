@@ -13,14 +13,14 @@
 .sidebar {
     padding: 10px;
     box-shadow: -10px 0px 10px 1px #aaaaaa;
-    width: 320px;
+    width: 220px;
     position: absolute;
     right: 0px;
     top: 0px;
     height: 400vh;
     background-color: white;
-    padding-bottom: 48px;
-    padding-left: 62px;
+    padding-bottom: 49px;
+    padding-left: 52px;
     padding-right: 36px;
     padding-top: 48px;
 }
