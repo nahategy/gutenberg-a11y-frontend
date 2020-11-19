@@ -3,6 +3,7 @@ import ARule from "./AbstractRule";
 
 class ImageAltTextRule extends ARule {
     error_description = "contr rule"
+    name = "ImageAltTextRule";
 
     run() {
         if (!this.html_element)
@@ -17,8 +18,9 @@ class ImageAltTextRule extends ARule {
             }
         }
     }
-}
 
+
+}
 
 export default ImageAltTextRule;
 

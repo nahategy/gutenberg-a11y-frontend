@@ -1,10 +1,10 @@
 import ARule from "./AbstractRule";
 
-const MIN_FONT_SIZE = 13;
+const MIN_FONT_SIZE = 73;
 
 class FontSize extends ARule {
     error_description = "contr rule"
-
+    name = "FontSizeRule";
 
     run() {
         if (!this.html_element)

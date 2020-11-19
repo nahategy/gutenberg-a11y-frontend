@@ -8,6 +8,7 @@ class ARule {
     error_description;
     observer;
     rule_button;
+    name;
 
     constructor(html_element) {
         if (new.target === ARule)
@@ -55,6 +56,10 @@ class ARule {
 
     run() {
         throw new Error("Run method not Implemented yet!")
+    }
+
+    get name() {
+        return HelperService.language.get_translation(this.name)
     }
 
     get error() {
