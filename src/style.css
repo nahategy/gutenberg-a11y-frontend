@@ -45,7 +45,10 @@
     font-size: 11px !important;
     line-height: 1 !important;
     user-select: none !important;
-    background: green;
+    background: #ff0000;
+    color: white;
+    font-weight: bold;
     top: -60px;
     border-radius: 50%;
+    border-color: #ff9300;
 }
