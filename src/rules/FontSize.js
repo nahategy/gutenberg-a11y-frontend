@@ -3,7 +3,7 @@ import ARule from "./AbstractRule";
 const MIN_FONT_SIZE = 73;
 
 class FontSize extends ARule {
-    error_description = "contr rule"
+    error_description = "Default size is too small"
     name = "FontSizeRule";
 
     run() {

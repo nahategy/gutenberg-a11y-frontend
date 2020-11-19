@@ -2,7 +2,7 @@ import ARule from "./AbstractRule";
 
 
 class ImageAltTextRule extends ARule {
-    error_description = "contr rule"
+    error_description = "The alt images is missing"
     name = "ImageAltTextRule";
 
     run() {
@@ -18,7 +18,6 @@ class ImageAltTextRule extends ARule {
             }
         }
     }
-
 
 }
 

@@ -4,37 +4,42 @@ import ImageAltTextRule from "../rules/ImageAltTextRule";
 class ViewRule {
     nextButton;
     prevButton;
-    currentNumber = 1;
+    currentNumber = 0;
     errors = [];
+    errors_element;
     errornumbersContainer;
+    rulename;
 
     next(ev) {
         ev.preventDefault();
-        var error_number = this.currentNumber;
-        if (error_number > this.errors.length - 1) {
-            var error = this.errors[error_number];
-            this.errornumbersContainer.innerHTML = `${this.currentNumber++} / ${this.errors.length}`;
+        if (this.currentNumber + 1 < this.errors.length) {
+            this.currentNumber++;
+            this.errornumbersContainer.innerHTML = `${this.currentNumber+1} / ${this.errors.length}`;
+            this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
+            this.rulename.innerHTML = this.errors[this.currentNumber].name;
         }
     }
 
     prev(ev) {
         ev.preventDefault();
-        var error_number = this.currentNumber;
-        if (error_number <= this.errors.length-1) {
-            var error = this.errors[error_number];
-            this.errornumbersContainer.innerHTML = `${this.currentNumber--} / ${this.errors.length}`;
+        if (this.currentNumber - 1 >= 0) {
+            this.currentNumber--;
+            this.errornumbersContainer.innerHTML = `${this.currentNumber+1} / ${this.errors.length}`;
+            this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
+            this.rulename.innerHTML = this.errors[this.currentNumber].name;
         }
     }
 
     function_hello(failed_rules, need = 1) {
         var numberOfErrors = 0;
         var need = 1;
-
-        failed_rules.forEach(function (value) {
-            this.errors[numberOfErrors] = value.name;
-            numberOfErrors++;
-        }.bind(this));
-
+        if (failed_rules)
+            failed_rules.forEach(function (value) {
+                this.errors[numberOfErrors] = value;
+                numberOfErrors++;
+            }.bind(this));
+        else
+            return
         // console.log("Hibák száma: " + numberOfErrors);
 
 
@@ -49,23 +54,30 @@ class ViewRule {
         element.innerHTML = "Issue   ";
         this.errornumbersContainer = document.createElement("span");
         element.appendChild(this.errornumbersContainer);
-        this.errornumbersContainer.innerHTML = this.currentNumber + " / " + numberOfErrors;
+        this.errornumbersContainer.innerHTML = (this.currentNumber + 1) + " / " + numberOfErrors;
         div.appendChild(element);
-        element = document.createElement("label");
-        this.errors = document.createElement("span");
-        element.appendChild(this.errors);
-        this.errors.innerHTML = "<br><br>" + this.errors[0] + "<br><br>";
+        this.rulename = document.createElement('div');
+        this.rulename.classList.add('rulename');
+        this.rulename.innerHTML = this.errors[this.currentNumber].name;
+        div.appendChild(this.rulename);
+        this.errors_element = document.createElement("span");
+        element.appendChild(this.errors_element);
+        this.errors_element.innerHTML += this.errors[this.currentNumber].error_description ;
+        this.errors_element.classList.add("d-block");
         div.appendChild(element);
+        var button_container = document.createElement('div');
+        button_container.classList.add('button-container');
         this.prevButton = document.createElement("button");
         this.prevButton.innerHTML = "prev";
         this.prevButton.classList.add("prev");
         this.prevButton.onclick = this.prev.bind(this);
-        div.appendChild(this.prevButton);
+        button_container.appendChild(this.prevButton);
         this.nextButton = document.createElement("button");
         this.nextButton.innerHTML = "next";
         this.nextButton.classList.add("next");
         this.nextButton.onclick = this.next.bind(this);
-        div.appendChild(this.nextButton);
+        button_container.appendChild(this.nextButton);
+        div.appendChild(button_container);
         document.body.appendChild(div);
 
 
@@ -81,7 +93,7 @@ class ViewRule {
         var close_button = document.createElement("div");
         close_button.setAttribute("class", "button-1");
         close_button.setAttribute("id", "button-1");
-        close_button.innerHTML=close_button_text;
+        close_button.innerHTML = close_button_text;
         close_button.addEventListener('click', this.hide_view.bind(this));
         document.getElementById('sidebar').appendChild(close_button);
     }
