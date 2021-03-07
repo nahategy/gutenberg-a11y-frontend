@@ -9,8 +9,9 @@ class FontSize extends ARule {
   run() {
     if (!this.html_element)
       return false;
-    if (this.check_font_size(this.html_element))
+    if (this.check_font_size(this.html_element)) {
       return this;
+    }
     return false;
   }
 

@@ -8,41 +8,56 @@ class RuleButton {
   static instance = null;
 
   html_element;
-  rules;
+  failed_rules;
   is_created = false;
 
   constructor() {
-
+    this.failed_rules = new Map();
   }
 
 
-  static GetInstance() {
+  static   GetInstance (){
     if (RuleButton.instance == null) {
-      RuleButton.instance = new RuleButton().create_button();
+      RuleButton.instance =   new RuleButton();
+      RuleButton.instance.create_button();
     }
     return RuleButton.instance;
   }
 
-  add_rules(failed_rules) {
-    this.rules = [...this.rules, ...failed_rules];
-    if (this.button) {
-      this.__set_rule_number()
+  get_failed_rules_for_element = (element) => {
+    let failed_rules_of_element = this.failed_rules.get(element);
+    if (failed_rules_of_element === undefined) {
+      this.failed_rules.set(element, []);
+      failed_rules_of_element = [];
     }
+    return failed_rules_of_element;
+  }
+  set_failed_rules_for_element = (element, rules) => {
+    this.failed_rules.set(element, rules);
+    return this;
   }
 
-  __set_rule_number() {
+  add_rule = (rule) => {
+    const failed_rules = this.get_failed_rules_for_element(rule.html_element);
+    failed_rules.push(rule);
+    this.set_failed_rules_for_element(rule.html_element, failed_rules);
+    this.__set_rule_number()
+    return this;
+  }
+
+  __set_rule_number = () => {
     const number = this.error_number()
     if (number > 0) {
       this.button.innerHTML = this.error_number();
       return;
     }
-    this.button.remove();
-    this.button_container.remove();
-    this.is_created = false;
+    // this.button.remove();
+    // this.button_container.remove();
+    // this.is_created = false;
 
   }
 
-  async create_button() {
+  create_button = async () => {
     if (this.is_created)
       return this.update_button()
 
@@ -54,38 +69,40 @@ class RuleButton {
     this.button.classList.add(RULE_BUTTON_CLASS);
     this.button.innerHTML = this.error_number();
     this.button_container.appendChild(this.button);
-    this.button_container.onclick = this.click.bind(this);
+    this.button_container.onclick = this.click;
+
     // Inserting the container before the editor
-    await HelperService.waitFor('.interface-interface-skeleton__body', this.append_button_to_document.bind(this));
+    await HelperService.waitFor('.interface-interface-skeleton__body', this.append_button_to_document);
     return this;
   }
 
-  append_button_to_document() {
+  append_button_to_document = () => {
     const editor = document.querySelector('.interface-interface-skeleton__body');
     editor.parentNode.insertBefore(this.button_container, editor);
     this.is_created = true;
   }
 
-  error_number() {
-    const failed_rules_map = window.accessibility_errors.get(this.html_element);
-    if (failed_rules_map !== undefined && failed_rules_map)
-      return failed_rules_map.size;
-    return 0;
+  error_number = () => {
+    let fail_number = 0;
+    for (let key in this.failed_rules) {
+      fail_number += this.failed_rules.get(key).length;
+    }
+    return fail_number;
   }
 
-  update_button() {
+  update_button = () => {
     if (this.button)
       this.__set_rule_number();
     return this;
   }
 
-  click(ev) {
+  click = (ev) => {
     ev.preventDefault();
-    let v = new ViewRule;
-    v.function_hello(this.rules);
+    let view_rule = new ViewRule;
+    view_rule.function_hello(this.failed_rules);
   }
 
-  remove() {
+  remove = () => {
     if (this.button)
       this.button.remove();
     if (this.button_container)
