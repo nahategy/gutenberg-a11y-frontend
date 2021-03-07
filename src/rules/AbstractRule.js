@@ -14,7 +14,7 @@ class ARule {
     if (new.target === ARule)
       throw new TypeError("Cannot construct Abstract Rule directly")
     this.html_element = html_element;
-    this.rule_button = new RuleButton.get_instance();
+    this.rule_button = new RuleButton.GetInstance();
   }
 
   listen() {
@@ -35,7 +35,7 @@ class ARule {
     if (!result) {
       window.accessibility_errors.delete(this.html_element);
       if (this.rule_button.is_created) {
-        this.rule_button.set_rules(new Map())
+        this.rule_button.add_rules(new Map())
       }
       return;
     }
@@ -47,10 +47,9 @@ class ARule {
     window.accessibility_errors.set(this.html_element, failed_rules);
 
     if (this.html_element && this.html_element.toString() != '') {
-      this.rule_button.create_button();
     }
     if (this.rule_button.is_created) {
-      this.rule_button.set_rules(failed_rules);
+      this.rule_button.add_rules(failed_rules);
     }
   }
 

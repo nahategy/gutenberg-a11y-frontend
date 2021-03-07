@@ -19,6 +19,7 @@ class HelperService {
     HelperService.language = get_language_file()
     HelperService.initializeLib()
     window.addEventListener('unload', HelperService.beforeUnload)
+    RuleButton.GetInstance();
   }
 
   static beforeUnload() {
@@ -52,6 +53,18 @@ class HelperService {
     });
     observer.observe(node, config)
   }
+
+
+  static async waitFor(selector, cb) {
+    console.log('waiting for: ', selector)
+    return setTimeout(async () => {
+      if (document.querySelector(selector) == null)
+        return await this.waitFor(selector, cb);
+      cb();
+      console.log('waiting finished for: ', selector)
+    }, 500);
+  }
+
 }
 
 
