@@ -14,7 +14,7 @@ class ARule {
         if (new.target === ARule)
             throw new TypeError("Cannot construct Abstract Rule directly")
         this.html_element = html_element;
-        this.rule_button = new RuleButton(this.html_element);
+        this.rule_button = new RuleButton.get_instance();
     }
 
     listen() {

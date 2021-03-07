@@ -11,10 +11,13 @@ class RuleButton {
     button_container;
     button;
     is_created = false;
+    static instance = null;
 
-    constructor(element) {
-        this.html_element = element;
-        this.html_element.onclick = this.click.bind(this);
+    static get_instance(){
+        if (RuleButton.instance != null){
+          RuleButton.instance = RuleButton();
+        }
+        return RuleButton.instance;
     }
 
     set_rules(failed_rules) {

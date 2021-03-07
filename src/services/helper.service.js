@@ -36,10 +36,10 @@ class HelperService {
             return
         }
         const config = {childList: true};
-        const observer = new MutationObserver(function (mutationlist, observeer) {
-            if (mutationlist.length > 0) {
-                for (let mutation in mutationlist) {
-                    mutation = mutationlist[mutation];
+        const observer = new MutationObserver(function (mutation_list, observeer) {
+            if (mutation_list.length > 0) {
+                for (let mutation in mutation_list) {
+                    mutation = mutation_list[mutation];
                     if (mutation.addedNodes.length > 0) {
                         RulesService.applyRules(mutation.addedNodes[0]);
                     }
