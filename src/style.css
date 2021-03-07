@@ -53,12 +53,12 @@
     border-color: #ff9300;
 }
 
-.button-container{
+.button-container {
     margin-top: 50px;
 }
 
 .d-block {
-    display : block!important;
+    display: block !important;
 }
 
 .button-container button {

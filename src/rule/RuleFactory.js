@@ -4,16 +4,16 @@ import FontSize from "../rules/FontSize";
 
 
 class RuleFactory {
-    static getRulesByBlockType(block_type) {
-        var rules = [];
-        switch (block_type) {
-            case BLOCk_PARAGRAPH:
-                rules = [ImageAltTextRule, FontSize]
-            default:
-                break;
-        }
-        return rules;
+  static getRulesByBlockType(block_type) {
+    var rules = [];
+    switch (block_type) {
+      case BLOCk_PARAGRAPH:
+        rules = [ImageAltTextRule, FontSize]
+      default:
+        break;
     }
+    return rules;
+  }
 }
 
 export default RuleFactory;
