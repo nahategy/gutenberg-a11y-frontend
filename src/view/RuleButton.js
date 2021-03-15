@@ -1,98 +1,113 @@
 import ViewRule from "./view";
+import HelperService from "../services/helper.service";
 
 const RULE_BUTTON_CONTAINER_CLASS = "rule-button-container";
 const RULE_BUTTON_CLASS = "rule-button";
-const RULE_BUTTON_CLASS_SELECTOR_CONTAINER = `.${RULE_BUTTON_CONTAINER_CLASS}`;
-const RULE_BUTTON_CLASS_SELECTOR = `.${RULE_BUTTON_CLASS}`;
 
 class RuleButton {
-    html_element;
-    rules;
-    button_container;
-    button;
-    is_created = false;
+  static instance = null;
 
-    constructor(element) {
-        this.html_element = element;
-        this.html_element.onclick = this.click.bind(this);
+  html_element;
+  failed_rules;
+  is_created = false;
+
+  constructor() {
+    this.failed_rules = new Map();
+  }
+
+
+  static   GetInstance (){
+    if (RuleButton.instance == null) {
+      RuleButton.instance =   new RuleButton();
+      RuleButton.instance.create_button();
     }
+    return RuleButton.instance;
+  }
 
-    set_rules(failed_rules) {
-        this.rules = failed_rules;
-        if (this.button) {
-            this.__set_rule_number()
-        }
+  get_failed_rules_for_element = (element) => {
+    let failed_rules_of_element = this.failed_rules.get(element);
+    if (failed_rules_of_element === undefined) {
+      this.failed_rules.set(element, []);
+      failed_rules_of_element = [];
     }
+    return failed_rules_of_element;
+  }
+  set_failed_rules_for_element = (element, rules) => {
+    this.failed_rules.set(element, rules);
+    return this;
+  }
 
-    __set_rule_number() {
-        const number = this.error_number()
-        if (number > 0) {
-            this.button.innerHTML = this.error_number();
-            return;
-        }
-        this.button.remove();
-        this.button_container.remove();
-        this.is_created = false;
+  add_rule = (rule) => {
+    const failed_rules = this.get_failed_rules_for_element(rule.html_element);
+    failed_rules.push(rule);
+    this.set_failed_rules_for_element(rule.html_element, failed_rules);
+    this.__set_rule_number()
+    return this;
+  }
 
+  __set_rule_number = () => {
+    const number = this.error_number()
+    if (number > 0) {
+      this.button.innerHTML = this.error_number();
+      return;
     }
+    // this.button.remove();
+    // this.button_container.remove();
+    // this.is_created = false;
 
-    create_button() {
-        const existing_button_container = this.html_element.parentNode.querySelector(RULE_BUTTON_CLASS_SELECTOR_CONTAINER);
-        const existing_button = this.html_element.parentNode.querySelector(RULE_BUTTON_CLASS_SELECTOR);
+  }
 
-        if (this.button_container || existing_button) {
-            this.button_container = existing_button;
-            this.button = existing_button;
-            this.update_button();
-        }
-        if (existing_button)
-            return
-        const coordinates = this.html_element.getBoundingClientRect();
-        this.button_container = document.createElement('div');
-        this.button_container.classList.add(RULE_BUTTON_CONTAINER_CLASS);
+  create_button = async () => {
+    if (this.is_created)
+      return this.update_button()
 
-        this.button = document.createElement('button');
-        this.button.classList.add(RULE_BUTTON_CLASS);
-        this.button.innerHTML = this.error_number();
-        this.button_container.appendChild(this.button);
 
-        this.button_container.onclick = this.click.bind(this);
+    this.button_container = document.createElement('div');
+    this.button_container.classList.add(RULE_BUTTON_CONTAINER_CLASS);
 
-        this.button_container.style.left = `${coordinates.right}px`;
-        if (!existing_button)
-            this.html_element.parentNode.appendChild(this.button_container);
+    this.button = document.createElement('button');
+    this.button.classList.add(RULE_BUTTON_CLASS);
+    this.button.innerHTML = this.error_number();
+    this.button_container.appendChild(this.button);
+    this.button_container.onclick = this.click;
 
-        this.is_created = true;
-        return this;
+    // Inserting the container before the editor
+    await HelperService.waitFor('.interface-interface-skeleton__body', this.append_button_to_document);
+    return this;
+  }
+
+  append_button_to_document = () => {
+    const editor = document.querySelector('.interface-interface-skeleton__body');
+    editor.parentNode.insertBefore(this.button_container, editor);
+    this.is_created = true;
+  }
+
+  error_number = () => {
+    let fail_number = 0;
+    for (let key in this.failed_rules) {
+      fail_number += this.failed_rules.get(key).length;
     }
+    return fail_number;
+  }
 
-    error_number() {
-        const failed_rules_map = window.accessibility_errors.get(this.html_element);
+  update_button = () => {
+    if (this.button)
+      this.__set_rule_number();
+    return this;
+  }
 
-        if (failed_rules_map !== undefined && failed_rules_map)
-            return failed_rules_map.size;
-        return 0;
-    }
+  click = (ev) => {
+    ev.preventDefault();
+    let view_rule = new ViewRule;
+    view_rule.function_hello(this.failed_rules);
+  }
 
-    update_button() {
-        console.log("UPDATE");
-        if (this.button)
-            this.__set_rule_number();
-        return this;
-    }
-
-    click(ev) {
-        ev.preventDefault();
-        let v = new ViewRule;
-        v.function_hello(this.rules);
-    }
-
-    remove() {
-        if (this.button)
-            this.button.remove();
-        if (this.button_container)
-            this.button_container.remove();
-    }
+  remove = () => {
+    if (this.button)
+      this.button.remove();
+    if (this.button_container)
+      this.button_container.remove();
+  }
 
 }
 

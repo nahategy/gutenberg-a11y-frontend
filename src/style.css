@@ -26,13 +26,13 @@
 }
 
 .rule-button-container {
-    position: relative;
+    position: fixed;
     overflow: visible;
-    float: left;
-    display: inline;
+    top: 75px;
+    right: 80px;
     width: 0px;
     height: 0px;
-    z-index: 1;
+    z-index: 30;
 }
 
 .rule-button {
@@ -53,12 +53,12 @@
     border-color: #ff9300;
 }
 
-.button-container{
+.button-container {
     margin-top: 50px;
 }
 
 .d-block {
-    display : block!important;
+    display: block !important;
 }
 
 .button-container button {
