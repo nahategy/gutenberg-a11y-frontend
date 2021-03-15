@@ -74,6 +74,14 @@ class ARule {
         throw new Error("wcag_link Method not Implemented yet!")
     }
 
+    _update(){
+
+    }
+
+    update(){
+
+    }
+
 }
 
 

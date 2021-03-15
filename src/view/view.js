@@ -1,6 +1,3 @@
-import ImageAltTextRule from "../rules/ImageAltTextRule";
-
-
 class ViewRule {
     nextButton;
     prevButton;
@@ -99,13 +96,9 @@ class ViewRule {
     }
 
     hide_view() {
-        var x = document.getElementById("sidebar");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
+        var x = document.getElementById("sidebar").remove();
     }
+
 }
 
 export default ViewRule;
