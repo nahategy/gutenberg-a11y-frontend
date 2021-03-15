@@ -5,6 +5,7 @@ const MIN_FONT_SIZE = 73;
 class FontSize extends ARule {
   error_description = "Default size is too small"
   name = "FontSizeRule";
+  error = "Valami"
 
   run() {
     if (!this.html_element)

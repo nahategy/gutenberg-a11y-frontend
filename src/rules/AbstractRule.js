@@ -10,12 +10,11 @@ class ARule {
   rule_button;
   name;
 
-    constructor(html_element) {
+  constructor(html_element) {
     if (new.target === ARule)
       throw new TypeError("Abstract Rule  Cannot be constructed directly")
     this.html_element = html_element;
-    this.rule_button =   RuleButton.GetInstance();
-    console.log(this.rule_button)
+    this.rule_button = RuleButton.GetInstance();
   }
 
   listen() {
@@ -36,8 +35,7 @@ class ARule {
     if (!result) {
       return;
     }
-
-      this.rule_button.add_rule(this);
+    this.rule_button.add_rule(this);
   }
 
   run() {

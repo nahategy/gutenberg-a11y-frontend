@@ -16,9 +16,9 @@ class RuleButton {
   }
 
 
-  static   GetInstance (){
+  static GetInstance() {
     if (RuleButton.instance == null) {
-      RuleButton.instance =   new RuleButton();
+      RuleButton.instance = new RuleButton();
       RuleButton.instance.create_button();
     }
     return RuleButton.instance;
@@ -47,9 +47,9 @@ class RuleButton {
 
   __set_rule_number = () => {
     const number = this.error_number()
+    console.log('Set rule number' + number)
     if (number > 0) {
       this.button.innerHTML = this.error_number();
-      return;
     }
     // this.button.remove();
     // this.button_container.remove();
@@ -84,9 +84,9 @@ class RuleButton {
 
   error_number = () => {
     let fail_number = 0;
-    for (let key in this.failed_rules) {
-      fail_number += this.failed_rules.get(key).length;
-    }
+    this.failed_rules.forEach((value) => {
+      fail_number += value.length;
+    })
     return fail_number;
   }
 
