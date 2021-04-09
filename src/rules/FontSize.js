@@ -8,9 +8,9 @@ class FontSize extends ARule {
   error = "Valami"
 
   run() {
-    if (!this.html_element)
+    if (!this.block)
       return false;
-    if (this.check_font_size(this.html_element)) {
+    if (this.check_font_size(this.block)) {
       return this;
     }
     return false;

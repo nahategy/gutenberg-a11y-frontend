@@ -42,7 +42,7 @@ class ViewRule {
     })
 
     if (this.errors.length == 0) {
-      return;
+      return false;
     }
 
     var div = document.createElement("div");
@@ -98,6 +98,8 @@ class ViewRule {
     close_button.innerHTML = close_button_text;
     close_button.addEventListener('click', this.hide_view);
     document.getElementById('sidebar').appendChild(close_button);
+
+    return true;
   }
 
   hide_view = () => {

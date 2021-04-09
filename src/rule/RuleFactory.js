@@ -5,16 +5,13 @@ import AdjacentLinks from "../rules/AdjacentLinks";
 
 
 class RuleFactory {
-    static getRulesByBlockType(block_type) {
-        var rules = [];
-        switch (block_type) {
-            case BLOCk_PARAGRAPH:
-                rules = [ImageAltTextRule, FontSize, AdjacentLinks]
-            default:
-                break;
-        }
-        return rules;
-    }
+  static getRules() {
+    return [
+      ImageAltTextRule,
+      FontSize,
+      AdjacentLinks
+    ]
+  }
 }
 
 export default RuleFactory;

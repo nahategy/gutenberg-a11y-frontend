@@ -1,44 +1,32 @@
 import HelperService from "../services/helper.service";
-import RulesService from "../services/rules.service";
 import RuleButton from "../view/RuleButton";
 
 class ARule {
-  html_element;
+  block;
   error;
   error_description;
-  observer;
   rule_button;
   name;
 
-  constructor(html_element) {
+  constructor(block) {
     if (new.target === ARule)
       throw new TypeError("Abstract Rule  Cannot be constructed directly")
-    this.html_element = html_element;
+    this.block = block;
     this.rule_button = RuleButton.GetInstance();
   }
 
-  listen() {
-    const config = {childList: true};
-    this.observer = new MutationObserver(this._run.bind(this));
-    this.observer.observe(this.html_element, config);
-    this.html_element.oninput = this._run.bind(this);
-  }
 
-  cancel() {
-    this.observer.disconnect();
-  }
-
-  _run() {
-    const result = this.run();
+  run = () => {
+    const result = this._run();
 
     // Found no error - was no error | errors has been fixed
     if (!result) {
       return;
     }
-    this.rule_button.add_rule(this);
+    // TODO: beletenni a blockba hogy ha volt fail és melyik elemeken.
   }
 
-  run() {
+  _run = () => {
     throw new Error("Run method not Implemented yet!")
   }
 
@@ -47,7 +35,7 @@ class ARule {
   }
 
   get error() {
-    return this.error;
+    return HelperService.language.get_translation(this.error);
   };
 
   get error_description() {
@@ -58,13 +46,13 @@ class ARule {
     throw new Error("wcag_link Method not Implemented yet!")
   }
 
-    _update(){
+  _update() {
 
-    }
+  }
 
-    update(){
+  update() {
 
-    }
+  }
 
 }
 

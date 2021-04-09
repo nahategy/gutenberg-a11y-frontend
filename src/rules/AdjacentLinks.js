@@ -8,26 +8,26 @@ class AdjacentLinks extends ARule {
     run() {
 
 
-        if (!this.html_element)
+        if (!this.block)
             return;
 
-        const images = this.html_element.querySelectorAll('img');
+        const images = this.block.querySelectorAll('img');
         if (!images)
             return;
 
-        if (this.html_element.tagName !== "A") {
+        if (this.block.tagName !== "A") {
             return;
         }
         if (!this.shouldMergeAnchors()) {
             console.log('184*/*/7*/');
-            console.log(this.html_element);
+            console.log(this.block);
             return this;
         }
 
     }
 
     update() {
-        const rootElem = this.html_element.parentNode
+        const rootElem = this.block.parentNode
         if (data.combine) {
             const next = elem.nextElementSibling
 
@@ -46,8 +46,8 @@ class AdjacentLinks extends ARule {
 
 
     shouldMergeAnchors = () => {
-        const elem1 = this.html_element;
-        const elem2 = this.html_element.nextSibling;
+        const elem1 = this.block;
+        const elem2 = this.block.nextSibling;
 
         if (!elem1 || !elem2 || elem1.tagName !== "A" || elem2.tagName !== "A") {
             return false

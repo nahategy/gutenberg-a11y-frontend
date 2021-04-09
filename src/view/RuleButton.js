@@ -1,5 +1,6 @@
 import ViewRule from "./view";
 import HelperService from "../services/helper.service";
+import RuleApplicator from "../rule/RuleApplicator";
 
 const RULE_BUTTON_CONTAINER_CLASS = "rule-button-container";
 const RULE_BUTTON_CLASS = "rule-button";
@@ -24,39 +25,6 @@ class RuleButton {
     return RuleButton.instance;
   }
 
-  get_failed_rules_for_element = (element) => {
-    let failed_rules_of_element = this.failed_rules.get(element);
-    if (failed_rules_of_element === undefined) {
-      this.failed_rules.set(element, []);
-      failed_rules_of_element = [];
-    }
-    return failed_rules_of_element;
-  }
-  set_failed_rules_for_element = (element, rules) => {
-    this.failed_rules.set(element, rules);
-    return this;
-  }
-
-  add_rule = (rule) => {
-    const failed_rules = this.get_failed_rules_for_element(rule.html_element);
-    failed_rules.push(rule);
-    this.set_failed_rules_for_element(rule.html_element, failed_rules);
-    this.__set_rule_number()
-    return this;
-  }
-
-  __set_rule_number = () => {
-    const number = this.error_number()
-    console.log('Set rule number' + number)
-    if (number > 0) {
-      this.button.innerHTML = this.error_number();
-    }
-    // this.button.remove();
-    // this.button_container.remove();
-    // this.is_created = false;
-
-  }
-
   create_button = async () => {
     if (this.is_created)
       return this.update_button()
@@ -72,6 +40,7 @@ class RuleButton {
     this.button_container.onclick = this.click;
 
     // Inserting the container before the editor
+    // The editor is created by js, so the element which will contain the button may not exists on the first run
     await HelperService.waitFor('.interface-interface-skeleton__body', this.append_button_to_document);
     return this;
   }
@@ -98,8 +67,30 @@ class RuleButton {
 
   click = (ev) => {
     ev.preventDefault();
-    let view_rule = new ViewRule;
-    view_rule.function_hello(this.failed_rules);
+    let view_rule = new ViewRule
+
+    this.open_sidebar_if_rules_failed(view_rule)
+    if (jQuery('.editor-post-text-editor').length == 0)
+      return;
+    const rule_applicator = new RuleApplicator(jQuery('.editor-post-text-editor').val())
+    rule_applicator.find_elements();
+
+  }
+
+  open_sidebar_if_rules_failed = (view_rule) => {
+    this.toggle_code_editor()
+    var result;
+    if ((result = view_rule.function_hello(this.failed_rules))) {
+      this.toggle_code_editor();
+    }
+    return result
+  }
+
+  toggle_code_editor = () => {
+    jQuery('.edit-post-more-menu').find('button').click();
+    jQuery('.components-menu-item__shortcut:contains("Ctrl+Shift+Alt+M")').closest('.components-button').click();
+    jQuery('.editor-post-text-editor').attr('disabled', 'disabled');
+    jQuery('.edit-post-more-menu').find('button').click();
   }
 
   remove = () => {

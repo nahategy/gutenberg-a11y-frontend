@@ -26,7 +26,7 @@ class RulesService {
 
   static createRules(element) {
     const type = element.dataset.type;
-    const rules_to_apply = RuleFactory.getRulesByBlockType(type);
+    const rules_to_apply = RuleFactory.getRules(type);
     return new RuleApplicator(element, rules_to_apply).apply_rules()
   }
 

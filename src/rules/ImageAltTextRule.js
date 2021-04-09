@@ -6,9 +6,9 @@ class ImageAltTextRule extends ARule {
   name = "ImageAltTextRule";
 
   run() {
-    if (!this.html_element)
+    if (!this.block)
       return;
-    const images = this.html_element.querySelectorAll('img');
+    const images = this.block.querySelectorAll('img');
     if (!images)
       return;
     for (var i = 0; i < images.length; i++) {
