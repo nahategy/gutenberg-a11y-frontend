@@ -19,15 +19,17 @@ class RuleApplicator {
         const line = this.editor_context_string.replaceAll('\n', '');
         var str = "";
         for (var i = 0; i < line.length; i++) {
+
             str += line[i];
+
             let start_position = str.search(start_block_regex);
             let matched_results_start = str.match(start_block_regex);
 
             if (start_position > -1) {
                 if (start_position > 0) {
-                    const kezd = str.substr(0,start_position)
-                    console.log("continue", kezd)
-                    const end = str.substring(start_position + matched_results_start[0].length)
+                    const kezd = str.substr(0, start_position)
+                    console.log("continue_st", kezd)
+                    const end = str.substring(start_position, start_position + matched_results_start[0].length)
                     console.log('start in', end)
                     str = "";
                 }
@@ -37,11 +39,12 @@ class RuleApplicator {
 
             let end_position = str.search(end_block_regex);
             let matched_results_end = str.match(end_block_regex);
+
             if (end_position > -1) {
                 if (end_position > 0) {
-                    const kezd = str.substr(0,end_position)
-                    console.log("continue", kezd)
-                    const end = str.substring(end_position + matched_results_end[0].length)
+                    const kezd = str.substr(0, end_position)
+                    console.log("continue_en", kezd)
+                    const end = str.substring(end_position, end_position + matched_results_end[0].length)
                     console.log('end in', end)
                     str = "";
                 }
