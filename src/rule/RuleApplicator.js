@@ -1,4 +1,5 @@
 import RuleFactory from "./RuleFactory";
+import WPBlockTree from "./WPBlockTree";
 
 class RuleApplicator {
     editor_context_string;
@@ -16,8 +17,13 @@ class RuleApplicator {
         const start_block_regex = new RegExp('<!-- wp:.*? -->');
         const end_block_regex = new RegExp('<!-- \\/wp:.*? -->');
 
+
         const line = this.editor_context_string.replaceAll('\n', '');
         var str = "";
+        var lists = {};
+        var j = 0;
+        var block_tree = new WPBlockTree();
+
         for (var i = 0; i < line.length; i++) {
 
             str += line[i];
@@ -28,12 +34,12 @@ class RuleApplicator {
             if (start_position > -1) {
                 if (start_position > 0) {
                     const kezd = str.substr(0, start_position)
-                    console.log("continue_st", kezd)
+                    block_tree.add_content(kezd)
                     const end = str.substring(start_position, start_position + matched_results_start[0].length)
-                    console.log('start in', end)
+                    block_tree.start_element(end)
                     str = "";
                 }
-                console.log('start out', str)
+                block_tree.start_element(str)
                 str = "";
             }
 
@@ -43,12 +49,12 @@ class RuleApplicator {
             if (end_position > -1) {
                 if (end_position > 0) {
                     const kezd = str.substr(0, end_position)
-                    console.log("continue_en", kezd)
+                    block_tree.add_content(kezd)
                     const end = str.substring(end_position, end_position + matched_results_end[0].length)
-                    console.log('end in', end)
+                    block_tree.end_element(end)
                     str = "";
                 }
-                console.log('end out', str)
+                block_tree.end_element(str)
                 str = "";
             }
         }
