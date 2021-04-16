@@ -8,7 +8,6 @@ class ImageAltTextRule extends ARule {
     _run = () => {
         if (!this.block_content)
             return;
-        console.log(this.block_content);
         const images = this.block_content.find('img');
         if (!images)
             return;
@@ -19,6 +18,11 @@ class ImageAltTextRule extends ARule {
             }
         }
     }
+
+    get form() {
+        return jQuery("<form><label>Hiba javító szöveg:<input type='text'></label><button type='button'>Javítás</button></form>>").html()
+    }
+
 }
 
 export default ImageAltTextRule;
