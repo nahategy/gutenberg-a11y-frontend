@@ -21,7 +21,6 @@ class WPBlockTree {
         if (str == '')
             return
         this.current_element_index -= 1;
-        console.log(this.current_element_index)
     }
 
     add_content = (str) => {

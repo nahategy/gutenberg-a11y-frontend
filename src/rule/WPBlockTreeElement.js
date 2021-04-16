@@ -40,6 +40,11 @@ class WPBlockTreeElement {
         }
         return [jQuery(str), sub_blocks];
     }
+
+    get_sub_elements = () => {
+        return this.toHTML()[1];
+    }
+
 }
 
 export default WPBlockTreeElement;

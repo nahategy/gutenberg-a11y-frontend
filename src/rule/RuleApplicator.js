@@ -1,14 +1,16 @@
 import RuleFactory from "./RuleFactory";
 import WPBlockTree from "./WPBlockTree";
+import FailedWPBlockTreeElementExtractor from "./FailedWPBlockTreeElementExtractor";
 
 class RuleApplicator {
     editor_context_string;
     block_tree = new WPBlockTree();
+    failed_block_extractor = null;
 
     constructor(editor_context_string) {
         this.editor_context_string = editor_context_string;
+        this.failed_block_extractor = new FailedWPBlockTreeElementExtractor(this.block_tree);
     }
-
 
     find_elements = () => {
         //Regex:  <!-- wp:paragraph --> kontent <!-- wp:paragraph -->
@@ -55,13 +57,16 @@ class RuleApplicator {
 
     apply_rules = () => {
         const rules = RuleFactory.getRules();
-        console.log(this.block_tree)
         for (var i = 0; i < this.block_tree.structure.length; i++) {
             for (var j = 0; j < rules.length; j++) {
                 const rule = new rules[j](this.block_tree.structure[i]);
                 rule.run();
             }
         }
+    }
+
+    get_failed_tree_elements = () => {
+        return this.failed_block_extractor.run(this.block_tree);
     }
 
 }
