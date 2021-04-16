@@ -54,11 +54,11 @@ class RuleApplicator {
     }
 
     apply_rules = () => {
-        return;
         const rules = RuleFactory.getRules();
-        for (var i = 0; i < this.elements; i++) {
+        console.log(this.block_tree)
+        for (var i = 0; i < this.block_tree.structure.length; i++) {
             for (var j = 0; j < rules.length; j++) {
-                const rule = new rules[j](this.elements[i]);
+                const rule = new rules[j](this.block_tree.structure[i]);
                 rule.run();
             }
         }

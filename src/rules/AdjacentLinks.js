@@ -5,24 +5,23 @@ class AdjacentLinks extends ARule {
     error_description = "AdjacentLinks error"
     name = "AdjacentLinks";
 
-    run() {
-
-
-        if (!this.block)
+    _run = () => {
+        if (!this.block_content)
             return;
 
-        const images = this.block.querySelectorAll('img');
+        const images = this.block_content.find('img');
         if (!images)
             return;
 
-        if (this.block.tagName !== "A") {
-            return;
-        }
-        if (!this.shouldMergeAnchors()) {
-            console.log('184*/*/7*/');
-            console.log(this.block);
-            return this;
-        }
+        // TODO ugyan ezt jqueryvel :)
+        // if (this.block_content.tagName !== "A") {
+        //     return;
+        // }
+        // if (!this.shouldMergeAnchors()) {
+        //     console.log('184*/*/7*/');
+        //     console.log(this.block);
+        //     return this;
+        // }
 
     }
 

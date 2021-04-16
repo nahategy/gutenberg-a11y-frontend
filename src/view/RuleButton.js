@@ -74,7 +74,7 @@ class RuleButton {
       return;
     const rule_applicator = new RuleApplicator(jQuery('.editor-post-text-editor').val())
     rule_applicator.find_elements();
-
+    rule_applicator.apply_rules();
   }
 
   open_sidebar_if_rules_failed = (view_rule) => {
