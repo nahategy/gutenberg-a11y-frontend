@@ -3,12 +3,10 @@ import WPBlockTree from "./WPBlockTree";
 
 class RuleApplicator {
     editor_context_string;
-    elements;
-
+    block_tree = new WPBlockTree();
 
     constructor(editor_context_string) {
         this.editor_context_string = editor_context_string;
-        this.elements = [];
     }
 
 
@@ -16,16 +14,11 @@ class RuleApplicator {
         //Regex:  <!-- wp:paragraph --> kontent <!-- wp:paragraph -->
         const start_block_regex = new RegExp('<!-- wp:.*? -->');
         const end_block_regex = new RegExp('<!-- \\/wp:.*? -->');
-
-
         const line = this.editor_context_string.replaceAll('\n', '');
+
+
         var str = "";
-        var lists = {};
-        var j = 0;
-        var block_tree = new WPBlockTree();
-
         for (var i = 0; i < line.length; i++) {
-
             str += line[i];
 
             let start_position = str.search(start_block_regex);
@@ -34,12 +27,12 @@ class RuleApplicator {
             if (start_position > -1) {
                 if (start_position > 0) {
                     const kezd = str.substr(0, start_position)
-                    block_tree.add_content(kezd)
+                    this.block_tree.add_content(kezd)
                     const end = str.substring(start_position, start_position + matched_results_start[0].length)
-                    block_tree.start_element(end)
+                    this.block_tree.start_element(end)
                     str = "";
                 }
-                block_tree.start_element(str)
+                this.block_tree.start_element(str)
                 str = "";
             }
 
@@ -49,12 +42,12 @@ class RuleApplicator {
             if (end_position > -1) {
                 if (end_position > 0) {
                     const kezd = str.substr(0, end_position)
-                    block_tree.add_content(kezd)
+                    this.block_tree.add_content(kezd)
                     const end = str.substring(end_position, end_position + matched_results_end[0].length)
-                    block_tree.end_element(end)
+                    this.block_tree.end_element(end)
                     str = "";
                 }
-                block_tree.end_element(str)
+                this.block_tree.end_element(str)
                 str = "";
             }
         }
