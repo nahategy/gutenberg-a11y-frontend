@@ -20,7 +20,6 @@ class FailedWPBlockTreeElementExtractor {
             this.failed_block_tree_elements.push(wp_block_tree_element);
         }
         var sub_block_tree_elements = wp_block_tree_element.get_sub_elements();
-        console.log(sub_block_tree_elements);
         for (var i = 0; i < sub_block_tree_elements.length; i++) {
             this.extract_failed_elements(sub_block_tree_elements[i]);
         }

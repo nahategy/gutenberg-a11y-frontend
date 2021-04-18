@@ -2,18 +2,23 @@ class ViewRule {
     nextButton;
     prevButton;
     currentNumber = 0;
+    currentFaliedNumber = 0;
     errors = [];
     errors_element;
     errornumbersContainer;
     rulename;
+    form_container;
+
 
     next(ev) {
         ev.preventDefault();
         if (this.currentNumber + 1 < this.errors.length) {
             this.currentNumber++;
+            var current_error = this.errors[this.currentNumber];
             this.errornumbersContainer.innerHTML = `${this.currentNumber + 1} / ${this.errors.length}`;
             this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
             this.rulename.innerHTML = this.errors[this.currentNumber].name;
+            this.form_container.innerHTML = current_error.form(this.currentNumber);
         }
     }
 
@@ -21,18 +26,18 @@ class ViewRule {
         ev.preventDefault();
         if (this.currentNumber - 1 >= 0) {
             this.currentNumber--;
+            var current_error = this.errors[this.currentNumber];
             this.errornumbersContainer.innerHTML = `${this.currentNumber + 1} / ${this.errors.length}`;
             this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
             this.rulename.innerHTML = this.errors[this.currentNumber].name;
+            this.form_container.innerHTML = current_error.form(this.currentNumber);
         }
     }
 
 
     function_hello(failed_rules) {
-
         // Mindig teljes hiba listát adunk át.
         this.errors = failed_rules;
-
         if (this.errors.length == 0) {
             return false;
         }
@@ -66,10 +71,11 @@ class ViewRule {
         this.errors_element.innerHTML += current_error.error_description;
         this.errors_element.classList.add("d-block");
         div.appendChild(element);
-        var form_container = document.createElement('div');
-        form_container.classList.add('form-container');
-        form_container.innerHTML = current_error.form;
-        div.appendChild(form_container);
+        this.form_container = document.createElement('div');
+        this.form_container.classList.add('form-container');
+        console.log('current numb create side bar :', this.currentNumber);
+        this.form_container.innerHTML = current_error.form(this.currentNumber);
+        div.appendChild(this.form_container);
         var button_container = document.createElement('div');
         button_container.classList.add('button-container');
         this.prevButton = document.createElement("button");

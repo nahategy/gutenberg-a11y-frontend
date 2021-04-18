@@ -72,5 +72,3 @@ class RuleApplicator {
 }
 
 export default RuleApplicator;
-
-

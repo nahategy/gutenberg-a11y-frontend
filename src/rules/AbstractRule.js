@@ -55,7 +55,7 @@ class ARule {
         throw new Error("wcag_link Method not Implemented yet!")
     }
 
-    get form() {
+    form(idx) {
         return ''
     }
 
