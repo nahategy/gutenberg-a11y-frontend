@@ -74,7 +74,7 @@ class ViewRule {
         this.form_container = document.createElement('div');
         this.form_container.classList.add('form-container');
         console.log('current numb create side bar :', this.currentNumber);
-        this.form_container.innerHTML = current_error.form(this.currentNumber);
+        this.form_container.appendChild(current_error.form(this.currentNumber));
         div.appendChild(this.form_container);
         var button_container = document.createElement('div');
         button_container.classList.add('button-container');

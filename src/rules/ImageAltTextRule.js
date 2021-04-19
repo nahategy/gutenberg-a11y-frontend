@@ -18,8 +18,8 @@ class ImageAltTextRule extends ARule {
     prevButton;
     nextButton;
     repairButton;
+    alt_tag;
 
-    alt_tag = document.querySelector('.alt_tag');
 
 
     prev_rule() {
@@ -28,11 +28,23 @@ class ImageAltTextRule extends ARule {
 
     next_rule(ev) {
         ev.preventDefault();
-        alert('Add a text');
+        if (this.currentNumber + 1 < this.errors.length) {
+            this.currentNumber++;
+            var current_error = this.errors[this.currentNumber];
+        }
     }
 
-    repair() {
-        alert('Add a text');
+    repair(ev) {
+        ev.preventDefault();
+        if (this.alt_tag.value === '') {
+            alert('Add a text');
+        }else{
+            console.log('current falied num: ', this.currentNumber);
+            var current_error = this.fails[this.currentNumber];
+            this.fails[this.currentNumber].alt=this.alt_tag.value;
+            console.log(current_error);
+            console.log(this.fails[this.currentNumber].alt);
+        }
     }
 
 
@@ -56,7 +68,7 @@ class ImageAltTextRule extends ARule {
     form(idx) {
         console.log('idx: ', idx);
         console.log('length : ', this.fails.length);
-        console.log(this.fails)
+        console.log(this.fails);
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
 
@@ -77,11 +89,12 @@ class ImageAltTextRule extends ARule {
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
-        var element = document.createElement("input");
-        element.class = "alt_tag";
-        element.type = "text";
-        element.value = current_error.alt;
-        div.appendChild(element);
+        this.alt_tag = document.createElement("input");
+        this.alt_tag.classList.add = "alt_tag";
+        this.alt_tag.className = "alt_tag";
+        this.alt_tag.type = "text";
+        this.alt_tag.value = current_error.alt;
+        div.appendChild(this.alt_tag);
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
@@ -100,7 +113,7 @@ class ImageAltTextRule extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
-        return div.innerHTML;
+        return div;
     }
 
 }
