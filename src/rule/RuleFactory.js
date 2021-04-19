@@ -8,8 +8,8 @@ class RuleFactory {
   static getRules() {
     return [
       ImageAltTextRule,
-      FontSize,
-      AdjacentLinks
+      // FontSize,
+      // AdjacentLinks
     ]
   }
 }

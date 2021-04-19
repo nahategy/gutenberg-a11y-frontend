@@ -10,6 +10,7 @@ class ViewRule {
     form_container;
 
 
+
     next(ev) {
         ev.preventDefault();
         if (this.currentNumber + 1 < this.errors.length) {
@@ -17,8 +18,11 @@ class ViewRule {
             var current_error = this.errors[this.currentNumber];
             this.errornumbersContainer.innerHTML = `${this.currentNumber + 1} / ${this.errors.length}`;
             this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
+            //this.errors_element.innerHTML = this.errors[this.currentNumber].errors_element;
             this.rulename.innerHTML = this.errors[this.currentNumber].name;
-            this.form_container.innerHTML = current_error.form(this.currentNumber);
+            this.form_container.innerHTML = '';
+            this.form_container.appendChild(current_error.form());
+            var div = document.getElementById('.repair_div');
         }
     }
 
@@ -30,7 +34,9 @@ class ViewRule {
             this.errornumbersContainer.innerHTML = `${this.currentNumber + 1} / ${this.errors.length}`;
             this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
             this.rulename.innerHTML = this.errors[this.currentNumber].name;
-            this.form_container.innerHTML = current_error.form(this.currentNumber);
+            this.form_container.innerHTML = '';
+            this.form_container.appendChild(current_error.form());
+            var div = document.getElementById('.repair_div');
         }
     }
 
@@ -57,7 +63,7 @@ class ViewRule {
         element.innerHTML = "Accessibility Checker";
         div.appendChild(element);
         element = document.createElement("label");
-        element.innerHTML = "Issue   ";
+        element.innerHTML = "Block   ";
         this.errornumbersContainer = document.createElement("span");
         element.appendChild(this.errornumbersContainer);
         this.errornumbersContainer.innerHTML = (this.currentNumber + 1) + " / " + numberOfErrors;
@@ -74,7 +80,7 @@ class ViewRule {
         this.form_container = document.createElement('div');
         this.form_container.classList.add('form-container');
         console.log('current numb create side bar :', this.currentNumber);
-        this.form_container.appendChild(current_error.form(this.currentNumber));
+        this.form_container.appendChild(current_error.form());
         div.appendChild(this.form_container);
         var button_container = document.createElement('div');
         button_container.classList.add('button-container');

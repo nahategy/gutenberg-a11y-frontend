@@ -22,16 +22,29 @@ class ImageAltTextRule extends ARule {
 
 
 
-    prev_rule() {
-        alert('Add a text');
+    prev_rule(ev) {
+        ev.preventDefault();
+        if(this.currentNumber - 1 >= 0){
+            this.currentFaliedNumber = this.fails.length;
+            this.currentNumber--;
+            var current_error = this.errors[this.currentNumber];
+            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.alt_tag.value = this.fails[this.currentNumber].alt;
+        }
+
     }
 
     next_rule(ev) {
         ev.preventDefault();
-        if (this.currentNumber + 1 < this.errors.length) {
+
+        if(this.currentNumber + 1 < this.fails.length){
+            this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             var current_error = this.errors[this.currentNumber];
+            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.alt_tag.value = this.fails[this.currentNumber].alt;
         }
+
     }
 
     repair(ev) {
@@ -65,16 +78,21 @@ class ImageAltTextRule extends ARule {
         // console.log('run lefutott');
     }
 
-    form(idx) {
-        console.log('idx: ', idx);
+    form() {
+        //console.log('idx: ', idx);
         console.log('length : ', this.fails.length);
         console.log(this.fails);
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
 
         this.currentFaliedNumber = this.fails.length;
-        var current_error = this.fails[this.currentNumber];
-        console.log(current_error.alt);
+        var current_error = this.fails[0];
+        for(var i=0;i<this.fails.length;i++){
+            console.log('alt ',i,' ', this.fails[i].alt);
+        }
+
+
+
 
         var div = document.createElement("div");
         div.setAttribute("class", "repair_div");
