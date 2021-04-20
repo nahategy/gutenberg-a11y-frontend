@@ -1,9 +1,9 @@
 import ARule from "./AbstractRule";
 
 
-class ImageAltTextRule extends ARule {
-    error_description = "The alt images is missing"
-    name = "ImageAltTextRule";
+class ImageAltTextLength extends ARule {
+    error_description = "The alt images is too long"
+    name = "ImageAltTextLengthRule";
 
     nextButtonRule;
     prevButton;
@@ -69,10 +69,13 @@ class ImageAltTextRule extends ARule {
             return;
         for (var i = 0; i < images.length; i++) {
             const image = images[i];
-            if (!image.alt || image.alt.toString().trim() === "") {
+            if (image.alt && image.alt.length > 100 ) {
                 this.fails.push(image);
             }
         }
+        // console.log('image length', images.length);
+        // console.log(this.fails);
+        // console.log('run lefutott');
     }
 
     form() {
@@ -133,6 +136,6 @@ class ImageAltTextRule extends ARule {
 
 }
 
-export default ImageAltTextRule;
+export default ImageAltTextLength;
 
 

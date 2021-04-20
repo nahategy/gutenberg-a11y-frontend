@@ -5,13 +5,30 @@ const MIN_FONT_SIZE = 73;
 class FontSize extends ARule {
     error_description = "Default size is too small"
     name = "FontSizeRule";
-    error = "Valami"
+
 
     _run = () => {
-        // if (!this.block_content)
-        return false;
-        for (var i = 0; i < this.block_content.length; i++) {
-            if (this.check_font_size(this.block_content[i])) {
+        if (!this.block_content)
+            return;
+        const sizes = this.block_content;
+
+        //console.log('size: '. window.getComputedStyle(sizes[0]).fontSize);
+
+        // if (window.getComputedStyle(sizes[0]).fontSize) {
+        //     var result = window.getComputedStyle(sizes[0]).fontSize.replace("px", "");
+        //     result = parseInt(result);
+        //     console.log('res : ', result);
+        // }
+
+        if (!sizes)
+            return;
+
+        return;
+
+        for (var i = 0; i < sizes.length; i++) {
+            const size = sizes[i];
+            if (this.check_font_size(size)) {
+                console.log('for size: ', size);
                 // TODO itt nem vissza térni, hanem eltárolni az elemeket.
                 return this;
             }
