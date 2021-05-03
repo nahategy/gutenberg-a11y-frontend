@@ -85,12 +85,12 @@ class ViewRule {
         var button_container = document.createElement('div');
         button_container.classList.add('button-container');
         this.prevButton = document.createElement("button");
-        this.prevButton.innerHTML = "prev";
+        this.prevButton.innerHTML = "Prev";
         this.prevButton.classList.add("prev");
         this.prevButton.onclick = this.prev.bind(this);
         button_container.appendChild(this.prevButton);
         this.nextButton = document.createElement("button");
-        this.nextButton.innerHTML = "next";
+        this.nextButton.innerHTML = "Next";
         this.nextButton.classList.add("next");
         this.nextButton.onclick = this.next.bind(this);
         button_container.appendChild(this.nextButton);

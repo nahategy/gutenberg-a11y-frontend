@@ -64,16 +64,8 @@ class FontSize extends ARule {
             return;
         const sizes = this.block_content;
 
-        //console.log('size: '. window.getComputedStyle(sizes[0]).fontSize);
-        // console.log('sizes[0]:', sizes[0]);
-        // var result = window.getComputedStyle(sizes[0]).fontSize;
-        // console.log('fontSize: ',result);
-        //
-        //console.log('sizes:',sizes);
-
-        // for(var i=0;i<sizes.length;i++){
-        //     console.log('sizes: ',i,' ',sizes[i]);
-        // }
+        if (!sizes)
+            return;
 
         if(sizes[0].style.fontSize){
             var result = sizes[0].style.fontSize.replace("px", "");
@@ -89,8 +81,7 @@ class FontSize extends ARule {
         //     console.log('res : ', result);
         // }
 
-        if (!sizes)
-            return;
+
 
         return;
 

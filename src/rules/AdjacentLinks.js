@@ -8,20 +8,20 @@ class AdjacentLinks extends ARule {
     _run = () => {
         if (!this.block_content)
             return;
+        const rule_element = this.block_content;
 
-        const images = this.block_content.find('img');
-        if (!images)
+        if (!rule_element)
             return;
 
-        // TODO ugyan ezt jqueryvel :)
-        // if (this.block_content.tagName !== "A") {
-        //     return;
-        // }
-        // if (!this.shouldMergeAnchors()) {
-        //     console.log('184*/*/7*/');
-        //     console.log(this.block);
-        //     return this;
-        // }
+        if (rule_element.tagName !== "A") {
+            console.log('tagname');
+            return;
+        }
+        if (!rule_element.shouldMergeAnchors()) {
+            console.log('184*/*/7*/');
+            console.log(this.block);
+            return this;
+        }
 
     }
 
