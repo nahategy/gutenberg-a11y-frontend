@@ -31,14 +31,19 @@ class WPBlockTreeElement {
         var str = "";
         var sub_blocks = [];
         for (var i = 0; i < this.content.length; i++) {
-            const current_content = this.content[i];
-            if (typeof current_content != 'WPBlockTreeElement')
+            if (typeof this.content[i] != 'WPBlockTreeElement')
                 str += this.content[i].toString();
             else {
-                sub_blocks.push(current_content)
+                sub_blocks.push(this.content[i])
             }
         }
         return [jQuery(str), sub_blocks];
+    }
+
+    toOriginalText = () => {
+        const tmp_div = jQuery('<div></div>');
+        tmp_div.append(this.toHTML()[0])
+        return tmp_div.html();
     }
 
     get_sub_elements = () => {

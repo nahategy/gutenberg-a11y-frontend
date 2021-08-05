@@ -9,8 +9,7 @@ class FailedWPBlockTreeElementExtractor {
 
     run = () => {
         for (var i = 0; i < this.block_tree.structure.length; i++) {
-            var main_element = this.block_tree.structure[i];
-            this.extract_failed_elements(main_element)
+            this.extract_failed_elements(this.block_tree.structure[i])
         }
         return this.failed_block_tree_elements;
     }

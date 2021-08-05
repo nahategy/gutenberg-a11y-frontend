@@ -21,10 +21,9 @@ class ImageAltTextRule extends ARule {
     alt_tag;
 
 
-
     prev_rule(ev) {
         ev.preventDefault();
-        if(this.currentNumber - 1 >= 0){
+        if (this.currentNumber - 1 >= 0) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             var current_error = this.errors[this.currentNumber];
@@ -36,8 +35,7 @@ class ImageAltTextRule extends ARule {
 
     next_rule(ev) {
         ev.preventDefault();
-
-        if(this.currentNumber + 1 < this.fails.length){
+        if (this.currentNumber + 1 < this.fails.length) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             var current_error = this.errors[this.currentNumber];
@@ -51,44 +49,43 @@ class ImageAltTextRule extends ARule {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
             alert('Add a text');
-        }else{
-            console.log('current falied num: ', this.currentNumber);
-            var current_error = this.fails[this.currentNumber];
-            this.fails[this.currentNumber].alt=this.alt_tag.value;
-            console.log(current_error);
-            console.log(this.fails[this.currentNumber].alt);
+            return
         }
+        this.fails[this.currentNumber].alt = this.alt_tag.value;
+        // TODO: block contentből újra generálni a TreeElementet!
+
+        var div = jQuery('<div></div>')
+        div.append(this.block.toHTML()[0])
+        console.log('1', div.html())
+        console.log(this.block);
+        //this._update();
     }
 
 
     _run = () => {
         if (!this.block_content)
             return;
-        const images = this.block_content.find('img');
+        let images = this.block_content.find('img');
+        this.block_content.find('img').alt = "abct";
         if (!images)
             return;
         for (var i = 0; i < images.length; i++) {
-            const image = images[i];
-            if (!image.alt || image.alt.toString().trim() === "") {
-                this.fails.push(image);
+            if (!images[i].alt || images[i].alt.toString().trim() === "") {
+                this.fails.push(images[i]);
             }
         }
     }
 
     form() {
         //console.log('idx: ', idx);
-        console.log('length : ', this.fails.length);
-        console.log(this.fails);
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
 
         this.currentFaliedNumber = this.fails.length;
         var current_error = this.fails[0];
-        for(var i=0;i<this.fails.length;i++){
-            console.log('alt ',i,' ', this.fails[i].alt);
+        for (var i = 0; i < this.fails.length; i++) {
+            console.log('alt ', i, ' ', this.fails[i].alt);
         }
-
-
 
 
         var div = document.createElement("div");
@@ -130,7 +127,6 @@ class ImageAltTextRule extends ARule {
         div.appendChild(button_container_rule);
         return div;
     }
-
 }
 
 export default ImageAltTextRule;

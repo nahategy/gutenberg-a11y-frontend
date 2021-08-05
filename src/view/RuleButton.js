@@ -14,6 +14,7 @@ class RuleButton {
 
     constructor() {
         this.failed_rules = new Map();
+        this.rule_applicator = null;
     }
 
 
@@ -71,14 +72,28 @@ class RuleButton {
         this.open_sidebar_if_rules_failed(view_rule)
     }
 
+    rewrite_rules = () => {
+        console.log('Tree', this.rule_applicator.block_tree);
+        var output = "";
+        for (var i = 0; i < this.rule_applicator.block_tree.structure.length; i++) {
+            const element = this.rule_applicator.block_tree.structure[i];
+            if (element.failed_rules && element.failed_rules.block) {
+                output += element.failed_rules.block.toOriginalText()
+            } else {
+                output += element.toOriginalText();
+            }
+        }
+        console.log(output)
+    }
+
     open_sidebar_if_rules_failed = (view_rule) => {
         this.toggle_code_editor()
         if (jQuery('.editor-post-text-editor').length == 0)
             return;
-        const rule_applicator = new RuleApplicator(jQuery('.editor-post-text-editor').val())
-        rule_applicator.find_elements();
-        rule_applicator.apply_rules();
-        var f = rule_applicator.get_failed_tree_elements();
+        this.rule_applicator = new RuleApplicator(jQuery('.editor-post-text-editor').val())
+        this.rule_applicator.find_elements();
+        this.rule_applicator.apply_rules(this.rewrite_rules);
+        var f = this.rule_applicator.get_failed_tree_elements();
         var result;
         var failed_rule_extractor = new FailedRuleExtractor(f);
         if ((result = view_rule.function_hello(failed_rule_extractor.run()))) {

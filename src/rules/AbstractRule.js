@@ -10,7 +10,7 @@ class ARule {
     name;
     fails;
 
-    constructor(block) {
+    constructor(block, rewrite_rules_function) {
         if (new.target === ARule)
             throw new TypeError("Abstract Rule  Cannot be constructed directly")
         this.block = block;
@@ -18,6 +18,7 @@ class ARule {
         this.fails = [];
         this.sub_blocks = this.block_content[1];
         this.block_content = this.block_content[0];
+        this.__rewrite_rules = rewrite_rules_function;
         for (var i = 0; i < this.sub_blocks.length; i++) {
             // new this.constructor(this.sub_blocks[i])
         }
@@ -60,11 +61,12 @@ class ARule {
     }
 
     _update() {
-
+        console.log(this.__rewrite_rules)
+        this.__rewrite_rules()
     }
 
     update() {
-
+        return this.block.toOriginalText()
     }
 
 }
