@@ -2,7 +2,7 @@ import ARule from "./AbstractRule";
 
 
 class ImageAltTextLength extends ARule {
-    error_description = "The alt images is too long"
+    error_description = "Alt attribute text should not contain more than 120 characters."
     name = "ImageAltTextLengthRule";
 
     nextButtonRule;
@@ -99,7 +99,7 @@ class ImageAltTextLength extends ARule {
         div.setAttribute("id", "repair_div");
         div.classList.add("container");
         var element = document.createElement("h4");
-        element.innerHTML = "Aktuális hiba jav:";
+        element.innerHTML = "Current error fix:";
         div.appendChild(element);
         element = document.createElement("label");
         element.innerHTML = "Issue   ";
@@ -116,17 +116,17 @@ class ImageAltTextLength extends ARule {
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
-        this.repairButton.innerHTML = "Javítás";
+        this.repairButton.innerHTML = "Repair";
         this.repairButton.classList.add("repair");
         this.repairButton.onclick = this.repair.bind(this);
         button_container_rule.appendChild(this.repairButton);
         this.prevButton = document.createElement("button");
-        this.prevButton.innerHTML = "prev";
+        this.prevButton.innerHTML = "Prev";
         this.prevButton.classList.add("prev_rule");
         this.prevButton.onclick = this.prev_rule.bind(this);
         button_container_rule.appendChild(this.prevButton);
         this.nextButtonRule = document.createElement("button");
-        this.nextButtonRule.innerHTML = "next";
+        this.nextButtonRule.innerHTML = "Next";
         this.nextButtonRule.classList.add("next_rule");
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);

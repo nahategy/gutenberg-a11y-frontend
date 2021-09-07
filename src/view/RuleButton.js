@@ -93,10 +93,11 @@ class RuleButton {
         this.rule_applicator = new RuleApplicator(jQuery('.editor-post-text-editor').val())
         this.rule_applicator.find_elements();
         this.rule_applicator.apply_rules(this.rewrite_rules);
-        var f = this.rule_applicator.get_failed_tree_elements();
+        var fails = this.rule_applicator.get_failed_tree_elements();
+        console.log(fails)
         var result;
-        var failed_rule_extractor = new FailedRuleExtractor(f);
-        if ((result = view_rule.function_hello(failed_rule_extractor.run()))) {
+        var failed_rule_extractor = new FailedRuleExtractor(fails);
+        if ((result = view_rule.function_hello(this.rule_applicator.get_failed_tree_elements()))) {
             this.toggle_code_editor();
         }
         return result

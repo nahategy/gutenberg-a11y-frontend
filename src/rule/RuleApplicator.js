@@ -1,6 +1,7 @@
 import RuleFactory from "./RuleFactory";
 import WPBlockTree from "./WPBlockTree";
 import FailedWPBlockTreeElementExtractor from "./FailedWPBlockTreeElementExtractor";
+import WPBlockTreeElementDummy from "./WPBlockTreeElementDummy";
 
 class RuleApplicator {
     editor_context_string;
@@ -12,7 +13,7 @@ class RuleApplicator {
         this.failed_block_extractor = new FailedWPBlockTreeElementExtractor(this.block_tree);
     }
 
-    find_elements = () => {
+    find_elements_ = () => {
         //Regex:  <!-- wp:paragraph --> kontent <!-- wp:paragraph -->
         const start_block_regex = new RegExp('<!-- wp:.*? -->');
         const end_block_regex = new RegExp('<!-- \\/wp:.*? -->');
@@ -55,6 +56,14 @@ class RuleApplicator {
         }
     }
 
+    find_elements = () => {
+        const element_ = new WPBlockTreeElementDummy();
+        this.block_tree.structure[0] = element_;
+        const line = this.editor_context_string.replaceAll('\n', '');
+
+        element_.add_content(line)
+    }
+
     apply_rules = (rewrite_rules_function) => {
         const rules = RuleFactory.getRules();
         for (var i = 0; i < this.block_tree.structure.length; i++) {
@@ -65,7 +74,8 @@ class RuleApplicator {
     }
 
     get_failed_tree_elements = () => {
-        return this.failed_block_extractor.run(this.block_tree);
+        console.log()
+        return this.block_tree.structure[0].failed_rules
     }
 
 }

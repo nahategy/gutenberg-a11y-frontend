@@ -30,6 +30,7 @@ class WPBlockTreeElement {
     toHTML = () => {
         var str = "";
         var sub_blocks = [];
+        console.log(this.content)
         for (var i = 0; i < this.content.length; i++) {
             if (typeof this.content[i] != 'WPBlockTreeElement')
                 str += this.content[i].toString();

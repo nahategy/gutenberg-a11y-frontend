@@ -10,8 +10,8 @@ class RuleFactory {
         return [
             ImageAltTextRule,
             ImageAltTextLength,
-            FontSize,
-            AdjacentLinks,
+            // FontSize,
+            // AdjacentLinks,
         ]
     }
 }

@@ -2,7 +2,7 @@ import ARule from "./AbstractRule";
 
 
 class ImageAltTextRule extends ARule {
-    error_description = "The alt images is missing"
+    error_description = "Images should include an alt attribute describing the image content."
     name = "ImageAltTextRule";
 
     nextButtonRule;

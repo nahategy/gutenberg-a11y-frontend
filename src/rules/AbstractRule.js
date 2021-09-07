@@ -15,6 +15,8 @@ class ARule {
             throw new TypeError("Abstract Rule  Cannot be constructed directly")
         this.block = block;
         this.block_content = block.toHTML();
+        console.log(this.block_content)
+        document.test = this.block_content[0];
         this.fails = [];
         this.sub_blocks = this.block_content[1];
         this.block_content = this.block_content[0];
