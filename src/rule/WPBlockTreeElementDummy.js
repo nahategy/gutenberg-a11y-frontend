@@ -8,7 +8,7 @@ class WPBlockTreeElementDummy {
     }
 
     add_content = (str) => {
-        this.content = str
+        this.content = jQuery(str);
     }
 
     toString = () => {
@@ -16,11 +16,12 @@ class WPBlockTreeElementDummy {
     }
 
     toHTML = () => {
-        return [jQuery(this.content), []];
+        return [this.content, []];
     }
 
     toOriginalText = () => {
-        return "";
+        console.log("Blabla",this.content)
+        return (jQuery("<div></div>").append(this.content)).html();
     }
 
     get_sub_elements = () => {

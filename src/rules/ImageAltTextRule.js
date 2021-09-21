@@ -56,9 +56,7 @@ class ImageAltTextRule extends ARule {
 
         var div = jQuery('<div></div>')
         div.append(this.block.toHTML()[0])
-        console.log('1', div.html())
-        console.log(this.block);
-        //this._update();
+        this._update();
     }
 
 

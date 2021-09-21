@@ -15,8 +15,6 @@ class ARule {
             throw new TypeError("Abstract Rule  Cannot be constructed directly")
         this.block = block;
         this.block_content = block.toHTML();
-        console.log(this.block_content)
-        document.test = this.block_content[0];
         this.fails = [];
         this.sub_blocks = this.block_content[1];
         this.block_content = this.block_content[0];
@@ -35,7 +33,6 @@ class ARule {
             return;
         }
         this.block.failed_rules.push(this);
-        // TODO: beletenni a blockba hogy ha volt fail és melyik elemeken.
     }
 
     _run = () => {
@@ -63,7 +60,6 @@ class ARule {
     }
 
     _update() {
-        console.log(this.__rewrite_rules)
         this.__rewrite_rules()
     }
 

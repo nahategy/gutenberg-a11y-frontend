@@ -73,34 +73,47 @@ class RuleButton {
     }
 
     rewrite_rules = () => {
-        console.log('Tree', this.rule_applicator.block_tree);
+        console.log('Tree', this.rule_applicator.block_tree.structure[0].content);
         var output = "";
         for (var i = 0; i < this.rule_applicator.block_tree.structure.length; i++) {
-            const element = this.rule_applicator.block_tree.structure[i];
-            if (element.failed_rules && element.failed_rules.block) {
-                output += element.failed_rules.block.toOriginalText()
-            } else {
-                output += element.toOriginalText();
+            const wpTreeElementDummy = this.rule_applicator.block_tree.structure[i];
+            console.log(i, wpTreeElementDummy)
+            if (wpTreeElementDummy.failed_rules) {
+                output += wpTreeElementDummy.toOriginalText();
             }
         }
-        console.log(output)
+        this.toggle_code_editor()
+        var editor = this.getGutenbergCodeEditorElement();
+        editor.prop("disabled", "");
+        editor.focus();
+        window.setNativeValue(editor[0], output)
+        document.querySelector(".editor-post-text-editor").dispatchEvent(new Event("change", {bubbles: true}));
+        document.querySelector(".editor-post-text-editor").dispatchEvent(new Event("blur", {bubbles: true}));
+        this.button_container.focus();
+
     }
+
 
     open_sidebar_if_rules_failed = (view_rule) => {
         this.toggle_code_editor()
-        if (jQuery('.editor-post-text-editor').length == 0)
+        let gutenbergCodeEditor = this.getGutenbergCodeEditorElement();
+        if (gutenbergCodeEditor.length == 0)
             return;
-        this.rule_applicator = new RuleApplicator(jQuery('.editor-post-text-editor').val())
+        this.rule_applicator = new RuleApplicator(gutenbergCodeEditor.val())
         this.rule_applicator.find_elements();
         this.rule_applicator.apply_rules(this.rewrite_rules);
         var fails = this.rule_applicator.get_failed_tree_elements();
-        console.log(fails)
         var result;
         var failed_rule_extractor = new FailedRuleExtractor(fails);
         if ((result = view_rule.function_hello(this.rule_applicator.get_failed_tree_elements()))) {
             this.toggle_code_editor();
         }
         return result
+    }
+
+    getGutenbergCodeEditorElement() {
+        let gutenbergCodeEditor = jQuery('.editor-post-text-editor');
+        return gutenbergCodeEditor;
     }
 
     toggle_code_editor = () => {
