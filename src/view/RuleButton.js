@@ -2,6 +2,7 @@ import ViewRule from "./view";
 import HelperService from "../services/helper.service";
 import RuleApplicator from "../rule/RuleApplicator";
 import FailedRuleExtractor from "../rule/FailedRuleExtractor";
+import {icon} from "./accessibilityIcon";
 
 const RULE_BUTTON_CONTAINER_CLASS = "rule-button-container";
 const RULE_BUTTON_CLASS = "rule-button";
@@ -30,16 +31,15 @@ class RuleButton {
         if (this.is_created)
             return this.update_button()
 
-
-        this.button_container = document.createElement('div');
-        this.button_container.classList.add(RULE_BUTTON_CONTAINER_CLASS);
-
         this.button = document.createElement('button');
         this.button.classList.add(RULE_BUTTON_CLASS);
-        this.button.innerHTML = this.error_number();
-        this.button_container.appendChild(this.button);
-        this.button_container.onclick = this.click;
+        this.button.onclick = this.click;
+        const image = document.createElement("img");
+        image.src=icon;
+        image.alt = await HelperService.language.get_translation("Accessibility checker");
+        image.title = await HelperService.language.get_translation("Accessibility checker");
 
+        this.button.appendChild(image)
         // Inserting the container before the editor
         // The editor is created by js, so the element which will contain the button may not exists on the first run
         await HelperService.waitFor('.interface-interface-skeleton__body', this.append_button_to_document);
@@ -47,8 +47,8 @@ class RuleButton {
     }
 
     append_button_to_document = () => {
-        const editor = document.querySelector('.interface-interface-skeleton__body');
-        editor.parentNode.insertBefore(this.button_container, editor);
+        const editor = document.querySelector('.edit-post-header__settings');
+        editor.insertBefore(this.button, editor.firstChild)
         this.is_created = true;
     }
 
@@ -73,11 +73,9 @@ class RuleButton {
     }
 
     rewrite_rules = () => {
-        console.log('Tree', this.rule_applicator.block_tree.structure[0].content);
         var output = "";
         for (var i = 0; i < this.rule_applicator.block_tree.structure.length; i++) {
             const wpTreeElementDummy = this.rule_applicator.block_tree.structure[i];
-            console.log(i, wpTreeElementDummy)
             if (wpTreeElementDummy.failed_rules) {
                 output += wpTreeElementDummy.toOriginalText();
             }

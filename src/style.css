@@ -3,11 +3,17 @@
     color: red;
 }
 
-.button-1 {
+#closeButton {
     border: 0px;
     position: absolute;
     left: 10px;
     top: 10px;
+}
+#closeButton button{
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    line-height: normal;
 }
 
 .sidebar {
@@ -25,32 +31,60 @@
     padding-top: 48px;
 }
 
-.rule-button-container {
-    position: fixed;
-    overflow: visible;
-    top: 75px;
-    right: 80px;
-    width: 0px;
-    height: 0px;
-    z-index: 30;
+.rule-button {
+    background: transparent;
+    outline: 1px solid transparent;
+    white-space: nowrap;
+    align-items: center;
+    -webkit-appearance: none;
+    border: 0;
+    border-radius: 2px;
+    box-sizing: border-box;
+    color: #1e1e1e;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 13px;
+    font-weight: 400;
+    height: 36px;
+    margin: 0;
+    padding: 6px 12px;
+    text-decoration: none;
+    transition: box-shadow .1s linear;
 }
 
-.rule-button {
-    position: absolute !important;
-    display: block !important;
-    visibility: visible !important;
-    width: 35px !important;
-    height: 35px !important;
-    text-align: center !important;
-    font-size: 11px !important;
-    line-height: 1 !important;
-    user-select: none !important;
-    background: #ff0000;
-    color: white;
-    font-weight: bold;
-    top: -60px;
-    border-radius: 50%;
-    border-color: #ff9300;
+.accessibility-container{
+    font-size: 1rem;
+}
+
+.accessibility-container label{
+    cursor: unset!important;
+}
+
+.accessibility-container .button-container-rule{
+    align-items: center;
+    text-align: center;
+}
+
+.accessibility-container button{
+    background: #006ba1;
+    color: #fff;
+    padding: 0.5rem;
+    min-width: 29%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+.accessibility-container input{
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+.rule-button img {
+    width: 45px;
 }
 
 .button-container {
