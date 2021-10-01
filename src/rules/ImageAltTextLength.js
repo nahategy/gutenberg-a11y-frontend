@@ -69,19 +69,13 @@ class ImageAltTextLength extends ARule {
             return;
         for (var i = 0; i < images.length; i++) {
             const image = images[i];
-            if (image.alt && image.alt.length > 100 ) {
+            if (image.alt && image.alt.length > 120 ) {
                 this.fails.push(image);
             }
         }
-        // console.log('image length', images.length);
-        // console.log(this.fails);
-        // console.log('run lefutott');
     }
 
     form() {
-        //console.log('idx: ', idx);
-        console.log('length : ', this.fails.length);
-        console.log(this.fails);
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
 
@@ -90,8 +84,6 @@ class ImageAltTextLength extends ARule {
         for(var i=0;i<this.fails.length;i++){
             console.log('alt ',i,' ', this.fails[i].alt);
         }
-
-
 
 
         var div = document.createElement("div");

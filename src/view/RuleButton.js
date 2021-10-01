@@ -89,7 +89,6 @@ class RuleButton {
         document.querySelector(".editor-post-text-editor").dispatchEvent(new Event("blur", {bubbles: true}));
         this.button_container.focus();
         this.toggle_code_editor()
-
     }
 
 

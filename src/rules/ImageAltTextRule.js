@@ -4,6 +4,7 @@ import ARule from "./AbstractRule";
 class ImageAltTextRule extends ARule {
     error_description = "Images should include an alt attribute describing the image content."
     name = "ImageAltTextRule";
+    link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
     nextButtonRule;
     prevButton;
@@ -52,8 +53,6 @@ class ImageAltTextRule extends ARule {
             return
         }
         this.fails[this.currentNumber].alt = this.alt_tag.value;
-        // TODO: block contentből újra generálni a TreeElementet!
-
         var div = jQuery('<div></div>')
         div.append(this.block.toHTML()[0])
         this._update();
@@ -75,7 +74,6 @@ class ImageAltTextRule extends ARule {
     }
 
     form() {
-        //console.log('idx: ', idx);
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
 
@@ -123,6 +121,7 @@ class ImageAltTextRule extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
+        console.log(div);
         return div;
     }
 }

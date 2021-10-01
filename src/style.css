@@ -88,7 +88,7 @@
 }
 
 .button-container {
-    margin-top: 50px;
+    margin-top: 15px;
 }
 
 .d-block {
@@ -96,6 +96,10 @@
 }
 
 .button-container button {
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 13px;
+    margin-right: 7px;
+}
+
+.errDescDiv {
+    margin-bottom: 20px;
 }

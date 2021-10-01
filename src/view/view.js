@@ -43,7 +43,6 @@ class ViewRule {
 
 
     function_hello(failed_rules) {
-        // Mindig teljes hiba listát adunk át.
         this.errors = failed_rules;
         if (this.errors.length == 0) {
             return false;
@@ -61,43 +60,59 @@ class ViewRule {
         div.classList.add("accessibility-container");
         div.setAttribute("id", "sidebar");
         div.classList.add("container");
-        var element = document.createElement("h4");
+        var element = document.createElement("h3");
         element.innerHTML = "Accessibility Checker";
         div.appendChild(element);
         element = document.createElement("label");
-        element.innerHTML = "Block   ";
+        element.innerHTML = "Rule  ";
+        console.log(div);
         this.errornumbersContainer = document.createElement("span");
         element.appendChild(this.errornumbersContainer);
         this.errornumbersContainer.innerHTML = (this.currentNumber + 1) + " / " + numberOfErrors;
         div.appendChild(element);
-        this.rulename = document.createElement('div');
-        this.rulename.classList.add('rulename');
-        this.rulename.innerHTML = current_error.name;
-        div.appendChild(this.rulename);
+        // this.rulename = document.createElement('div');
+        // this.rulename.classList.add('rulename');
+        // this.rulename.innerHTML = current_error.name;
+        // div.appendChild(this.rulename);
         this.errors_element = document.createElement("span");
         element.appendChild(this.errors_element);
-        this.errors_element.innerHTML += current_error.error_description;
+        this.errors_element.innerHTML += `<br>${current_error.name}: <br>`;
+            this.errors_element.innerHTML += current_error.error_description;
         this.errors_element.classList.add("d-block");
         div.appendChild(element);
+        let descDiv = document.createElement('div');
+        descDiv.className = 'errDescDiv';
+        descDiv.innerHTML = 'WCAG description:<br>';
+        let link = document.createElement('a');
+        link.href = 'https://www.w3.org/TR/WCAG20-TECHS/H37.html';
+        link.innerText = 'https://www.w3.org/TR/WCAG20-TECHS/H37.html';
+        descDiv.appendChild(link);
+        div.appendChild(descDiv);
+        let line = document.createElement('hr');
+        div.appendChild(line);
+
+
         this.form_container = document.createElement('div');
         this.form_container.classList.add('form-container');
-        console.log('current numb create side bar :', this.currentNumber);
         this.form_container.appendChild(current_error.form());
         div.appendChild(this.form_container);
         var button_container = document.createElement('div');
         button_container.classList.add('button-container');
         this.prevButton = document.createElement("button");
-        this.prevButton.innerHTML = "Prev";
-        this.prevButton.classList.add("prev");
+        this.prevButton.innerHTML = "Prev Rule";
+        this.prevButton.classList.add("prevRule");
         this.prevButton.onclick = this.prev.bind(this);
         button_container.appendChild(this.prevButton);
         this.nextButton = document.createElement("button");
-        this.nextButton.innerHTML = "Next";
-        this.nextButton.classList.add("next");
+        this.nextButton.innerHTML = "Next Rule";
+        this.nextButton.classList.add("nextRule");
         this.nextButton.onclick = this.next.bind(this);
         button_container.appendChild(this.nextButton);
-        if (numberOfErrors > 1)
-            div.appendChild(button_container);
+        //if (numberOfErrors > 1)
+        let line2 = document.createElement('hr');
+        div.appendChild(line2);
+        div.appendChild(button_container);
+        console.log(div);
         document.body.appendChild(div);
 
 
