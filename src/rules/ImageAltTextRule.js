@@ -27,9 +27,9 @@ class ImageAltTextRule extends ARule {
         if (this.currentNumber - 1 >= 0) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
-            var current_error = this.errors[this.currentNumber];
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
+            this.showFailedElementInDom();
         }
 
     }
@@ -39,14 +39,20 @@ class ImageAltTextRule extends ARule {
         if (this.currentNumber + 1 < this.fails.length) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
-            var current_error = this.errors[this.currentNumber];
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
+            this.showFailedElementInDom();
         }
 
     }
 
-    repair(ev) {
+  showFailedElementInDom = () => {
+      const src = this.fails[this.currentNumber].src;
+      const element = jQuery(`img[src='${src}']`);
+      this.highlight_failed_element(element[0])
+  }
+
+  repair(ev) {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
             alert('Add a text');
@@ -76,13 +82,15 @@ class ImageAltTextRule extends ARule {
     form() {
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
-
         this.currentFaliedNumber = this.fails.length;
         var current_error = this.fails[0];
         for (var i = 0; i < this.fails.length; i++) {
             console.log('alt ', i, ' ', this.fails[i].alt);
         }
 
+        setTimeout(()=>{
+            this.showFailedElementInDom();
+        },500);
 
         var div = document.createElement("div");
         div.setAttribute("class", "repair_div");
@@ -112,12 +120,12 @@ class ImageAltTextRule extends ARule {
         button_container_rule.appendChild(this.repairButton);
         this.prevButton = document.createElement("button");
         this.prevButton.innerHTML = "Prev";
-        this.prevButton.classList.add("prev_rule");
+        this.prevButton.classList.add("prev_rule_error");
         this.prevButton.onclick = this.prev_rule.bind(this);
         button_container_rule.appendChild(this.prevButton);
         this.nextButtonRule = document.createElement("button");
         this.nextButtonRule.innerHTML = "Next";
-        this.nextButtonRule.classList.add("next_rule");
+        this.nextButtonRule.classList.add("next_rule_error");
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);

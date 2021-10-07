@@ -114,12 +114,12 @@ class ImageAltTextLength extends ARule {
         button_container_rule.appendChild(this.repairButton);
         this.prevButton = document.createElement("button");
         this.prevButton.innerHTML = "Prev";
-        this.prevButton.classList.add("prev_rule");
+        this.prevButton.classList.add("prev_rule_error");
         this.prevButton.onclick = this.prev_rule.bind(this);
         button_container_rule.appendChild(this.prevButton);
         this.nextButtonRule = document.createElement("button");
         this.nextButtonRule.innerHTML = "Next";
-        this.nextButtonRule.classList.add("next_rule");
+        this.nextButtonRule.classList.add("next_rule_error");
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
