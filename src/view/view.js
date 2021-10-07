@@ -76,15 +76,16 @@ class ViewRule {
         // div.appendChild(this.rulename);
         this.errors_element = document.createElement("span");
         element.appendChild(this.errors_element);
-        this.errors_element.innerHTML += `<br>${current_error.name}: <br>`;
+        this.errors_element.innerHTML += `<br><b>${current_error.name}:</b> <br>`;
             this.errors_element.innerHTML += current_error.error_description;
         this.errors_element.classList.add("d-block");
         div.appendChild(element);
         let descDiv = document.createElement('div');
         descDiv.className = 'errDescDiv';
-        descDiv.innerHTML = 'WCAG description:<br>';
+        descDiv.innerHTML = '<b>WCAG description:</b><br>';
         let link = document.createElement('a');
         link.href = 'https://www.w3.org/TR/WCAG20-TECHS/H37.html';
+        link.target = '_blank';
         link.innerText = 'https://www.w3.org/TR/WCAG20-TECHS/H37.html';
         descDiv.appendChild(link);
         div.appendChild(descDiv);
