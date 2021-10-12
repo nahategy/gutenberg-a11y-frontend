@@ -65,13 +65,11 @@ export default class ImageAltTextRule extends ARule {
                 let $element = jQuery(e);
 
                 if ($element.closest('a').length === 0) {
-                        this.fails.push(e);
-                        return false;
+                    this.fails.push(e);
                 }
-
             }
         }
-
+        return this.fails.length < 1;
     }
 
     form() {
