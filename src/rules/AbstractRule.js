@@ -78,7 +78,7 @@ class ARule {
             return;
         element.scrollIntoView();
         const positions = element.getBoundingClientRect();
-        console.log(positions);
+        // console.log(positions);
         this.highlighter = document.createElement("div");
         this.highlighter.classList.add("a11y-highlighter");
         this.highlighter.style.top =`${positions.top}px`;
@@ -87,6 +87,28 @@ class ARule {
         this.highlighter.style.height = `${positions.height}px`;
 
         document.querySelector("body").append(this.highlighter);
+
+    }
+
+    prev_rule(ev) {
+        ev.preventDefault();
+        if (this.currentNumber - 1 >= 0) {
+            this.currentFaliedNumber = this.fails.length;
+            this.currentNumber--;
+            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.showFailedElementInDom();
+        }
+
+    }
+
+    next_rule(ev) {
+        ev.preventDefault();
+        if (this.currentNumber + 1 < this.fails.length) {
+            this.currentFaliedNumber = this.fails.length;
+            this.currentNumber++;
+            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.showFailedElementInDom();
+        }
 
     }
 }
