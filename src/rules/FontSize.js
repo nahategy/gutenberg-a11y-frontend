@@ -21,10 +21,12 @@ class FontSize extends ARule {
     repairButton;
     alt_tag;
 
+    fail_comment_blocks = [];
+
 
     prev_rule(ev) {
         ev.preventDefault();
-        if(this.currentNumber - 1 >= 0){
+        if (this.currentNumber - 1 >= 0) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             var current_error = this.errors[this.currentNumber];
@@ -37,7 +39,7 @@ class FontSize extends ARule {
     next_rule(ev) {
         ev.preventDefault();
 
-        if(this.currentNumber + 1 < this.fails.length){
+        if (this.currentNumber + 1 < this.fails.length) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             var current_error = this.errors[this.currentNumber];
@@ -51,74 +53,38 @@ class FontSize extends ARule {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
             alert('Add a text');
-        }else{
+        } else {
             var current_error = this.fails[this.currentNumber];
-            this.fails[this.currentNumber].alt=this.alt_tag.value;
+            this.fails[this.currentNumber].style.fontSize = `${this.alt_tag.value}px`;
+            let elem = this.fail_comment_blocks[this.currentNumber];
+            elem.nodeValue = elem.nodeValue.replace(/fontSize":"(\d+)px"/, `"fontSize":"${this.alt_tag.value}px"`)
         }
     }
-
 
 
     _run = () => {
         if (!this.block_content)
             return;
-        const sizes = this.block_content;
+        const htmlElementList = this.block_content;
 
-        if (!sizes)
+        if (!htmlElementList)
             return;
 
-        if(sizes[0].style.fontSize){
-            var result = sizes[0].style.fontSize.replace("px", "");
-            if(result < MIN_FONT_SIZE){
-                this.fails.push(sizes[0]);
+        console.log(this.block_content)
+        for (let i = 0; i < this.block_content.length; i++) {
+
+            if (htmlElementList[i].style?.fontSize) {
+                var result = parseInt(htmlElementList[i].style.fontSize.replace("px", ""));
+                if (result < MIN_FONT_SIZE) {
+                    this.fails.push(htmlElementList[i]);
+                    this.fails.push(htmlElementList[i - 1]);
+                }
             }
         }
 
-
-        // if (window.getComputedStyle(sizes[0]).fontSize) {
-        //     var result = window.getComputedStyle(sizes[0]).fontSize.replace("px", "");
-        //     result = parseInt(result);
-        //     console.log('res : ', result);
-        // }
-
-
-
-        return;
-
-        for (var i = 0; i < sizes.length; i++) {
-            const size = sizes[i];
-            if (this.check_font_size(size)) {
-                // TODO itt nem vissza térni, hanem eltárolni az elemeket.
-                return this;
-            }
-        }
         return false;
     }
 
-    check_font_size(element) {
-        let result = false;
-
-
-        // if (element.childNodes > 0) {
-        //     for (let i = 0; i < element.childNodes; i++) {
-        //         result = result || this.check_font_size(element.childNodes[i]);
-        //         console.log(result);
-        //     }
-        // }
-
-
-        if (window.getComputedStyle(element).fontSize) {
-            result = window.getComputedStyle(element).fontSize.replace("px", "");
-            if (!result)
-                return false;
-            try {
-                result = parseInt(result);
-            } catch (err) {
-                return false;
-            }
-            return result < MIN_FONT_SIZE;
-        }
-    }
 
     form() {
         this.currentNumber = 0;
