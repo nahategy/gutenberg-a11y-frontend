@@ -1,7 +1,7 @@
 import ARule from "./AbstractRule";
 
 
-export default class ImageAltTextRule extends ARule {
+class HeaderOrder extends ARule {
     error_description = "Images should include an alt attribute describing the image content."
     name = "ImageAltTextRule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
@@ -134,6 +134,8 @@ export default class ImageAltTextRule extends ARule {
         return div;
     }
 }
+
+export default HeaderOrder;
 
 
 
