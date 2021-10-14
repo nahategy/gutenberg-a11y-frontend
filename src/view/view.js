@@ -1,4 +1,6 @@
 import HelperService from "../services/helper.service";
+import AbstractRule from "../rules/AbstractRule";
+import ARule from "../rules/AbstractRule";
 
 class ViewRule {
     nextButton;
@@ -9,6 +11,7 @@ class ViewRule {
     errors_element;
     errornumbersContainer;
     rulename;
+    link;
     form_container;
 
 
@@ -19,10 +22,13 @@ class ViewRule {
             var current_error = this.errors[this.currentNumber];
             this.errornumbersContainer.innerHTML = `${this.currentNumber + 1} / ${this.errors.length}`;
             this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
-            //this.errors_element.innerHTML = this.errors[this.currentNumber].errors_element;
             this.rulename.innerHTML = this.errors[this.currentNumber].name;
+            this.link.innerText=this.errors[this.currentNumber].link;
             this.form_container.innerHTML = '';
             this.form_container.appendChild(current_error.form());
+            if(this.errors[this.currentNumber].name!='ImageAltTextRule'){
+                document.querySelector('.a11y-highlighter').remove();
+            }
             var div = document.getElementById('.repair_div');
         }
     }
@@ -35,9 +41,13 @@ class ViewRule {
             this.errornumbersContainer.innerHTML = `${this.currentNumber + 1} / ${this.errors.length}`;
             this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
             this.rulename.innerHTML = this.errors[this.currentNumber].name;
+            this.link.innerText=this.errors[this.currentNumber].link;
             this.form_container.innerHTML = '';
             this.form_container.appendChild(current_error.form());
             var div = document.getElementById('.repair_div');
+            if(this.errors[this.currentNumber].name!='ImageAltTextRule'){
+                document.querySelector('.a11y-highlighter').remove();
+            }
         }
     }
 
@@ -65,29 +75,29 @@ class ViewRule {
         div.appendChild(element);
         element = document.createElement("label");
         element.innerHTML = "Rule  ";
-        console.log(div);
         this.errornumbersContainer = document.createElement("span");
         element.appendChild(this.errornumbersContainer);
         this.errornumbersContainer.innerHTML = (this.currentNumber + 1) + " / " + numberOfErrors;
         div.appendChild(element);
-        // this.rulename = document.createElement('div');
-        // this.rulename.classList.add('rulename');
-        // this.rulename.innerHTML = current_error.name;
-        // div.appendChild(this.rulename);
+        this.rulename = document.createElement('div');
+        this.rulename.classList.add('rulename');
+        this.rulename.innerHTML = current_error.name;
+        div.appendChild(this.rulename);
         this.errors_element = document.createElement("span");
         element.appendChild(this.errors_element);
         this.errors_element.innerHTML += `<br><b>${current_error.name}:</b> <br>`;
-            this.errors_element.innerHTML += current_error.error_description;
+        this.errors_element.innerHTML += current_error.error_description;
         this.errors_element.classList.add("d-block");
         div.appendChild(element);
         let descDiv = document.createElement('div');
         descDiv.className = 'errDescDiv';
         descDiv.innerHTML = '<b>WCAG description:</b><br>';
-        let link = document.createElement('a');
-        link.href = 'https://www.w3.org/TR/WCAG20-TECHS/H37.html';
-        link.target = '_blank';
-        link.innerText = 'https://www.w3.org/TR/WCAG20-TECHS/H37.html';
-        descDiv.appendChild(link);
+        this.link = document.createElement('a');
+        this.link.href = current_error.link;
+        this.link.className='ruleLink';
+        this.link.target = '_blank';
+        this.link.innerText = current_error.link;
+        descDiv.appendChild(this.link);
         div.appendChild(descDiv);
         let line = document.createElement('hr');
         div.appendChild(line);
@@ -113,7 +123,6 @@ class ViewRule {
         let line2 = document.createElement('hr');
         div.appendChild(line2);
         div.appendChild(button_container);
-        console.log(div);
         document.body.appendChild(div);
 
 
@@ -135,6 +144,8 @@ class ViewRule {
 
     hide_view = () => {
         var x = document.getElementById("sidebar").remove();
+        if(document.querySelector('.a11y-highlighter'))
+        document.querySelector('.a11y-highlighter').remove();
     }
 
 }

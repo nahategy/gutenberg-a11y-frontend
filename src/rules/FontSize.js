@@ -3,8 +3,9 @@ import ARule from "./AbstractRule";
 const MIN_FONT_SIZE = 12;
 
 class FontSize extends ARule {
-    error_description = "Default size is too small"
+    error_description = "Default size is too small";
     name = "FontSizeRule";
+    link = "https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-scale.html";
 
     nextButtonRule;
     prevButton;
@@ -31,7 +32,7 @@ class FontSize extends ARule {
             this.currentNumber--;
             var current_error = this.errors[this.currentNumber];
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].style.fontSize.replace("px", "");
+            //this.alt_tag.value = this.fails[this.currentNumber].style.fontSize.replace("px", "");
         }
 
     }
@@ -44,7 +45,7 @@ class FontSize extends ARule {
             this.currentNumber++;
             var current_error = this.errors[this.currentNumber];
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].style.fontSize.replace("px", "");
+            //this.alt_tag.value = this.fails[this.currentNumber].style.fontSize.replace("px", "");
         }
 
     }
@@ -53,11 +54,20 @@ class FontSize extends ARule {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
             alert('Add a text');
-        } else {
+        }
+        else {
             var current_error = this.fails[this.currentNumber];
             this.fails[this.currentNumber].style.fontSize = `${this.alt_tag.value}px`;
             let elem = this.fail_comment_blocks[this.currentNumber];
             elem.nodeValue = elem.nodeValue.replace(/fontSize":"(\d+)px"/, `"fontSize":"${this.alt_tag.value}px"`)
+
+
+            // for (var i = 0; i < this.fails.length; i++) {
+            //     if (this.fails[i].nodeName == '#comment') {
+            //         this.fails[i].nodeValue = this.fails[i].nodeValue.replace(/fontSize":"(\d+)px"/, `"fontSize":"${this.alt_tag.value}px"`);
+            //     }
+            // }
+            // this._update();
         }
     }
 
@@ -90,21 +100,23 @@ class FontSize extends ARule {
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
 
-        this.currentFaliedNumber = this.fails.length;
-        var current_error = this.fails[0];
-        var result = this.fails[0].style.fontSize.replace("px", "");
-
-        // for(var i=0;i<this.fails.length;i++){
-        //     console.log('alt ',i,' ', this.fails[i].alt);
+        // for (var i = 0; i < this.fails.length; i++) {
+        //     if (this.fails[i].nodeName == '#comment') {
+        //         this.currentFaliedNumber++;
+        //     }
         // }
 
+        this.currentFaliedNumber = this.fails.length;
+
+        var current_error = this.fails[0];
+        var result = this.fails[0].style.fontSize.replace("px", "");
 
         var div = document.createElement("div");
         div.setAttribute("class", "repair_div");
         div.setAttribute("id", "repair_div");
         div.classList.add("container");
         var element = document.createElement("h4");
-        element.innerHTML = "Aktuális hiba jav:";
+        element.innerHTML = "Current error fix:";
         div.appendChild(element);
         element = document.createElement("label");
         element.innerHTML = "Issue   ";
@@ -121,18 +133,18 @@ class FontSize extends ARule {
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
-        this.repairButton.innerHTML = "Javítás";
+        this.repairButton.innerHTML = "Repair";
         this.repairButton.classList.add("repair");
         this.repairButton.onclick = this.repair.bind(this);
         button_container_rule.appendChild(this.repairButton);
         this.prevButton = document.createElement("button");
-        this.prevButton.innerHTML = "prev";
-        this.prevButton.classList.add("prev_rule");
+        this.prevButton.innerHTML = "Prev";
+        this.prevButton.classList.add("prev_rule_error");
         this.prevButton.onclick = this.prev_rule.bind(this);
         button_container_rule.appendChild(this.prevButton);
         this.nextButtonRule = document.createElement("button");
-        this.nextButtonRule.innerHTML = "next";
-        this.nextButtonRule.classList.add("next_rule");
+        this.nextButtonRule.innerHTML = "Next";
+        this.nextButtonRule.classList.add("next_rule_error");
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);

@@ -9,8 +9,8 @@ class ARule {
     error_description;
     name;
     fails;
-    currentNumber=0;
-    highlighter=null;
+    currentNumber = 0;
+    highlighter = null;
 
     constructor(block, rewrite_rules_function) {
         if (new.target === ARule)
@@ -70,24 +70,31 @@ class ARule {
     }
 
     highlight_failed_element = (element) => {
-        if(this.highlighter !== null){
+        if (this.highlighter !== null) {
             this.highlighter.remove();
         }
 
-        if(!element)
+        if (!element)
             return;
         element.scrollIntoView();
         const positions = element.getBoundingClientRect();
         // console.log(positions);
         this.highlighter = document.createElement("div");
         this.highlighter.classList.add("a11y-highlighter");
-        this.highlighter.style.top =`${positions.top}px`;
-        this.highlighter.style.left =`${positions.left}px`;
+        this.highlighter.style.top = `${positions.top}px`;
+        this.highlighter.style.left = `${positions.left}px`;
         this.highlighter.style.width = `${positions.width}px`;
         this.highlighter.style.height = `${positions.height}px`;
 
         document.querySelector("body").append(this.highlighter);
+    }
 
+    hideFailedElementinDom = () => {
+        if (this.highlighter) {
+            this.highlighter.remove();
+            console.log('hello');
+        }
+        console.log('hll');
     }
 
     prev_rule(ev) {

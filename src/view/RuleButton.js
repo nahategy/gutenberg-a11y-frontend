@@ -73,6 +73,8 @@ class RuleButton {
     }
 
     rewrite_rules = () => {
+        if(document.querySelector('.a11y-highlighter'))
+            document.querySelector('.a11y-highlighter').remove();
         var output = "";
         for (var i = 0; i < this.rule_applicator.block_tree.structure.length; i++) {
             const wpTreeElementDummy = this.rule_applicator.block_tree.structure[i];
@@ -87,7 +89,7 @@ class RuleButton {
         window.setNativeValue(editor[0], output)
         document.querySelector(".editor-post-text-editor").dispatchEvent(new Event("change", {bubbles: true}));
         document.querySelector(".editor-post-text-editor").dispatchEvent(new Event("blur", {bubbles: true}));
-        this.button_container.focus();
+        //this.button_container.focus();
         this.toggle_code_editor()
     }
 

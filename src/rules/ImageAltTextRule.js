@@ -46,13 +46,14 @@ class ImageAltTextRule extends ARule {
 
     }
 
-  showFailedElementInDom = () => {
-      const src = this.fails[this.currentNumber].src;
-      const element = jQuery(`img[src='${src}']`);
-      this.highlight_failed_element(element[0])
-  }
+    showFailedElementInDom = () => {
+        const src = this.fails[this.currentNumber].src;
+        const element = jQuery(`img[src='${src}']`);
+        this.highlight_failed_element(element[0])
+    }
 
-  repair(ev) {
+
+    repair(ev) {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
             alert('Add a text');
@@ -88,9 +89,9 @@ class ImageAltTextRule extends ARule {
             console.log('alt ', i, ' ', this.fails[i].alt);
         }
 
-        setTimeout(()=>{
+        setTimeout(() => {
             this.showFailedElementInDom();
-        },500);
+        }, 500);
 
         var div = document.createElement("div");
         div.setAttribute("class", "repair_div");
@@ -129,7 +130,6 @@ class ImageAltTextRule extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
-        console.log(div);
         return div;
     }
 }

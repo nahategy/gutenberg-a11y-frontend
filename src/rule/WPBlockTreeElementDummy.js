@@ -20,7 +20,6 @@ class WPBlockTreeElementDummy {
     }
 
     toOriginalText = () => {
-        console.log("Blabla",this.content)
         return (jQuery("<div></div>").append(this.content)).html();
     }
 
