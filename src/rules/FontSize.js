@@ -80,7 +80,6 @@ class FontSize extends ARule {
         if (!htmlElementList)
             return;
 
-        console.log(this.block_content)
         for (let i = 0; i < this.block_content.length; i++) {
 
             if (htmlElementList[i].style?.fontSize) {

@@ -15,6 +15,7 @@ class RuleFactory {
             ImageAltTextRule,
             ImageAltTextLength,
             FontSize,
+            AdjacentLinks,
             HeaderOrder,
             TextAlignJustified,
             TextUnderLine
