@@ -6,6 +6,7 @@ import ImageAltTextLength from "../rules/ImageAltTextLength";
 import HeaderOrder from "../rules/HeaderOrder";
 import TextAlignJustified from "../rules/TextAlignJustified";
 import TextUnderLine from "../rules/TextUnderLine";
+import TableHeader from "../rules/TableHeader";
 
 
 
@@ -15,7 +16,8 @@ class RuleFactory {
             ImageAltTextRule,
             ImageAltTextLength,
             FontSize,
-            AdjacentLinks,
+            // AdjacentLinks,
+            TableHeader,
             HeaderOrder,
             TextAlignJustified,
             TextUnderLine
