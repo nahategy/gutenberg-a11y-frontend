@@ -53,13 +53,13 @@ class FontSize extends ARule {
     repair(ev) {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
-            alert('Add a text');
+            alert('Enter the new font size!');
         }
         else {
             var current_error = this.fails[this.currentNumber];
             this.fails[this.currentNumber].style.fontSize = `${this.alt_tag.value}px`;
             let elem = this.fail_comment_blocks[this.currentNumber];
-            elem.nodeValue = elem.nodeValue.replace(/fontSize":"(\d+)px"/, `"fontSize":"${this.alt_tag.value}px"`)
+            elem.nodeValue = elem.nodeValue.replace(/"fontSize":"(\d+)px"/, `"fontSize":"${this.alt_tag.value}px"`)
 
 
             // for (var i = 0; i < this.fails.length; i++) {
@@ -67,7 +67,7 @@ class FontSize extends ARule {
             //         this.fails[i].nodeValue = this.fails[i].nodeValue.replace(/fontSize":"(\d+)px"/, `"fontSize":"${this.alt_tag.value}px"`);
             //     }
             // }
-            // this._update();
+            this._update();
         }
     }
 
@@ -87,7 +87,7 @@ class FontSize extends ARule {
                 var result = parseInt(htmlElementList[i].style.fontSize.replace("px", ""));
                 if (result < MIN_FONT_SIZE) {
                     this.fails.push(htmlElementList[i]);
-                    this.fails.push(htmlElementList[i - 1]);
+                    this.fail_comment_blocks.push(htmlElementList[i - 1]);
                 }
             }
         }
