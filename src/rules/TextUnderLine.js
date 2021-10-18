@@ -3,7 +3,7 @@ import ARule from "./AbstractRule";
 
 class TextAlignJustified extends ARule {
     error_description = "Images should include an alt attribute describing the image content."
-    name = "ImageAltTextRule";
+    name = "Invalid Text Underline";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
     nextButtonRule;
@@ -47,11 +47,12 @@ class TextAlignJustified extends ARule {
     }
 
     showFailedElementInDom = () => {
-
     }
 
     repair(ev) {
         ev.preventDefault();
+        this.fails[this.currentNumber].style.textDecoration = 'unset';
+        this._update();
     }
 
 
