@@ -50,13 +50,11 @@ class ImageAltTextLength extends ARule {
     repair(ev) {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
-            alert('Add a text');
+            alert('Enter the new image alternative text');
         }else{
-            console.log('current falied num: ', this.currentNumber);
             var current_error = this.fails[this.currentNumber];
             this.fails[this.currentNumber].alt=this.alt_tag.value;
-            console.log(current_error);
-            console.log(this.fails[this.currentNumber].alt);
+            this._update();
         }
     }
 

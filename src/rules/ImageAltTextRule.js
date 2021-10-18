@@ -56,12 +56,11 @@ class ImageAltTextRule extends ARule {
     repair(ev) {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
-            alert('Add a text');
+            alert('Enter the new image alternative text');
             return
         }
+
         this.fails[this.currentNumber].alt = this.alt_tag.value;
-        var div = jQuery('<div></div>')
-        div.append(this.block.toHTML()[0])
         this._update();
     }
 
