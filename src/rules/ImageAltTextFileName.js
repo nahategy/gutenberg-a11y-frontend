@@ -1,10 +1,10 @@
 import ARule from "./AbstractRule";
 
 
-class TableHeader extends ARule {
-    error_description = "Screen readers cannot interpret tables without the proper structure. Table headers provide direction and overview of the content.";
-    name = "Tables should include at least one header.";
-    link = "https://www.w3.org/TR/WCAG20-TECHS/H43.html";
+class ImageAltTextFileName extends ARule {
+    error_description = "Screen readers cannot determine what is displayed in an image without alternative text, and filenames are often meaningless strings of numbers and letters that do not describe the context or meaning."
+    name = "Image filenames should not be used as the alt attribute describing the image content.";
+    link = "https://www.w3.org/TR/WCAG20-TECHS/F30.html";
 
     nextButtonRule;
     prevButton;
@@ -21,85 +21,89 @@ class TableHeader extends ARule {
     repairButton;
     alt_tag;
 
-    fail_comment_blocks = [];
-
 
     prev_rule(ev) {
         ev.preventDefault();
         if (this.currentNumber - 1 >= 0) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
-            let current_error = this.errors[this.currentNumber];
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.alt_tag.value = this.fails[this.currentNumber].alt;
+            this.showFailedElementInDom();
         }
 
     }
 
     next_rule(ev) {
         ev.preventDefault();
-
         if (this.currentNumber + 1 < this.fails.length) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
-            let current_error = this.errors[this.currentNumber];
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.alt_tag.value = this.fails[this.currentNumber].alt;
+            this.showFailedElementInDom();
         }
 
     }
+
+    showFailedElementInDom = () => {
+        const src = this.fails[this.currentNumber].src;
+        const element = jQuery(`img[src='${src}']`);
+        this.highlight_failed_element(element[0])
+    }
+
 
     repair(ev) {
         ev.preventDefault();
-        let current_error = this.fails[this.currentNumber];
-
-        let $tr = current_error.find("tr").first()
-        let listoftd = $tr.find('td');
-        for (let i = 0; i < listoftd.length; i++) {
-            this.changeTagType(listoftd[i], 'th');
+        if (this.alt_tag.value === '') {
+            alert('Enter the new image alternative text');
+            return
         }
 
+        this.fails[this.currentNumber].alt = this.alt_tag.value;
         this._update();
     }
 
-    changeTagType(elem, tagName) {
-        const newElem = elem.ownerDocument.createElement(tagName)
-        while (elem.firstChild) {
-            newElem.appendChild(elem.firstChild)
-        }
-        for (let i = elem.attributes.length - 1; i >= 0; --i) {
-            newElem.attributes.setNamedItem(elem.attributes[i].cloneNode())
-        }
-        elem.parentNode.replaceChild(newElem, elem)
-        return newElem
+    normalize_string = (str) => {
+        return str.toLowerCase();
+    }
+
+    get_file_name = (str) => {
+        return str.substring(str.lastIndexOf('/') + 1);
     }
 
     _run = () => {
         if (!this.block_content)
             return;
+        let images = this.block_content.find('img');
+        if (!images)
+            return;
 
-        let $tables = this.block_content.find('table');
-        for (let i = 0; i < $tables.length; i++) {
-            if (jQuery($tables[i]).find("th").length === 0) {
-                this.fails.push(jQuery($tables[i]));
+        for (var i = 0; i < images.length; i++) {
+            if (this.normalize_string(images[i].alt) === this.normalize_string(this.get_file_name(images[i].src))) {
+                this.fails.push(images[i]);
             }
         }
-
     }
-
 
     form() {
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
-
-
         this.currentFaliedNumber = this.fails.length;
+        var current_error = this.fails[0];
+        for (var i = 0; i < this.fails.length; i++) {
+            console.log('alt ', i, ' ', this.fails[i].alt);
+        }
 
-        let current_error = this.fails[0];
+        setTimeout(() => {
+            this.showFailedElementInDom();
+        }, 500);
 
-        let div = document.createElement("div");
+        var div = document.createElement("div");
         div.setAttribute("class", "repair_div");
         div.setAttribute("id", "repair_div");
         div.classList.add("container");
-        let element = document.createElement("h4");
+        var element = document.createElement("h4");
         element.innerHTML = "Current error fix:";
         div.appendChild(element);
         element = document.createElement("label");
@@ -112,8 +116,9 @@ class TableHeader extends ARule {
         this.alt_tag.classList.add = "alt_tag";
         this.alt_tag.className = "alt_tag";
         this.alt_tag.type = "text";
+        this.alt_tag.value = current_error.alt;
         div.appendChild(this.alt_tag);
-        let button_container_rule = document.createElement('div');
+        var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
         this.repairButton.innerHTML = "Repair";
@@ -133,10 +138,8 @@ class TableHeader extends ARule {
         div.appendChild(button_container_rule);
         return div;
     }
-
-
 }
 
-export default TableHeader;
+export default ImageAltTextFileName;
 
 

@@ -35,7 +35,6 @@ class AdjacentLinks extends ARule {
             }
 
             if (this.shouldMergeAnchors(elem1, elem2)) {
-                console.log('FAIL', elem2);
                 this.fails.push(elem2)
             }
         }
@@ -44,10 +43,6 @@ class AdjacentLinks extends ARule {
 
     repair = (ev) => {
         ev.preventDefault();
-        if (this.alt_tag.value === '') {
-            alert('Enter the new font size!');
-            return
-        }
         this.fails[this.currentNumber].href = "";
         this._update();
     }

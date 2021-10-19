@@ -69,7 +69,6 @@ class ImageAltTextRule extends ARule {
         if (!this.block_content)
             return;
         let images = this.block_content.find('img');
-        this.block_content.find('img').alt = "abct";
         if (!images)
             return;
         for (var i = 0; i < images.length; i++) {

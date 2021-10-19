@@ -1,10 +1,10 @@
 import ARule from "./AbstractRule";
 
 
-class TableHeader extends ARule {
-    error_description = "Screen readers cannot interpret tables without the proper structure. Table headers provide direction and overview of the content.";
-    name = "Tables should include at least one header.";
-    link = "https://www.w3.org/TR/WCAG20-TECHS/H43.html";
+class TableCaption extends ARule {
+    error_description = "Screen readers cannot interpret tables without the proper structure. Table captions describe the context and general understanding of the table.";
+    name = "Tables should include a caption describing the contents of the table.";
+    link = "https://www.w3.org/TR/WCAG20-TECHS/H39.html";
 
     nextButtonRule;
     prevButton;
@@ -50,35 +50,21 @@ class TableHeader extends ARule {
     repair(ev) {
         ev.preventDefault();
         let current_error = this.fails[this.currentNumber];
-
-        let $tr = current_error.find("tr").first()
-        let listoftd = $tr.find('td');
-        for (let i = 0; i < listoftd.length; i++) {
-            this.changeTagType(listoftd[i], 'th');
-        }
+        current_error.prepend(jQuery(`<caption>${this.alt_tag.value}</caption>`));
 
         this._update();
     }
 
-    changeTagType(elem, tagName) {
-        const newElem = elem.ownerDocument.createElement(tagName)
-        while (elem.firstChild) {
-            newElem.appendChild(elem.firstChild)
-        }
-        for (let i = elem.attributes.length - 1; i >= 0; --i) {
-            newElem.attributes.setNamedItem(elem.attributes[i].cloneNode())
-        }
-        elem.parentNode.replaceChild(newElem, elem)
-        return newElem
-    }
 
     _run = () => {
         if (!this.block_content)
             return;
-
         let $tables = this.block_content.find('table');
         for (let i = 0; i < $tables.length; i++) {
-            if (jQuery($tables[i]).find("th").length === 0) {
+            if (jQuery($tables[i]).find("caption").length === 0) {
+                // Csak akkor érdekes, ha nem blokkeditorból szerkeszti ( az nem kezeli ezt és beomlik )
+                if (jQuery($tables[i]).parent('.wp-block-code').length === 0)
+                    return;
                 this.fails.push(jQuery($tables[i]));
             }
         }
@@ -90,9 +76,7 @@ class TableHeader extends ARule {
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
 
-
         this.currentFaliedNumber = this.fails.length;
-
         let current_error = this.fails[0];
 
         let div = document.createElement("div");
@@ -137,6 +121,6 @@ class TableHeader extends ARule {
 
 }
 
-export default TableHeader;
+export default TableCaption;
 
 
