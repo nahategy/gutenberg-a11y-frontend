@@ -9,6 +9,7 @@ import TextUnderLine from "../rules/TextUnderLine";
 import TableHeader from "../rules/TableHeader";
 import TableCaption from "../rules/TableCaption";
 import ImageAltTextFileName from "../rules/ImageAltTextFileName";
+import TableHeaderScope from "../rules/TableHeaderScope";
 
 
 class RuleFactory {
@@ -21,6 +22,7 @@ class RuleFactory {
             // AdjacentLinks,
             TableCaption,
             TableHeader,
+            TableHeaderScope,
             HeaderOrder,
             TextAlignJustified,
             TextUnderLine
