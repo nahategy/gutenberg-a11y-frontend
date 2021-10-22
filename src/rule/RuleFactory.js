@@ -19,7 +19,7 @@ class RuleFactory {
             ImageAltTextLength,
             ImageAltTextFileName,
             FontSize,
-            // AdjacentLinks,
+            AdjacentLinks,
             TableCaption,
             TableHeader,
             TableHeaderScope,

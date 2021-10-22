@@ -3,8 +3,8 @@ import ARule from "./AbstractRule";
 const MIN_FONT_SIZE = 12;
 
 class FontSize extends ARule {
-    error_description = "Default size is too small";
-    name = "FontSizeRule";
+    error_description = "Ensure that default fonts are no smaller than 11px. ";
+    name = "Font Size Rule";
     link = "https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-scale.html";
 
     nextButtonRule;
@@ -61,12 +61,7 @@ class FontSize extends ARule {
             let elem = this.fail_comment_blocks[this.currentNumber];
             elem.nodeValue = elem.nodeValue.replace(/"fontSize":"(\d+)px"/, `"fontSize":"${this.alt_tag.value}px"`)
 
-
-            // for (var i = 0; i < this.fails.length; i++) {
-            //     if (this.fails[i].nodeName == '#comment') {
-            //         this.fails[i].nodeValue = this.fails[i].nodeValue.replace(/fontSize":"(\d+)px"/, `"fontSize":"${this.alt_tag.value}px"`);
-            //     }
-            // }
+            this.showAlert('Error corrected', 'alert-primary');
             this._update();
         }
     }

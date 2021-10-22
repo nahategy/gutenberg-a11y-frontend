@@ -61,6 +61,7 @@ class ImageAltTextFileName extends ARule {
         }
 
         this.fails[this.currentNumber].alt = this.alt_tag.value;
+        this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
 
@@ -91,9 +92,7 @@ class ImageAltTextFileName extends ARule {
         this.currentFaliedNumber = 0;
         this.currentFaliedNumber = this.fails.length;
         var current_error = this.fails[0];
-        for (var i = 0; i < this.fails.length; i++) {
-            console.log('alt ', i, ' ', this.fails[i].alt);
-        }
+
 
         setTimeout(() => {
             this.showFailedElementInDom();

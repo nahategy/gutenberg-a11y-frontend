@@ -71,6 +71,7 @@ class ViewRule {
         div.setAttribute("id", "sidebar");
         div.classList.add("container");
         var element = document.createElement("h3");
+        element.className = 'accessibilityHeader';
         element.innerHTML = "Accessibility Checker";
         div.appendChild(element);
         element = document.createElement("label");

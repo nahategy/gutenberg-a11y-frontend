@@ -51,7 +51,7 @@ class TableCaption extends ARule {
         ev.preventDefault();
         let current_error = this.fails[this.currentNumber];
         current_error.prepend(jQuery(`<caption>${this.alt_tag.value}</caption>`));
-
+        this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
 

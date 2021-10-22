@@ -4,6 +4,8 @@ import ARule from "./AbstractRule";
 class ImageAltTextLength extends ARule {
     error_description = "Alt attribute text should not contain more than 120 characters."
     name = "ImageAltTextLengthRule";
+    link = "";
+
 
     nextButtonRule;
     prevButton;
@@ -54,6 +56,7 @@ class ImageAltTextLength extends ARule {
         }else{
             var current_error = this.fails[this.currentNumber];
             this.fails[this.currentNumber].alt=this.alt_tag.value;
+            this.showAlert('Error corrected', 'alert-primary');
             this._update();
         }
     }

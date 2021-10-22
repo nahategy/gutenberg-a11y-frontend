@@ -56,7 +56,7 @@ class TableHeader extends ARule {
         for (let i = 0; i < listoftd.length; i++) {
             this.changeTagType(listoftd[i], 'th');
         }
-
+        this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
 

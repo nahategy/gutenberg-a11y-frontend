@@ -53,6 +53,7 @@ class TableHeaderScope extends ARule {
 
         let $th = current_error.find("th")
         $th.attr('scope', 'col');
+        this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
 

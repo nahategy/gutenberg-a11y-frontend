@@ -2,9 +2,9 @@ import ARule from "./AbstractRule";
 
 
 class HeaderOrder extends ARule {
-    error_description = "Images should include an alt attribute describing the image content."
-    name = "ImageAltTextRule";
-    link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
+    error_description = "Heading levels should not be skipped."
+    name = "Header order rule";
+    link = "https://www.w3.org/TR/WCAG20-TECHS/G141.html";
 
     nextButtonRule;
     prevButton;
@@ -51,6 +51,7 @@ class HeaderOrder extends ARule {
     }
 
     repair(ev) {
+
         ev.preventDefault();
     }
 
@@ -59,13 +60,15 @@ class HeaderOrder extends ARule {
         if (!this.block_content)
             return;
 
-        var headers = jQuery(this.block_content).find('h1, h2 ,h3 ,h4, h5, h6 ');
+        var $headers = jQuery(this.block_content).filter('h1, h2 ,h3 ,h4, h5, h6 ');
 
         var nexType = 1;
-        for (let i = 0; i < headers.length; i++) {
-            let $element = jQuery(headers[i]);
-            var elementType =$element.previousSibling.nodeName;
-            var elementSize = parseInt(elementType.replace("h"));
+        for (let i = 0; i < $headers.length; i++) {
+            let $element = $headers[i];
+
+            var elementType =$headers[i].nodeName;
+            var elementSize = elementType.split("")[1];
+
             if (elementSize > nexType)
                 nexType = elementSize;
 
@@ -73,7 +76,7 @@ class HeaderOrder extends ARule {
                 //Hiba rossz a sorrendje az elemeknek ( ezt keressük ) .
             {
                 this.fails.push($element[0]);
-                break
+                break;
             }
 
         }
@@ -83,15 +86,17 @@ class HeaderOrder extends ARule {
     form() {
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
-        this.currentFaliedNumber = this.fails.length;
-        var current_error = this.fails[0];
-        for (var i = 0; i < this.fails.length; i++) {
-            console.log('alt ', i, ' ', this.fails[i].alt);
-        }
 
-        setTimeout(() => {
-            this.showFailedElementInDom();
-        }, 500);
+        // for (var i = 0; i < this.fails.length; i++) {
+        //     if (this.fails[i].nodeName == '#comment') {
+        //         this.currentFaliedNumber++;
+        //     }
+        // }
+
+        this.currentFaliedNumber = this.fails.length;
+
+        var current_error = this.fails[0];
+        var result = this.fails[0].style.fontSize.replace("px", "");
 
         var div = document.createElement("div");
         div.setAttribute("class", "repair_div");
@@ -110,7 +115,7 @@ class HeaderOrder extends ARule {
         this.alt_tag.classList.add = "alt_tag";
         this.alt_tag.className = "alt_tag";
         this.alt_tag.type = "text";
-        this.alt_tag.value = current_error.alt;
+        this.alt_tag.value = current_error.style.fontSize.replace("px", "");
         div.appendChild(this.alt_tag);
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
@@ -130,7 +135,6 @@ class HeaderOrder extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
-        console.log(div);
         return div;
     }
 }

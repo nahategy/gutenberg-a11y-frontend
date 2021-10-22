@@ -61,6 +61,7 @@ class ImageAltTextRule extends ARule {
         }
 
         this.fails[this.currentNumber].alt = this.alt_tag.value;
+        this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
 

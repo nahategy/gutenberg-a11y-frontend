@@ -1,14 +1,15 @@
 import ARule from "./AbstractRule";
+import HelperService from "../services/helper.service";
 
 class AdjacentLinks extends ARule {
 
-    error_description = "AdjacentLinks error"
+    error_description = "Adjacent links with the same URL should be a single link."
     name = "AdjacentLinks";
+    link = "https://www.w3.org/TR/WCAG20-TECHS/H2.html";
 
     _run = () => {
         if (!this.block_content)
             return;
-
 
         for (let i = 0; i < this.block_content.length; i++) {
             this.test(this.block_content[i])
@@ -31,7 +32,8 @@ class AdjacentLinks extends ARule {
             let elem2 = element.childNodes[i + 1];
 
             if (elem1.nodeName === "A" && elem2.nodeName === "#text") {
-                elem2 = element.childNodes[i++ + 1]
+                i++;
+                elem2 = element.childNodes[i + 1];
             }
 
             if (this.shouldMergeAnchors(elem1, elem2)) {
@@ -44,6 +46,7 @@ class AdjacentLinks extends ARule {
     repair = (ev) => {
         ev.preventDefault();
         this.fails[this.currentNumber].href = "";
+        this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
 
@@ -53,6 +56,50 @@ class AdjacentLinks extends ARule {
             return false
         }
         return elem1.getAttribute("href") === elem2.getAttribute("href")
+    }
+
+    form() {
+        this.currentNumber = 0;
+        this.currentFaliedNumber = 0;
+
+
+        this.currentFaliedNumber = this.fails.length;
+
+        var current_error = this.fails[0];
+        var result = this.fails[0].style.fontSize.replace("px", "");
+
+        var div = document.createElement("div");
+        div.setAttribute("class", "repair_div");
+        div.setAttribute("id", "repair_div");
+        div.classList.add("container");
+        var element = document.createElement("h4");
+        element.innerHTML = "Current error fix:";
+        div.appendChild(element);
+        element = document.createElement("label");
+        element.innerHTML = "Issue   ";
+        this.errornumbersContainerRule = document.createElement("span");
+        element.appendChild(this.errornumbersContainerRule);
+        this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
+        div.appendChild(element);
+        var button_container_rule = document.createElement('div');
+        button_container_rule.classList.add('button-container-rule');
+        this.repairButton = document.createElement("button");
+        this.repairButton.innerHTML = "Repair";
+        this.repairButton.classList.add("repair");
+        this.repairButton.onclick = this.repair.bind(this);
+        button_container_rule.appendChild(this.repairButton);
+        this.prevButton = document.createElement("button");
+        this.prevButton.innerHTML = "Prev";
+        this.prevButton.classList.add("prev_rule_error");
+        this.prevButton.onclick = this.prev_rule.bind(this);
+        button_container_rule.appendChild(this.prevButton);
+        this.nextButtonRule = document.createElement("button");
+        this.nextButtonRule.innerHTML = "Next";
+        this.nextButtonRule.classList.add("next_rule_error");
+        this.nextButtonRule.onclick = this.next_rule.bind(this);
+        button_container_rule.appendChild(this.nextButtonRule);
+        div.appendChild(button_container_rule);
+        return div;
     }
 
 }

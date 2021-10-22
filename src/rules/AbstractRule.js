@@ -118,6 +118,29 @@ class ARule {
         }
 
     }
+
+    showAlert = function (message, className) {
+        // Create div
+        let div = document.createElement('div');
+        // Add classes
+        div.className = `alert ${className}`;
+        // Add text
+        div.appendChild(document.createTextNode(message));
+
+        setTimeout(function () {
+            // Get parent
+            let container = document.querySelector('.accessibility-container');
+            // Get form
+            let form = document.querySelector('.accessibilityHeader');
+            // Insert alert
+            container.insertBefore(div, form);
+        }, 200);
+
+        // Timeout after 3 sec
+        setTimeout(function(){
+            document.querySelector('.alert').remove();
+        }, 3000);
+    }
 }
 
 

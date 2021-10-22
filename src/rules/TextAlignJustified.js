@@ -52,6 +52,7 @@ class TextUnderLine extends ARule {
 
     repair(ev) {
         ev.preventDefault();
+        this.showAlert('Error corrected', 'alert-primary');
     }
 
 

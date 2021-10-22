@@ -52,6 +52,7 @@ class TextAlignJustified extends ARule {
     repair(ev) {
         ev.preventDefault();
         this.fails[this.currentNumber].style.textDecoration = 'unset';
+        this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
 
