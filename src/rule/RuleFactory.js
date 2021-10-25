@@ -10,11 +10,15 @@ import TableHeader from "../rules/TableHeader";
 import TableCaption from "../rules/TableCaption";
 import ImageAltTextFileName from "../rules/ImageAltTextFileName";
 import TableHeaderScope from "../rules/TableHeaderScope";
+import EmptyHeader from "../rules/EmptyHeader";
+import EmptyButton from "../rules/EmptyButton";
 
 
 class RuleFactory {
     static getRules() {
         return [
+            EmptyButton,
+            EmptyHeader,
             ImageAltTextRule,
             ImageAltTextLength,
             ImageAltTextFileName,
@@ -25,7 +29,7 @@ class RuleFactory {
             TableHeaderScope,
             HeaderOrder,
             TextAlignJustified,
-            TextUnderLine
+            TextUnderLine,
         ]
     }
 }
