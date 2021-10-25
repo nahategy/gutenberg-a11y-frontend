@@ -56,21 +56,29 @@ class TextAlignJustified extends ARule {
         this._update();
     }
 
+    check_element = (element) => {
+        let e = element;
+        let $element = jQuery(e);
+
+        if ($element.is('u') || e.style?.textDecoration === "underline") {
+            if ($element.closest('a').length === 0) {
+                this.fails.push(e);
+            }
+        }
+        console.log($element.children())
+        for (let i = 0; i < $element.children().length; i++) {
+            this.check_element($element.children()[i])
+        }
+    }
 
     _run = () => {
         if (!this.block_content)
             return;
 
-        for (let i = 0; i < this.block_content.length; i++) {
-            let e = this.block_content[i];
-            if (e.style?.textDecoration === "underline") {
-                let $element = jQuery(e);
-
-                if ($element.closest('a').length === 0) {
-                    this.fails.push(e);
-                }
-            }
+        for(let i = 0; i<this.block_content.length;i++){
+            this.check_element(this.block_content[i]);
         }
+
         return this.fails.length < 1;
     }
 
