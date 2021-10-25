@@ -44,6 +44,11 @@ class HelperService {
     static getNexNumber() {
         return HelperService.number++;
     }
+
+    static log(msg) {
+        console.log(msg)
+    }
+
 }
 
 
