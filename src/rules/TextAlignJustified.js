@@ -3,7 +3,7 @@ import ARule from "./AbstractRule";
 
 class TextUnderLine extends ARule {
     error_description = "Images should include an alt attribute describing the image content."
-    name = "ImageAltTextRule";
+    name = "TexAlignJustified";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
     nextButtonRule;
@@ -52,24 +52,30 @@ class TextUnderLine extends ARule {
 
     repair(ev) {
         ev.preventDefault();
+        this.fails[this.currentNumber].style.textAlign = 'left';
         this.showAlert('Error corrected', 'alert-primary');
+        this._update();
     }
 
+    check_element = (element) => {
+        let e = element;
+        let $element = jQuery(e);
+        if (e.style?.textAlign === "justify") {
+            this.fails.push(e);
+        }
+        for (let i = 0; i < $element.children().length; i++) {
+            this.check_element($element.children()[i])
+        }
+    }
 
     _run = () => {
         if (!this.block_content)
             return;
 
         for (let i = 0; i < this.block_content.length; i++) {
-            let e = this.block_content[i];
-            if (e.style?.textAlign === "justified") {
-                let $element = jQuery(e);
-
-                if ($element.closest('a').length === 0) {
-                    this.fails.push(e);
-                }
-            }
+            this.check_element(this.block_content[i]);
         }
+
         return this.fails.length < 1;
     }
 
