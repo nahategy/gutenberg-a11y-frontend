@@ -65,7 +65,6 @@ class TextAlignJustified extends ARule {
                 this.fails.push(e);
             }
         }
-        console.log($element.children())
         for (let i = 0; i < $element.children().length; i++) {
             this.check_element($element.children()[i])
         }
