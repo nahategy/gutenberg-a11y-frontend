@@ -16,12 +16,10 @@ class FontSize extends ARule {
     errornumbersContainerRule;
     rulename;
     form_container;
-
     prevButton;
     nextButton;
     repairButton;
     alt_tag;
-
     fail_comment_blocks = [];
 
 
@@ -93,12 +91,6 @@ class FontSize extends ARule {
     form() {
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
-
-        // for (var i = 0; i < this.fails.length; i++) {
-        //     if (this.fails[i].nodeName == '#comment') {
-        //         this.currentFaliedNumber++;
-        //     }
-        // }
 
         this.currentFaliedNumber = this.fails.length;
 

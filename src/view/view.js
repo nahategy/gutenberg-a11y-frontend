@@ -26,7 +26,10 @@ class ViewRule {
             this.link.innerText=this.errors[this.currentNumber].link;
             this.form_container.innerHTML = '';
             this.form_container.appendChild(current_error.form());
-            if(this.errors[this.currentNumber].name!='ImageAltTextRule'){
+            if(this.errors[this.currentNumber].name!='ImageAltTextRule'
+                || this.errors[this.currentNumber].name!='ImageAltTextLength'
+                || this.errors[this.currentNumber].name!='ImageAltTextFileName'){
+                if(document.querySelector('.a11y-highlighter'))
                 document.querySelector('.a11y-highlighter').remove();
             }
             var div = document.getElementById('.repair_div');
@@ -45,8 +48,11 @@ class ViewRule {
             this.form_container.innerHTML = '';
             this.form_container.appendChild(current_error.form());
             var div = document.getElementById('.repair_div');
-            if(this.errors[this.currentNumber].name!='ImageAltTextRule'){
-                document.querySelector('.a11y-highlighter').remove();
+            if(this.errors[this.currentNumber].name!='ImageAltTextRule'
+                || this.errors[this.currentNumber].name!='ImageAltTextLength'
+                || this.errors[this.currentNumber].name!='ImageAltTextFileName'){
+                if(document.querySelector('.a11y-highlighter'))
+                    document.querySelector('.a11y-highlighter').remove();
             }
         }
     }

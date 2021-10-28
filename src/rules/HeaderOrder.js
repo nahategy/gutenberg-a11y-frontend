@@ -29,7 +29,6 @@ class HeaderOrder extends ARule {
             this.currentNumber--;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
-            this.showFailedElementInDom();
         }
 
     }
@@ -41,14 +40,10 @@ class HeaderOrder extends ARule {
             this.currentNumber++;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
-            this.showFailedElementInDom();
         }
 
     }
 
-    showFailedElementInDom = () => {
-
-    }
 
     repair(ev) {
 
@@ -87,11 +82,8 @@ class HeaderOrder extends ARule {
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
 
-        // for (var i = 0; i < this.fails.length; i++) {
-        //     if (this.fails[i].nodeName == '#comment') {
-        //         this.currentFaliedNumber++;
-        //     }
-        // }
+        document.querySelector('.a11y-highlighter').remove();
+
 
         this.currentFaliedNumber = this.fails.length;
 

@@ -6,7 +6,6 @@ class ImageAltTextLength extends ARule {
     name = "ImageAltTextLengthRule";
     link = "";
 
-
     nextButtonRule;
     prevButton;
     currentNumber = 0;
@@ -16,7 +15,6 @@ class ImageAltTextLength extends ARule {
     errornumbersContainerRule;
     rulename;
     form_container;
-
     prevButton;
     nextButton;
     repairButton;
@@ -32,6 +30,7 @@ class ImageAltTextLength extends ARule {
             var current_error = this.errors[this.currentNumber];
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
+            this.showFailedElementInDom();
         }
 
     }
@@ -45,9 +44,17 @@ class ImageAltTextLength extends ARule {
             var current_error = this.errors[this.currentNumber];
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
+            this.showFailedElementInDom();
         }
 
     }
+
+    showFailedElementInDom = () => {
+        const src = this.fails[this.currentNumber].src;
+        const element = jQuery(`img[src='${src}']`);
+        this.highlight_failed_element(element[0])
+    }
+
 
     repair(ev) {
         ev.preventDefault();
@@ -85,6 +92,10 @@ class ImageAltTextLength extends ARule {
         for(var i=0;i<this.fails.length;i++){
             console.log('alt ',i,' ', this.fails[i].alt);
         }
+
+        setTimeout(() => {
+            this.showFailedElementInDom();
+        }, 500);
 
 
         var div = document.createElement("div");

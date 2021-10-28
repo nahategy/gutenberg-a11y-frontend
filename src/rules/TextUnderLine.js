@@ -2,7 +2,7 @@ import ARule from "./AbstractRule";
 
 
 class TextAlignJustified extends ARule {
-    error_description = "Images should include an alt attribute describing the image content."
+    error_description = ""
     name = "Invalid Text Underline";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 

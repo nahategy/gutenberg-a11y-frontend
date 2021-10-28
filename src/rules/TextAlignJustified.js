@@ -105,12 +105,6 @@ class TextUnderLine extends ARule {
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
-        this.alt_tag = document.createElement("input");
-        this.alt_tag.classList.add = "alt_tag";
-        this.alt_tag.className = "alt_tag";
-        this.alt_tag.type = "text";
-        this.alt_tag.value = current_error.alt;
-        div.appendChild(this.alt_tag);
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
