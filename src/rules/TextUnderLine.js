@@ -60,7 +60,7 @@ class TextAlignJustified extends ARule {
         let e = element;
         let $element = jQuery(e);
 
-        if ($element.is('u') || e.style?.textDecoration === "underline") {
+        if ($element.is('u') && e.style?.textDecoration !== "unset" || e.style?.textDecoration === "underline") {
             if ($element.closest('a').length === 0) {
                 this.fails.push(e);
             }
@@ -74,7 +74,7 @@ class TextAlignJustified extends ARule {
         if (!this.block_content)
             return;
 
-        for(let i = 0; i<this.block_content.length;i++){
+        for (let i = 0; i < this.block_content.length; i++) {
             this.check_element(this.block_content[i]);
         }
 
@@ -107,12 +107,6 @@ class TextAlignJustified extends ARule {
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
-        this.alt_tag = document.createElement("input");
-        this.alt_tag.classList.add = "alt_tag";
-        this.alt_tag.className = "alt_tag";
-        this.alt_tag.type = "text";
-        this.alt_tag.value = current_error.alt;
-        div.appendChild(this.alt_tag);
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
