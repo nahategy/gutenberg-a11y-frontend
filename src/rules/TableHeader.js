@@ -2,8 +2,8 @@ import ARule from "./AbstractRule";
 
 
 class TableHeader extends ARule {
-    error_description = "Screen readers cannot interpret tables without the proper structure. Table headers provide direction and overview of the content.";
-    name = "Tables should include at least one header.";
+    error_description = "Tables should include at least one header. Screen readers cannot interpret tables without the proper structure. Table headers provide direction and overview of the content.";
+    name = "Table Header Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H43.html";
 
     nextButtonRule;
@@ -19,7 +19,6 @@ class TableHeader extends ARule {
     prevButton;
     nextButton;
     repairButton;
-    alt_tag;
 
     fail_comment_blocks = [];
 
@@ -108,11 +107,6 @@ class TableHeader extends ARule {
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
-        this.alt_tag = document.createElement("input");
-        this.alt_tag.classList.add = "alt_tag";
-        this.alt_tag.className = "alt_tag";
-        this.alt_tag.type = "text";
-        div.appendChild(this.alt_tag);
         let button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");

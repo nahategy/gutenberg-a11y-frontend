@@ -4,7 +4,7 @@ import HelperService from "../services/helper.service";
 class AdjacentLinks extends ARule {
 
     error_description = "Adjacent links with the same URL should be a single link."
-    name = "AdjacentLinks";
+    name = "Adjacent Links Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H2.html";
 
     _run = () => {

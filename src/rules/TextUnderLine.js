@@ -3,7 +3,7 @@ import ARule from "./AbstractRule";
 
 class TextAlignJustified extends ARule {
     error_description = ""
-    name = "Invalid Text Underline";
+    name = "Invalid Text Underline Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
     nextButtonRule;
@@ -86,9 +86,6 @@ class TextAlignJustified extends ARule {
         this.currentFaliedNumber = 0;
         this.currentFaliedNumber = this.fails.length;
         var current_error = this.fails[0];
-        for (var i = 0; i < this.fails.length; i++) {
-            console.log('alt ', i, ' ', this.fails[i].alt);
-        }
 
         setTimeout(() => {
             this.showFailedElementInDom();
@@ -125,7 +122,6 @@ class TextAlignJustified extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
-        console.log(div);
         return div;
     }
 }

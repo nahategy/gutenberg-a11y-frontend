@@ -3,7 +3,7 @@ import ARule from "./AbstractRule";
 
 class EmptyHeader extends ARule {
     error_description = "Headers should not be empty!"
-    name = "Empty Header";
+    name = "Empty Header Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
     nextButtonRule;
@@ -28,10 +28,9 @@ class EmptyHeader extends ARule {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].alt;
+            this.alt_tag.value = this.fails[this.currentNumber].innerText;
             this.showFailedElementInDom();
         }
-
     }
 
     next_rule(ev) {
@@ -40,10 +39,9 @@ class EmptyHeader extends ARule {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].alt;
+            this.alt_tag.value = this.fails[this.currentNumber].innerText;
             this.showFailedElementInDom();
         }
-
     }
 
     showFailedElementInDom = () => {
@@ -52,7 +50,6 @@ class EmptyHeader extends ARule {
     repair(ev) {
         ev.preventDefault();
         this.fails[this.currentNumber].innerText=this.alt_tag.value;
-        console.log(this.fails[this.currentNumber])
         this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
@@ -85,9 +82,6 @@ class EmptyHeader extends ARule {
         this.currentFaliedNumber = 0;
         this.currentFaliedNumber = this.fails.length;
         var current_error = this.fails[0];
-        for (var i = 0; i < this.fails.length; i++) {
-            console.log('alt ', i, ' ', this.fails[i].alt);
-        }
 
         setTimeout(() => {
             this.showFailedElementInDom();
@@ -129,7 +123,6 @@ class EmptyHeader extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
-        console.log(div);
         return div;
     }
 }

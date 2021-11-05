@@ -3,7 +3,7 @@ import ARule from "./AbstractRule";
 
 class ImageAltTextRule extends ARule {
     error_description = "Images should include an alt attribute describing the image content."
-    name = "ImageAltTextRule";
+    name = "Image Alt Text Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
     nextButtonRule;
@@ -84,9 +84,6 @@ class ImageAltTextRule extends ARule {
         this.currentFaliedNumber = 0;
         this.currentFaliedNumber = this.fails.length;
         var current_error = this.fails[0];
-        for (var i = 0; i < this.fails.length; i++) {
-            console.log('alt ', i, ' ', this.fails[i].alt);
-        }
 
         setTimeout(() => {
             this.showFailedElementInDom();

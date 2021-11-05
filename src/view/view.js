@@ -23,16 +23,11 @@ class ViewRule {
             this.errornumbersContainer.innerHTML = `${this.currentNumber + 1} / ${this.errors.length}`;
             this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
             this.rulename.innerHTML = this.errors[this.currentNumber].name;
-            this.link.innerText=this.errors[this.currentNumber].link;
+            this.link.innerText = this.errors[this.currentNumber].link;
             this.form_container.innerHTML = '';
             this.form_container.appendChild(current_error.form());
-            if(this.errors[this.currentNumber].name!='ImageAltTextRule'
-                || this.errors[this.currentNumber].name!='ImageAltTextLength'
-                || this.errors[this.currentNumber].name!='ImageAltTextFileName'){
-                if(document.querySelector('.a11y-highlighter'))
-                document.querySelector('.a11y-highlighter').remove();
-            }
             var div = document.getElementById('.repair_div');
+            document.querySelector('.a11y-highlighter')?.remove();
         }
     }
 
@@ -44,16 +39,11 @@ class ViewRule {
             this.errornumbersContainer.innerHTML = `${this.currentNumber + 1} / ${this.errors.length}`;
             this.errors_element.innerHTML = this.errors[this.currentNumber].error_description;
             this.rulename.innerHTML = this.errors[this.currentNumber].name;
-            this.link.innerText=this.errors[this.currentNumber].link;
+            this.link.innerText = this.errors[this.currentNumber].link;
             this.form_container.innerHTML = '';
             this.form_container.appendChild(current_error.form());
             var div = document.getElementById('.repair_div');
-            if(this.errors[this.currentNumber].name!='ImageAltTextRule'
-                || this.errors[this.currentNumber].name!='ImageAltTextLength'
-                || this.errors[this.currentNumber].name!='ImageAltTextFileName'){
-                if(document.querySelector('.a11y-highlighter'))
-                    document.querySelector('.a11y-highlighter').remove();
-            }
+            document.querySelector('.a11y-highlighter')?.remove();
         }
     }
 
@@ -88,20 +78,21 @@ class ViewRule {
         div.appendChild(element);
         this.rulename = document.createElement('div');
         this.rulename.classList.add('rulename');
-        this.rulename.innerHTML = current_error.name;
         div.appendChild(this.rulename);
+        this.rulename.innerHTML = current_error.name;
         this.errors_element = document.createElement("span");
         element.appendChild(this.errors_element);
-        this.errors_element.innerHTML += `<br><b>${current_error.name}:</b> <br>`;
+        // this.errors_element.innerHTML += this.rulename;
+        //this.errors_element.appendChild(this.rulename);
         this.errors_element.innerHTML += current_error.error_description;
         this.errors_element.classList.add("d-block");
         div.appendChild(element);
         let descDiv = document.createElement('div');
         descDiv.className = 'errDescDiv';
-        descDiv.innerHTML = '<b>WCAG description:</b><br>';
+        descDiv.innerHTML = '<div class="rulename">WCAG description:</div>';
         this.link = document.createElement('a');
         this.link.href = current_error.link;
-        this.link.className='ruleLink';
+        this.link.className = 'ruleLink';
         this.link.target = '_blank';
         this.link.innerText = current_error.link;
         descDiv.appendChild(this.link);
@@ -126,7 +117,6 @@ class ViewRule {
         this.nextButton.classList.add("nextRule");
         this.nextButton.onclick = this.next.bind(this);
         button_container.appendChild(this.nextButton);
-        //if (numberOfErrors > 1)
         let line2 = document.createElement('hr');
         div.appendChild(line2);
         div.appendChild(button_container);
@@ -151,8 +141,7 @@ class ViewRule {
 
     hide_view = () => {
         var x = document.getElementById("sidebar").remove();
-        if(document.querySelector('.a11y-highlighter'))
-        document.querySelector('.a11y-highlighter').remove();
+        document.querySelector('.a11y-highlighter')?.remove();
     }
 
 }

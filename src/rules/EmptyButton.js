@@ -3,7 +3,7 @@ import ARule from "./AbstractRule";
 
 class EmptyButton extends ARule {
     error_description = "Buttons should not be empty!"
-    name = "Empty Button";
+    name = "Empty Button Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
     nextButtonRule;
@@ -52,7 +52,6 @@ class EmptyButton extends ARule {
     repair(ev) {
         ev.preventDefault();
         this.fails[this.currentNumber].innerText = this.alt_tag.value;
-        console.log(this.fails[this.currentNumber])
         this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
@@ -91,9 +90,6 @@ class EmptyButton extends ARule {
         this.currentFaliedNumber = 0;
         this.currentFaliedNumber = this.fails.length;
         var current_error = this.fails[0];
-        for (var i = 0; i < this.fails.length; i++) {
-            console.log('alt ', i, ' ', this.fails[i].alt);
-        }
 
         setTimeout(() => {
             this.showFailedElementInDom();
@@ -135,7 +131,6 @@ class EmptyButton extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
-        console.log(div);
         return div;
     }
 }

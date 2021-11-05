@@ -2,8 +2,8 @@ import ARule from "./AbstractRule";
 
 
 class ImageAltTextFileName extends ARule {
-    error_description = "Screen readers cannot determine what is displayed in an image without alternative text, and filenames are often meaningless strings of numbers and letters that do not describe the context or meaning."
-    name = "Image filenames should not be used as the alt attribute describing the image content.";
+    error_description = "Image filenames should not be used as the alt attribute describing the image content. Screen readers cannot determine what is displayed in an image without alternative text, and filenames are often meaningless strings of numbers and letters that do not describe the context or meaning."
+    name = "Image Alt Text File Name Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/F30.html";
 
     nextButtonRule;

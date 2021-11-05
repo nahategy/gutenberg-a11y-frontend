@@ -2,8 +2,8 @@ import ARule from "./AbstractRule";
 
 
 class TableHeaderScope extends ARule {
-    error_description = "Screen readers cannot interpret tables without the proper structure. Table headers provide direction and content scope.";
-    name = "Tables headers should specify scope.";
+    error_description = "Tables headers should specify scope. Screen readers cannot interpret tables without the proper structure. Table headers provide direction and content scope.";
+    name = "Table Header Scope Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H63.html";
 
     nextButtonRule;
@@ -60,11 +60,13 @@ class TableHeaderScope extends ARule {
     _run = () => {
         if (!this.block_content)
             return;
-
         let $tables = this.block_content.find('table');
         for (let i = 0; i < $tables.length; i++) {
             var $th = jQuery($tables[i]).find("th");
-            this.searchForScopelessThs($th, $tables[i]);
+            if(this.searchForScopelessThs($th, $tables[i]) === true){
+                this.fails.push(jQuery($tables[i]));
+                continue;
+            }
         }
 
     }
@@ -74,16 +76,15 @@ class TableHeaderScope extends ARule {
         for (let j = 0; j < $th.length; j++) {
             let $elem = jQuery($th[j]);
             if ($elem.attr('scope') === undefined || $elem.attr('scope') === "") {
-                this.fails.push(jQuery($table));
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     form() {
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
-
 
         this.currentFaliedNumber = this.fails.length;
 
@@ -102,11 +103,6 @@ class TableHeaderScope extends ARule {
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
-        this.alt_tag = document.createElement("input");
-        this.alt_tag.classList.add = "alt_tag";
-        this.alt_tag.className = "alt_tag";
-        this.alt_tag.type = "text";
-        div.appendChild(this.alt_tag);
         let button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");

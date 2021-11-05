@@ -2,8 +2,8 @@ import ARule from "./AbstractRule";
 
 
 class TableCaption extends ARule {
-    error_description = "Screen readers cannot interpret tables without the proper structure. Table captions describe the context and general understanding of the table.";
-    name = "Tables should include a caption describing the contents of the table.";
+    error_description = "Tables should include a caption describing the contents of the table. Screen readers cannot interpret tables without the proper structure. Table captions describe the context and general understanding of the table.";
+    name = "Table Caption Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H39.html";
 
     nextButtonRule;
@@ -30,6 +30,7 @@ class TableCaption extends ARule {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             let current_error = this.errors[this.currentNumber];
+            this.alt_tag.value = this.getCaptionText();
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
         }
 
@@ -42,6 +43,7 @@ class TableCaption extends ARule {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             let current_error = this.errors[this.currentNumber];
+            this.alt_tag.value = this.getCaptionText();
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
         }
 
@@ -50,9 +52,25 @@ class TableCaption extends ARule {
     repair(ev) {
         ev.preventDefault();
         let current_error = this.fails[this.currentNumber];
-        current_error.prepend(jQuery(`<caption>${this.alt_tag.value}</caption>`));
+        let caption = this.getCaption();
+        console.log(caption);
+        if (caption.length > 0) {
+            caption.text(this.alt_tag.value);
+        } else {
+            current_error.prepend(jQuery(`<caption>${this.alt_tag.value}</caption>`));
+        }
         this.showAlert('Error corrected', 'alert-primary');
         this._update();
+    }
+
+    getCaptionText() {
+        let caption = this.getCaption();
+        return caption.length > 0 ? caption.text() : "";
+    }
+
+    getCaption() {
+        let current_error = this.fails[this.currentNumber];
+        return current_error.find('caption');
     }
 
 
@@ -63,9 +81,9 @@ class TableCaption extends ARule {
         for (let i = 0; i < $tables.length; i++) {
             if (jQuery($tables[i]).find("caption").length === 0) {
                 // Csak akkor érdekes, ha nem blokkeditorból szerkeszti ( az nem kezeli ezt és beomlik )
-                if (jQuery($tables[i]).parent('.wp-block-code').length === 0)
-                    return;
-                this.fails.push(jQuery($tables[i]));
+                if ($tables[i].parentElement.className === "wp-block-code") {
+                    this.fails.push(jQuery($tables[i]));
+                }
             }
         }
 
