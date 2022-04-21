@@ -1,4 +1,5 @@
 import ARule from "./AbstractRule";
+import {disableButtonIfInputEmpty} from "../common/utils";
 
 
 class TableCaption extends ARule {
@@ -133,6 +134,9 @@ class TableCaption extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
+
+       disableButtonIfInputEmpty(this.alt_tag,this.repairButton)
+
         return div;
     }
 
