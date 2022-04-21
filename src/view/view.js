@@ -59,6 +59,8 @@ class ViewRule {
     }
 
     create_side_bar(numberOfErrors) {
+        document.querySelector('#sidebar')?.remove();
+
         var current_error = this.errors[this.currentNumber];
 
         var div = document.createElement("div");
