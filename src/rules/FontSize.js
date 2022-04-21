@@ -1,4 +1,5 @@
 import ARule from "./AbstractRule";
+import {disableButtonIfInputEmpty} from "../common/utils";
 
 const MIN_FONT_SIZE = 12;
 
@@ -52,8 +53,7 @@ class FontSize extends ARule {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
             alert('Enter the new font size!');
-        }
-        else {
+        } else {
             var current_error = this.fails[this.currentNumber];
             this.fails[this.currentNumber].style.fontSize = `${this.alt_tag.value}px`;
             let elem = this.fail_comment_blocks[this.currentNumber];
@@ -114,7 +114,7 @@ class FontSize extends ARule {
         this.alt_tag.classList.add = "alt_tag";
         this.alt_tag.className = "alt_tag";
         this.alt_tag.type = "text";
-        this.alt_tag.value = current_error.style.fontSize.replace("px", "");
+        // this.alt_tag.value = current_error.style.fontSize.replace("px", "");
         div.appendChild(this.alt_tag);
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
@@ -134,6 +134,9 @@ class FontSize extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
+
+        disableButtonIfInputEmpty(this.alt_tag,this.repairButton)
+
         return div;
     }
 
