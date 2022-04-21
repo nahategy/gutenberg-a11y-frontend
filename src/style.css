@@ -20,9 +20,6 @@
 .sidebar {
     box-shadow: -10px 0px 10px 1px #aaaaaa;
     width: 220px;
-    position: absolute;
-    right: 0px;
-    top: 0px;
     height: 400vh;
     background-color: white;
     padding: 48px 36px 49px 52px;
@@ -52,6 +49,9 @@
 
 .accessibility-container {
     font-size: 1rem;
+    position: fixed;
+    right: 0px;
+    top: 61px;
 }
 
 .accessibility-container label {

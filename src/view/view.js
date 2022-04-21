@@ -65,9 +65,11 @@ class ViewRule {
 
         var current_error = this.errors[this.currentNumber];
 
+        var masikdiv = document.createElement("div");
+        masikdiv.classList.add("accessibility-container");
+
         var div = document.createElement("div");
         div.classList.add("sidebar");
-        div.classList.add("accessibility-container");
         div.setAttribute("id", "sidebar");
         div.classList.add("container");
         var element = document.createElement("h3");
@@ -124,7 +126,8 @@ class ViewRule {
         let line2 = document.createElement('hr');
         div.appendChild(line2);
         div.appendChild(button_container);
-        document.body.appendChild(div);
+        document.body.appendChild(masikdiv);
+        masikdiv.appendChild(div);
 
 
         var close_button_text = "<button type=\"button\" tabindex=\"0\"\n" +
