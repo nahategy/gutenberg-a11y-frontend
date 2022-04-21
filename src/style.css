@@ -23,7 +23,7 @@
     height: 400vh;
     background-color: white;
     padding: 48px 36px 49px 52px;
-    z-index: 9999;
+
 }
 
 .rule-button {
@@ -52,6 +52,7 @@
     position: fixed;
     right: 0px;
     top: 61px;
+    z-index: 9999;
 }
 
 .accessibility-container label {
