@@ -1,6 +1,7 @@
 import HelperService from "../services/helper.service";
 import AbstractRule from "../rules/AbstractRule";
 import ARule from "../rules/AbstractRule";
+import GC from "../services/GC";
 
 class ViewRule {
     nextButton;
@@ -59,6 +60,7 @@ class ViewRule {
     }
 
     create_side_bar(numberOfErrors) {
+        GC.runStart();
         document.querySelector('#sidebar')?.remove();
 
         var current_error = this.errors[this.currentNumber];
