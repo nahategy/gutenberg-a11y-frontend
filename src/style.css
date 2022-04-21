@@ -133,3 +133,7 @@
     margin-bottom: 15px;
 }
 
+button[disabled]{
+    background: #1e1e1e;
+}
+
