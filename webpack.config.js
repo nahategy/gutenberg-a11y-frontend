@@ -42,7 +42,13 @@ module.exports = {
         });
       }
     }
-  ]
+  ],
+  optimization: {
+    minimize: true,
+    moduleIds: 'size',
+    mergeDuplicateChunks: true,
+    mangleWasmImports: true,
+  },
 
 };
 
