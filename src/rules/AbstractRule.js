@@ -1,5 +1,6 @@
 import HelperService from "../services/helper.service";
 import RuleButton from "../view/RuleButton";
+import AccessibilityContainer from "../view/AccessibilityContainer";
 
 class ARule {
     block;
@@ -77,16 +78,18 @@ class ARule {
         if (!element)
             return;
         element.scrollIntoView();
-        const positions = element.getBoundingClientRect();
-        // console.log(positions);
-        this.highlighter = document.createElement("div");
-        this.highlighter.classList.add("a11y-highlighter");
-        this.highlighter.style.top = `${positions.top}px`;
-        this.highlighter.style.left = `${positions.left}px`;
-        this.highlighter.style.width = `${positions.width}px`;
-        this.highlighter.style.height = `${positions.height}px`;
 
-        document.querySelector("body").append(this.highlighter);
+        var highlighter = new AccessibilityContainer(element);
+
+        // const positions = element.getBoundingClientRect();
+        // // console.log(positions);
+        // this.highlighter = document.createElement("div");
+        // this.highlighter.classList.add("a11y-highlighter");
+        // this.highlighter.style.top = `${positions.top}px`;
+        // this.highlighter.style.left = `${positions.left}px`;
+        // this.highlighter.style.width = `${positions.width}px`;
+        // this.highlighter.style.height = `${positions.height}px`;
+
     }
 
     hideFailedElementinDom = () => {

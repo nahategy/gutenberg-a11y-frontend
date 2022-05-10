@@ -3,6 +3,10 @@
     color: red;
 }
 
+body{
+    overflow: hidden!important;
+}
+
 #closeButton {
     border: 0px;
     position: absolute;
