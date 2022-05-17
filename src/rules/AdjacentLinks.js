@@ -65,8 +65,6 @@ class AdjacentLinks extends ARule {
 
         this.currentFaliedNumber = this.fails.length;
 
-        var current_error = this.fails[0];
-        var result = this.fails[0].style.fontSize.replace("px", "");
 
         var div = document.createElement("div");
         div.setAttribute("class", "repair_div");
@@ -83,7 +81,27 @@ class AdjacentLinks extends ARule {
         div.appendChild(element);
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
+        var checkbox_container = document.createElement("div");
+        var checkbox_label = document.createElement("label");
+        HelperService.language.get_translation("Merge links ? ").then((translation) => {
+            checkbox_label.innerText = translation;
+            checkbox_label.appendChild(checkbox);
+        });
+
+        var checkbox = document.createElement("input");
+        checkbox.onclick = () =>{
+          if(checkbox.checked)
+              this.repairButton.disabled="";
+          else
+              this.repairButton.disabled="disabled";
+
+        }
+        checkbox.type = 'checkbox';
+        checkbox_container.appendChild(checkbox_label);
+        button_container_rule.appendChild(checkbox_container);
+
         this.repairButton = document.createElement("button");
+        this.repairButton.disabled = 'disabled';
         this.repairButton.innerHTML = "Repair";
         this.repairButton.classList.add("repair");
         this.repairButton.onclick = this.repair.bind(this);
