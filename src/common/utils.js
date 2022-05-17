@@ -1,14 +1,15 @@
-
 function disableButtonIfInputEmpty(input, button) {
     input.onkeyup = function () {
-        if(input.value ==="")
-            button.disabled = true;
-        else
-            button.disabled = false;
-
+        button.disabled = input.value === "";
     }
-    if (input.value === "")
-        button.disabled = true;
+    if (input.value === "") button.disabled = true;
 }
 
-export {disableButtonIfInputEmpty};
+function disableButtonIfFalse(input, button, delegate) {
+    input.onkeyup = function () {
+        button.disabled = !!delegate(input);
+    }
+    if (input.value === "") button.disabled = true;
+}
+
+export {disableButtonIfInputEmpty, disableButtonIfFalse};

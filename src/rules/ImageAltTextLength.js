@@ -1,4 +1,5 @@
 import ARule from "./AbstractRule";
+import {disableButtonIfFalse, disableButtonIfInputEmpty} from "../common/utils";
 
 
 class ImageAltTextLength extends ARule {
@@ -21,10 +22,9 @@ class ImageAltTextLength extends ARule {
     alt_tag;
 
 
-
     prev_rule(ev) {
         ev.preventDefault();
-        if(this.currentNumber - 1 >= 0){
+        if (this.currentNumber - 1 >= 0) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             var current_error = this.errors[this.currentNumber];
@@ -38,7 +38,7 @@ class ImageAltTextLength extends ARule {
     next_rule(ev) {
         ev.preventDefault();
 
-        if(this.currentNumber + 1 < this.fails.length){
+        if (this.currentNumber + 1 < this.fails.length) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             var current_error = this.errors[this.currentNumber];
@@ -60,9 +60,9 @@ class ImageAltTextLength extends ARule {
         ev.preventDefault();
         if (this.alt_tag.value === '') {
             alert('Enter the new image alternative text');
-        }else{
+        } else {
             var current_error = this.fails[this.currentNumber];
-            this.fails[this.currentNumber].alt=this.alt_tag.value;
+            this.fails[this.currentNumber].alt = this.alt_tag.value;
             this.showAlert('Error corrected', 'alert-primary');
             this._update();
         }
@@ -77,7 +77,7 @@ class ImageAltTextLength extends ARule {
             return;
         for (var i = 0; i < images.length; i++) {
             const image = images[i];
-            if (image.alt && image.alt.length > 100 ) {
+            if (image.alt && image.alt.length > 100) {
                 this.fails.push(image);
             }
         }
@@ -132,6 +132,14 @@ class ImageAltTextLength extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
+
+        if(this.alt_tag.value.length >100)
+            this.repairButton.disabled = true;
+
+        disableButtonIfFalse(this.alt_tag, this.repairButton, (input) => {
+            return input.value.length >= 100
+        })
+
         return div;
     }
 
