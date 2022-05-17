@@ -2,7 +2,7 @@ import ARule from "./AbstractRule";
 
 
 class ImageAltTextLength extends ARule {
-    error_description = "Alt attribute text should not contain more than 120 characters."
+    error_description = "Alt attribute text should not contain more than 100 characters."
     name = "Image Alt Text Length Rule";
     link = "";
 
@@ -77,7 +77,7 @@ class ImageAltTextLength extends ARule {
             return;
         for (var i = 0; i < images.length; i++) {
             const image = images[i];
-            if (image.alt && image.alt.length > 120 ) {
+            if (image.alt && image.alt.length > 100 ) {
                 this.fails.push(image);
             }
         }
