@@ -100,8 +100,8 @@ class TextUnderLine extends ARule {
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
-        var formDiv = document.createElement('div');
 
+        var formDiv = document.createElement('div');
         var justifyLabel  = document.createElement('label');
         justifyLabel.innerText = "Align text to: "
         this.justifyType = document.createElement("select");
