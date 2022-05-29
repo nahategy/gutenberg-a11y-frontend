@@ -2,7 +2,7 @@ import ARule from "./AbstractRule";
 
 
 class TextUnderLine extends ARule {
-    error_description = "Images should include an alt attribute describing the image content."
+    error_description = "Text should not be aligned to justified."
     name = "Text Align Justified Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
@@ -19,7 +19,7 @@ class TextUnderLine extends ARule {
     prevButton;
     nextButton;
     repairButton;
-    alt_tag;
+    justifyType;
 
 
     prev_rule(ev) {
@@ -28,7 +28,6 @@ class TextUnderLine extends ARule {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
         }
 
@@ -40,7 +39,6 @@ class TextUnderLine extends ARule {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
         }
 
@@ -52,7 +50,7 @@ class TextUnderLine extends ARule {
 
     repair(ev) {
         ev.preventDefault();
-        this.fails[this.currentNumber].style.textAlign = 'left';
+        this.fails[this.currentNumber].style.textAlign = this.justifyType.value;
         this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
@@ -102,6 +100,29 @@ class TextUnderLine extends ARule {
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
+        var formDiv = document.createElement('div');
+
+        var justifyLabel  = document.createElement('label');
+        justifyLabel.innerText = "Align text to: "
+        this.justifyType = document.createElement("select");
+        var optionLeft = document.createElement("option");
+        optionLeft.innerText = "Left";
+        optionLeft.value = "left";
+        var optionRight = document.createElement("option");
+        optionRight.innerText = "Right";
+        optionRight.value = "right";
+        var optionCenter = document.createElement("option");
+        optionCenter.innerText = "Center";
+        optionCenter.value = "center";
+
+        this.justifyType.appendChild(optionLeft)
+        this.justifyType.appendChild(optionRight)
+        this.justifyType.appendChild(optionCenter)
+
+        justifyLabel.appendChild(this.justifyType)
+        formDiv.appendChild(justifyLabel);
+        div.appendChild(formDiv);
+
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
