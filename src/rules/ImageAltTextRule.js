@@ -7,7 +7,6 @@ class ImageAltTextRule extends ARule {
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
     nextButtonRule;
-    prevButton;
     currentNumber = 0;
     currentFaliedNumber = 0;
     errors = [];
@@ -73,7 +72,8 @@ class ImageAltTextRule extends ARule {
         if (!images)
             return;
         for (var i = 0; i < images.length; i++) {
-            if (!images[i].alt || images[i].alt.toString().trim() === "") {
+            // Decorative images can have empty alt tags!
+            if (!images[i].alt /*|| images[i].alt.toString().trim() === ""*/) {
                 this.fails.push(images[i]);
             }
         }
