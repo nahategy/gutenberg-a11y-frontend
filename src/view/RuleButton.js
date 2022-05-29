@@ -102,13 +102,9 @@ class RuleButton {
         this.rule_applicator = new RuleApplicator(gutenbergCodeEditor.val())
         this.rule_applicator.find_elements();
         this.rule_applicator.apply_rules(this.rewrite_rules);
-        var fails = this.rule_applicator.get_failed_tree_elements();
-        var result;
-        var failed_rule_extractor = new FailedRuleExtractor(fails);
-        if ((result = view_rule.function_hello(this.rule_applicator.get_failed_tree_elements()))) {
+        if ((view_rule.function_hello(this.rule_applicator.get_failed_tree_elements()))) {
             this.toggle_code_editor();
         }
-        return result
     }
 
     getGutenbergCodeEditorElement() {
@@ -117,10 +113,11 @@ class RuleButton {
     }
 
     toggle_code_editor = () => {
-        jQuery('.edit-post-more-menu').find('button').click();
+        var $moreMenu = jQuery('.interface-more-menu-dropdown');
+        $moreMenu.find('button').click()
         jQuery('.components-menu-item__shortcut:contains("Ctrl+Shift+Alt+M")').closest('.components-button').click();
         jQuery('.editor-post-text-editor').attr('disabled', 'disabled');
-        jQuery('.edit-post-more-menu').find('button').click();
+        $moreMenu.find('button').click();
     }
 
     remove = () => {
