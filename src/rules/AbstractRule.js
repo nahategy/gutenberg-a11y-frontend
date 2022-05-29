@@ -71,9 +71,7 @@ class ARule {
     }
 
     highlight_failed_element = (element) => {
-        if (this.highlighter !== null) {
-            this.highlighter.remove();
-        }
+        jQuery('.a11y-highlighter').remove();
 
         if (!element)
             return;
