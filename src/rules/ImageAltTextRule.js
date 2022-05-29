@@ -9,7 +9,7 @@ class ImageAltTextRule extends ARule {
 
     nextButtonRule;
     currentNumber = 0;
-    currentFaliedNumber = 0;
+    currentFailedNumber = 0;
     errors = [];
     errors_element;
     errornumbersContainerRule;
@@ -25,9 +25,9 @@ class ImageAltTextRule extends ARule {
     prev_rule(ev) {
         ev.preventDefault();
         if (this.currentNumber - 1 >= 0) {
-            this.currentFaliedNumber = this.fails.length;
+            this.currentFailedNumber = this.fails.length;
             this.currentNumber--;
-            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFailedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
         }
@@ -37,9 +37,9 @@ class ImageAltTextRule extends ARule {
     next_rule(ev) {
         ev.preventDefault();
         if (this.currentNumber + 1 < this.fails.length) {
-            this.currentFaliedNumber = this.fails.length;
+            this.currentFailedNumber = this.fails.length;
             this.currentNumber++;
-            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFailedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
         }
@@ -80,8 +80,8 @@ class ImageAltTextRule extends ARule {
 
     form() {
         this.currentNumber = 0;
-        this.currentFaliedNumber = 0;
-        this.currentFaliedNumber = this.fails.length;
+        this.currentFailedNumber = 0;
+        this.currentFailedNumber = this.fails.length;
         var current_error = this.fails[0];
 
         setTimeout(() => {
@@ -99,7 +99,7 @@ class ImageAltTextRule extends ARule {
         element.innerHTML = "Issue   ";
         this.errornumbersContainerRule = document.createElement("span");
         element.appendChild(this.errornumbersContainerRule);
-        this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
+        this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFailedNumber);
         div.appendChild(element);
 
         var checkboxLabel = document.createElement('label');
