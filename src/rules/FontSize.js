@@ -128,7 +128,7 @@ class FontSize extends ARule {
 
         this.alt_tag.classList.add = "alt_tag";
         this.alt_tag.className = "alt_tag";
-        this.alt_tag.type = "text";
+        this.alt_tag.type = "number";
         // this.alt_tag.value = current_error.style.fontSize.replace("px", "");
         div.appendChild(this.alt_tag);
         div.appendChild(this.size_type);
