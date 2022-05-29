@@ -1,4 +1,5 @@
 import ARule from "./AbstractRule";
+import {disableButtonIfFalse} from "../common/utils";
 
 
 class ImageAltTextRule extends ARule {
@@ -19,7 +20,7 @@ class ImageAltTextRule extends ARule {
     nextButton;
     repairButton;
     alt_tag;
-
+    checkbox;
 
     prev_rule(ev) {
         ev.preventDefault();
@@ -54,23 +55,21 @@ class ImageAltTextRule extends ARule {
 
     repair(ev) {
         ev.preventDefault();
-        if (this.alt_tag.value === '') {
+        if (this.alt_tag.value === '' && !this.checkbox.checked) {
             alert('Enter the new image alternative text');
             return
         }
 
-        this.fails[this.currentNumber].alt = this.alt_tag.value;
+        this.fails[this.currentNumber].alt = this.checkbox.checked ? " " :this.alt_tag.value;
         this.showAlert('Error corrected', 'alert-primary');
         this._update();
     }
 
 
     _run = () => {
-        if (!this.block_content)
-            return;
+        if (!this.block_content) return;
         let images = this.block_content.find('img');
-        if (!images)
-            return;
+        if (!images) return;
         for (var i = 0; i < images.length; i++) {
             // Decorative images can have empty alt tags!
             if (!images[i].alt /*|| images[i].alt.toString().trim() === ""*/) {
@@ -102,12 +101,22 @@ class ImageAltTextRule extends ARule {
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
+
+        var checkboxLabel = document.createElement('label');
+        checkboxLabel.innerText = "Decorative image ? ";
+
+        var checkbox = document.createElement("input");
+        this.checkbox = checkbox;
+        checkbox.type = "checkbox";
+        checkboxLabel.appendChild(checkbox);
+
         this.alt_tag = document.createElement("input");
         this.alt_tag.classList.add = "alt_tag";
         this.alt_tag.className = "alt_tag";
         this.alt_tag.type = "text";
         this.alt_tag.value = current_error.alt;
         div.appendChild(this.alt_tag);
+        div.appendChild(checkboxLabel);
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
@@ -126,6 +135,16 @@ class ImageAltTextRule extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
+
+        disableButtonIfFalse(this.alt_tag, this.repairButton, (input) => {
+            return input.value.length === "" && !checkbox.checked;
+        })
+        checkbox.onclick = function () {
+            this.alt_tag.disabled = checkbox.checked;
+            this.repairButton.disabled = this.alt_tag.value.length === "" && !checkbox.checked;;
+
+        }.bind(this);
+
         return div;
     }
 }
