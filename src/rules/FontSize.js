@@ -21,8 +21,8 @@ class FontSize extends ARule {
     nextButton;
     repairButton;
     alt_tag;
+    size_type;
     fail_comment_blocks = [];
-
 
     prev_rule(ev) {
         ev.preventDefault();
@@ -54,10 +54,11 @@ class FontSize extends ARule {
         if (this.alt_tag.value === '') {
             alert('Enter the new font size!');
         } else {
-            var current_error = this.fails[this.currentNumber];
-            this.fails[this.currentNumber].style.fontSize = `${this.alt_tag.value}px`;
+            var selectedType = this.size_type.value;
+            console.log(selectedType);
+            this.fails[this.currentNumber].style.fontSize = `${this.alt_tag.value}${selectedType}`;
             let elem = this.fail_comment_blocks[this.currentNumber];
-            elem.nodeValue = elem.nodeValue.replace(/"fontSize":"(\d+)px"/, `"fontSize":"${this.alt_tag.value}px"`)
+            elem.nodeValue = elem.nodeValue.replace(/"fontSize":"(\d+)(px|em|rem)"/, `"fontSize":"${this.alt_tag.value}${selectedType}"`)
 
             this.showAlert('Error corrected', 'alert-primary');
             this._update();
@@ -111,11 +112,27 @@ class FontSize extends ARule {
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
         this.alt_tag = document.createElement("input");
+        this.size_type = document.createElement("select");
+        var optionPx = document.createElement("option");
+        optionPx.innerText = "Px";
+        optionPx.value = "px";
+        var optionRem = document.createElement("option");
+        optionRem.innerText = "Rem";
+        optionRem.value = "rem";
+        var optionEm = document.createElement("option");
+        optionEm.innerText = "Em";
+        optionEm.value = "em";
+
+        this.size_type.appendChild(optionPx)
+        this.size_type.appendChild(optionRem)
+        this.size_type.appendChild(optionEm)
+
         this.alt_tag.classList.add = "alt_tag";
         this.alt_tag.className = "alt_tag";
         this.alt_tag.type = "text";
         // this.alt_tag.value = current_error.style.fontSize.replace("px", "");
         div.appendChild(this.alt_tag);
+        div.appendChild(this.size_type);
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
