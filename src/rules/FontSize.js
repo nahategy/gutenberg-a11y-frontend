@@ -55,7 +55,6 @@ class FontSize extends ARule {
             alert('Enter the new font size!');
         } else {
             var selectedType = this.size_type.value;
-            console.log(selectedType);
             this.fails[this.currentNumber].style.fontSize = `${this.alt_tag.value}${selectedType}`;
             let elem = this.fail_comment_blocks[this.currentNumber];
             elem.nodeValue = elem.nodeValue.replace(/"fontSize":"(\d+)(px|em|rem)"/, `"fontSize":"${this.alt_tag.value}${selectedType}"`)
