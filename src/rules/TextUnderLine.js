@@ -1,8 +1,9 @@
 import ARule from "./AbstractRule";
+import {disableButtonIfFalse} from "../common/utils";
 
 
 class TextAlignJustified extends ARule {
-    error_description = ""
+    error_description = "Not link texts should not be underlined"
     name = "Invalid Text Underline Rule";
     link = "https://www.w3.org/TR/WCAG20-TECHS/H37.html";
 
@@ -19,7 +20,6 @@ class TextAlignJustified extends ARule {
     prevButton;
     nextButton;
     repairButton;
-    alt_tag;
 
 
     prev_rule(ev) {
@@ -28,7 +28,6 @@ class TextAlignJustified extends ARule {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
         }
 
@@ -40,7 +39,6 @@ class TextAlignJustified extends ARule {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
         }
 
@@ -104,12 +102,25 @@ class TextAlignJustified extends ARule {
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
+
+        var formDiv = document.createElement('div');
+        var checkboxLabel  = document.createElement('label');
+        checkboxLabel.innerText = "Underline will be removed "
+
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+
+        checkboxLabel.appendChild(checkbox);
+        formDiv.appendChild(checkboxLabel);
+        div.appendChild(formDiv);
+
         var button_container_rule = document.createElement('div');
         button_container_rule.classList.add('button-container-rule');
         this.repairButton = document.createElement("button");
         this.repairButton.innerHTML = "Repair";
         this.repairButton.classList.add("repair");
         this.repairButton.onclick = this.repair.bind(this);
+        this.repairButton.disabled = true;
         button_container_rule.appendChild(this.repairButton);
         this.prevButton = document.createElement("button");
         this.prevButton.innerHTML = "Prev";
@@ -122,6 +133,11 @@ class TextAlignJustified extends ARule {
         this.nextButtonRule.onclick = this.next_rule.bind(this);
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
+
+        checkbox.onclick = function () {
+            this.repairButton.disabled = !checkbox.checked;
+        }.bind(this);
+
         return div;
     }
 }
