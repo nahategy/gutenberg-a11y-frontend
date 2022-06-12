@@ -27,7 +27,7 @@ class RuleFactory {
             TableCaption,
             TableHeader,
             TableHeaderScope,
-            HeaderOrder,
+             HeaderOrder,
             TextAlignJustified,
             TextUnderLine,
         ]

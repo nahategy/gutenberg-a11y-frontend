@@ -100,24 +100,48 @@ class ARule {
 
     prev_rule(ev) {
         ev.preventDefault();
+        this.ruleNumberLength = document.getElementsByClassName("ruleNumberCounter")[0].innerText
+        let first = this.ruleNumberLength.split("/")[0]
+        let second = this.ruleNumberLength.split("/")[1]
+        this.ruleNumberLength = document.getElementsByClassName("issueCounter")[0].innerText
+        let issueFirst = this.ruleNumberLength.split("/")[0]
         if (this.currentNumber - 1 >= 0) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
+            let sum = (Number(first)-1) + ' / '+ second
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
+            if(issueFirst===1){
+                document.querySelector("button[class='prevRule']").click()
+            }
+        } else{
+            let sum = (Number(first)+1) + ' / '+ second
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
+            document.querySelector("button[class='prevRule']").click()
         }
 
     }
 
     next_rule(ev) {
         ev.preventDefault();
+        this.ruleNumberLength = document.getElementsByClassName("ruleNumberCounter")[0].innerText
+        let first = this.ruleNumberLength.split("/")[0]
+        let second = this.ruleNumberLength.split("/")[1]
         if (this.currentNumber + 1 < this.fails.length) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
+            let sum = (Number(first)+1) + ' / '+ second
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
+        }else {
+            let sum = (Number(first)+1) + ' / '+ second
+            document.querySelector("button[class='nextRule']").click()
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
         }
-
     }
 
     showAlert = function (message, className) {

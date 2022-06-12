@@ -21,30 +21,48 @@ class EmptyButton extends ARule {
     nextButton;
     repairButton;
     alt_tag;
+    nextRuleButton;
+    ruleNumberLength;
+
 
 
     prev_rule(ev) {
         ev.preventDefault();
+        this.ruleNumberLength = document.getElementsByClassName("ruleNumberCounter")[0].innerText
+        let first = this.ruleNumberLength.split("/")[0]
+        let second = this.ruleNumberLength.split("/")[1]
         if (this.currentNumber - 1 >= 0) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
+            let sum = (Number(first)-1) + ' / '+ second
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
+        } else if (!Number(first)===1){
+            let sum = (Number(first)-1) + ' / '+ second
+            document.querySelector("button[class='prevRule']").click()
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
         }
 
     }
 
     next_rule(ev) {
         ev.preventDefault();
+        this.ruleNumberLength = document.getElementsByClassName("ruleNumberCounter")[0].innerText
+        let first = this.ruleNumberLength.split("/")[0]
+        let second = this.ruleNumberLength.split("/")[1]
         if (this.currentNumber + 1 < this.fails.length) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber++;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
+        }else {
+            let sum = (Number(first)+1) + ' / '+ second
+            document.querySelector("button[class='nextRule']").click()
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
         }
-
     }
 
     showFailedElementInDom = () => {
@@ -76,6 +94,8 @@ class EmptyButton extends ARule {
     }
 
     _run = () => {
+
+
         if (!this.block_content)
             return;
 
@@ -87,6 +107,13 @@ class EmptyButton extends ARule {
     }
 
     form() {
+        window.onload = function(){
+            this.ruleNumberLength = document.getElementsByClassName("ruleNumberCounter")[0].innerText
+            this.ruleNumberLength = this.ruleNumberLength.split("/")[1]
+            alert('hello')
+        };
+
+
         this.currentNumber = 0;
         this.currentFaliedNumber = 0;
         this.currentFaliedNumber = this.fails.length;
@@ -106,6 +133,7 @@ class EmptyButton extends ARule {
         element = document.createElement("label");
         element.innerHTML = "Issue   ";
         this.errornumbersContainerRule = document.createElement("span");
+        this.errornumbersContainerRule.classList.add("issueCounter");
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
@@ -133,7 +161,7 @@ class EmptyButton extends ARule {
         button_container_rule.appendChild(this.nextButtonRule);
         div.appendChild(button_container_rule);
 
-        disableButtonIfInputEmpty(this.alt_tag,this.repairButton)
+        disableButtonIfInputEmpty(this.alt_tag, this.repairButton)
 
         return div;
     }

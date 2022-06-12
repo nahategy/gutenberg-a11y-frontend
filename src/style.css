@@ -145,3 +145,20 @@ button[disabled]{
     background: #1e1e1e;
 }
 
+.prevRule{
+    visibility:hidden
+}
+
+.nextRule{
+    visibility:hidden
+}
+
+.alt_tag_header_order{
+    visibility:hidden
+}
+
+.issueCounterHeaderOrder{
+    visibility:hidden
+}
+
+

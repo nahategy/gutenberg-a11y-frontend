@@ -54,7 +54,13 @@ class ViewRule {
         if (this.errors.length == 0) {
             return false;
         }
-        this.create_side_bar(this.errors.length);
+
+        let accu = 0;
+        for (var i = 0; i < this.errors.length; i++) {
+            accu += this.errors[i].fails.length
+        }
+        let errorsLengthSum = accu;
+        this.create_side_bar(errorsLengthSum);
 
         return true;
     }
@@ -79,6 +85,7 @@ class ViewRule {
         element = document.createElement("label");
         element.innerHTML = "Rule  ";
         this.errornumbersContainer = document.createElement("span");
+        this.errornumbersContainer.classList.add("ruleNumberCounter");
         element.appendChild(this.errornumbersContainer);
         this.errornumbersContainer.innerHTML = (this.currentNumber + 1) + " / " + numberOfErrors;
         div.appendChild(element);

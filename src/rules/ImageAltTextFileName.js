@@ -22,29 +22,84 @@ class ImageAltTextFileName extends ARule {
     repairButton;
     alt_tag;
 
-
     prev_rule(ev) {
         ev.preventDefault();
+        this.ruleNumberLength = document.getElementsByClassName("ruleNumberCounter")[0].innerText
+        let first = this.ruleNumberLength.split("/")[0]
+        let second = this.ruleNumberLength.split("/")[1]
+        this.ruleNumberLength = document.getElementsByClassName("issueCounter")[0].innerText
+        let issueFirst = this.ruleNumberLength.split("/")[0]
+        let issueSecond = this.ruleNumberLength.split("/")[1]
+        if(Number(first)===1){
+            return
+        }
         if (this.currentNumber - 1 >= 0) {
             this.currentFaliedNumber = this.fails.length;
             this.currentNumber--;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].alt;
+            // this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
+            console.log('hello')
+            let sum = (Number(first) - 1) + ' / ' + second
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText = sum
+        } else {
+            document.querySelector("button[class='prevRule']").click()
+            let sum = (Number(first) - 1) + ' / ' + second
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText = sum
+
+            this.ruleNumberLength = document.getElementsByClassName("issueCounter")[0].innerText
+            let issueFirst = this.ruleNumberLength.split("/")[0]
+            let issueSecond = this.ruleNumberLength.split("/")[1]
+
+            if (Number(issueFirst) === 1) {
+                console.log('issueFirst', issueFirst)
+                console.log('issueSecond', issueSecond)
+
+                if (Number(issueSecond) > 1) {
+                    let sum = (Number(first) - issueSecond) + ' / ' + second
+                    document.getElementsByClassName("ruleNumberCounter")[0].innerText = sum
+                    this.ruleNumberLength = document.getElementsByClassName(
+                        "issueCounter")[0].innerText= `${issueFirst} / ${issueSecond}`
+                    for (var i = 1; i < issueSecond; i++) {
+                        document.querySelector("button[class='next_rule_error']").click()
+                    }
+
+                }
+            }
         }
 
     }
 
     next_rule(ev) {
         ev.preventDefault();
-        if (this.currentNumber + 1 < this.fails.length) {
-            this.currentFaliedNumber = this.fails.length;
-            this.currentNumber++;
-            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
-            this.alt_tag.value = this.fails[this.currentNumber].alt;
-            this.showFailedElementInDom();
+
+        this.ruleNumberLength = document.getElementsByClassName("ruleNumberCounter")[0].innerText
+        let first2 = this.ruleNumberLength.split("/")[0]
+        let second2 = this.ruleNumberLength.split("/")[1]
+
+        if(Number(first2)===Number(second2)){
+            return
         }
 
+        this.ruleNumberLength = document.getElementsByClassName("ruleNumberCounter")[0].innerText
+        let first = this.ruleNumberLength.split("/")[0]
+        let second = this.ruleNumberLength.split("/")[1]
+        if (this.currentNumber + 1 < this.fails.length) {
+            console.log('iff')
+            this.currentFaliedNumber = this.fails.length;
+            console.log(this.currentFaliedNumber)
+            this.currentNumber++;
+            this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
+            // this.alt_tag.value = this.fails[this.currentNumber].alt;
+            this.showFailedElementInDom();
+            let sum = (Number(first)+1) + ' / ' + second
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
+        }else {
+            console.log('else')
+            let sum = (Number(first)+1) + ' / '+ second
+            document.querySelector("button[class='nextRule']").click()
+            document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
+        }
     }
 
     showFailedElementInDom = () => {
@@ -109,6 +164,7 @@ class ImageAltTextFileName extends ARule {
         element = document.createElement("label");
         element.innerHTML = "Issue   ";
         this.errornumbersContainerRule = document.createElement("span");
+        this.errornumbersContainerRule.classList.add("issueCounter");
         element.appendChild(this.errornumbersContainerRule);
         this.errornumbersContainerRule.innerHTML = (this.currentNumber + 1) + " / " + (this.currentFaliedNumber);
         div.appendChild(element);
