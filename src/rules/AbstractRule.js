@@ -93,9 +93,7 @@ class ARule {
     hideFailedElementinDom = () => {
         if (this.highlighter) {
             this.highlighter.remove();
-            console.log('hello');
         }
-        console.log('hll');
     }
 
     prev_rule(ev) {

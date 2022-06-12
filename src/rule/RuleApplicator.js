@@ -74,7 +74,6 @@ class RuleApplicator {
     }
 
     get_failed_tree_elements = () => {
-        console.log()
         return this.block_tree.structure[0].failed_rules
     }
 

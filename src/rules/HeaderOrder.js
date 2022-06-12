@@ -40,7 +40,6 @@ class HeaderOrder extends ARule {
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
             this.showFailedElementInDom();
-            console.log('hello')
             let sum = (Number(first) - 1) + ' / ' + second
             document.getElementsByClassName("ruleNumberCounter")[0].innerText = sum
         } else {
@@ -53,9 +52,6 @@ class HeaderOrder extends ARule {
             let issueSecond = this.ruleNumberLength.split("/")[1]
 
             if (Number(issueFirst) === 1) {
-                console.log('issueFirst', issueFirst)
-                console.log('issueSecond', issueSecond)
-
                 if (Number(issueSecond) > 1) {
                     let sum = (Number(first) - issueSecond) + ' / ' + second
                     document.getElementsByClassName("ruleNumberCounter")[0].innerText = sum
@@ -86,9 +82,7 @@ class HeaderOrder extends ARule {
         let first = this.ruleNumberLength.split("/")[0]
         let second = this.ruleNumberLength.split("/")[1]
         if (this.currentNumber + 1 < this.fails.length) {
-            console.log('iff')
             this.currentFaliedNumber = this.fails.length;
-            console.log(this.currentFaliedNumber)
             this.currentNumber++;
             this.errornumbersContainerRule.innerHTML = `${this.currentNumber + 1} / ${this.currentFaliedNumber}`;
             this.alt_tag.value = this.fails[this.currentNumber].alt;
@@ -96,7 +90,6 @@ class HeaderOrder extends ARule {
             let sum = (Number(first)+1) + ' / ' + second
             document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
         }else {
-            console.log('else')
             let sum = (Number(first)+1) + ' / '+ second
             document.querySelector("button[class='nextRule']").click()
             document.getElementsByClassName("ruleNumberCounter")[0].innerText=sum
@@ -150,7 +143,7 @@ class HeaderOrder extends ARule {
         var current_error = this.fails[0];
 
         setTimeout(() => {
-            this.showFailedElementInDom();
+            // this.showFailedElementInDom();
         }, 500);
 
         var div = document.createElement("div");
